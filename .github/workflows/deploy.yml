@@ -1,0 +1,51 @@
+# Deploys the site to devofcodes.com (S3 + CloudFront in the Dev of Codes
+# prod AWS account). The infrastructure lives in the private repo
+# Dev-of-Codes-LLC/devofcodes-infra (modules/static-site); the role below
+# trusts only this repository's main branch and can only write this bucket
+# and invalidate this distribution.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-site
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-west-2
+  ROLE_ARN: arn:aws:iam::100808729005:role/gha-deploy-site
+  BUCKET: devofcodes-prod-site
+  DISTRIBUTION_ID: E231XH2855QFP9
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload site
+        run: |
+          aws s3 sync . "s3://${BUCKET}" --delete \
+            --exclude ".git/*" --exclude ".github/*" \
+            --exclude "README*" --exclude ".gitignore" \
+            --cache-control "public, max-age=300"
+
+      - name: Invalidate CloudFront
+        run: |
+          id=$(aws cloudfront create-invalidation --distribution-id "${DISTRIBUTION_ID}" \
+            --paths "/*" --query Invalidation.Id --output text)
+          aws cloudfront wait invalidation-completed --distribution-id "${DISTRIBUTION_ID}" --id "$id"
+          echo "Invalidation $id complete"
