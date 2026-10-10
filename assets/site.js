@@ -119,6 +119,25 @@
     });
   }
 
+  /* Buttons that open the contact form with a project already chosen */
+  document.querySelectorAll('[data-prefill-kind], [data-prefill-message]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      if (!form) return;
+      var kindEl = form.querySelector('[name="kind"]');
+      var messageEl = form.querySelector('[name="message"]');
+      var kind = link.getAttribute('data-prefill-kind');
+      var message = link.getAttribute('data-prefill-message');
+      if (kindEl && kind) kindEl.value = kind;
+      if (messageEl && message && !messageEl.value.trim()) messageEl.value = message + '\n\n';
+      form.style.display = '';
+      document.getElementById('contactSuccess').style.display = 'none';
+      setTimeout(function () {
+        var nameEl = form.querySelector('[name="name"]');
+        if (nameEl) nameEl.focus({ preventScroll: true });
+      }, 600);
+    });
+  });
+
   /* Hero load sequence */
   var staged = document.querySelectorAll('[data-stage]');
   staged.forEach(function (el) {

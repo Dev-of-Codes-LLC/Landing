@@ -36,6 +36,12 @@ jobs:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Stamp the deploy date into the home page
+        run: |
+          today=$(date -u +'%b %-d, %Y')
+          sed -i "s#<!--deploy-date-->.*<!--/deploy-date-->#<!--deploy-date-->${today}<!--/deploy-date-->#" index.html
+          grep -o '<!--deploy-date-->[^<]*<!--/deploy-date-->' index.html
+
       - name: Upload site
         run: |
           aws s3 sync . "s3://${BUCKET}" --delete \
