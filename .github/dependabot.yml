@@ -1,0 +1,9 @@
+# The deploy workflow pins its actions to commit SHAs. Dependabot opens a
+# pull request when a pinned action has a newer release, so the pins do
+# not go stale silently.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

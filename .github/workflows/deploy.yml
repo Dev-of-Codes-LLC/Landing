@@ -42,11 +42,16 @@ jobs:
           sed -i "s#<!--deploy-date-->.*<!--/deploy-date-->#<!--deploy-date-->${today}<!--/deploy-date-->#" index.html
           grep -o '<!--deploy-date-->[^<]*<!--/deploy-date-->' index.html
 
+      # Excluded prefixes are also excluded from --delete, so anything that
+      # once reached the bucket under them is removed explicitly.
+      - name: Remove files that must never be served
+        run: aws s3 rm "s3://${BUCKET}/.claude" --recursive
+
       - name: Upload site
         run: |
           aws s3 sync . "s3://${BUCKET}" --delete \
-            --exclude ".git/*" --exclude ".github/*" \
-            --exclude "README*" --exclude ".gitignore" \
+            --exclude ".git/*" --exclude ".github/*" --exclude ".claude/*" \
+            --exclude "*.md" --exclude ".gitignore" \
             --cache-control "public, max-age=300"
 
       - name: Invalidate CloudFront
