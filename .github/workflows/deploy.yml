@@ -1,8 +1,8 @@
 # Deploys the site to devofcodes.com (S3 + CloudFront in the Dev of Codes
 # prod AWS account). The infrastructure lives in the private repo
 # Dev-of-Codes-LLC/devofcodes-infra (modules/static-site); the role below
-# trusts only this repository's main branch and can only write this bucket
-# and invalidate this distribution.
+# trusts only jobs in this repository's prod environment, which only main
+# may use, and can only write this bucket and invalidate this distribution.
 name: Deploy
 
 on:
@@ -28,6 +28,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment:
+      name: prod
+      url: https://devofcodes.com
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
