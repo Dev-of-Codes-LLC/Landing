@@ -76,6 +76,10 @@
   letter-spacing: -0.035em; line-height: 1.04;
   margin-bottom: 1.6rem; color: var(--text-primary);
 }
+@media (max-width: 480px) {
+  /* "Independent" is ~9.9em wide in Syne 800; the 2.6rem floor pushed it past the gutters on phones */
+  .hero-headline { font-size: calc(9.4vw - 0.25rem); }
+}
 .hero-headline .line { display: block; }
 .hero-headline .hw { display: inline-block; opacity: 0; transform: translateY(22px); }
 .hero-headline .hw.anim-in { opacity: 1; transform: translateY(0); transition: opacity 380ms ease, transform 380ms ease; }

@@ -26,7 +26,9 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* Phones let you pan into anything wider than the screen even with overflow-x on the viewport,
+   so body clips itself; clip (not hidden) on html stops body becoming a scroll container. */
+html { scroll-behavior: smooth; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -40,6 +42,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -196,6 +199,10 @@ img { max-width: 100%; display: block; }
 .page { padding: 9rem 0 4rem; }
 .page-header { margin-bottom: 3rem; }
 .page-header .section-headline { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+@media (max-width: 360px) {
+  /* long words like "implementation" outgrow the 2.2rem floor on the narrowest phones */
+  .page-header .section-headline { font-size: calc(10vw - 0.25rem); }
+}
 .page-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; letter-spacing: 0.04em; }
 
 /* ── Forms ── */
