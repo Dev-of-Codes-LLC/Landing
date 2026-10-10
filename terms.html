@@ -3,658 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service — DevOfCodes</title>
-<meta name="description" content="DevOfCodes terms of service. The rules and conditions for using the Falcon platform.">
-<meta property="og:title" content="Terms of Service — DevOfCodes">
-<meta property="og:description" content="DevOfCodes terms of service. The rules and conditions for using the Falcon platform.">
+<title>Terms of Use — DevOfCodes</title>
+<meta name="description" content="Terms for using devofcodes.com, the website of Dev of Codes LLC, and how contract work is agreed.">
+<meta property="og:title" content="Terms of Use — DevOfCodes">
 <meta property="og:site_name" content="DevOfCodes">
-<link rel="canonical" href="https://devofcodes.com/terms">
+<link rel="canonical" href="https://devofcodes.com/terms.html">
 <link rel="icon" type="image/png" href="assets/DoC Icon.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --bg-base:        #080A0F;
-  --bg-surface:     #0E1117;
-  --bg-elevated:    #161B24;
-  --border:         rgba(255, 255, 255, 0.07);
-  --border-bright:  rgba(255, 255, 255, 0.15);
-  --text-primary:   #E8EAF0;
-  --text-secondary: #6B7280;
-  --text-muted:     #586370;
-  --accent-cyan:    #00C8FF;
-  --accent-amber:   #F59E0B;
-  --accent-green:   #10B981;
-  --font-display:   'Syne', sans-serif;
-  --font-body:      'Literata', serif;
-  --font-mono:      'JetBrains Mono', monospace;
-}
-
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background-color: var(--bg-base);
-  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 32px 32px;
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  line-height: 1.75;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a { text-decoration: none; color: inherit; }
-button { font-family: inherit; }
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* ── NAV ── */
-.nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 0.9rem 0;
-  transition: background 300ms, border-color 300ms;
-  border-bottom: 1px solid transparent;
-  background: rgba(8, 10, 15, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-}
-
-.nav .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.nav-brand svg { width: 28px; height: 28px; }
-
-.nav-brand span {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text-primary);
-  letter-spacing: 0.02em;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.nav-link {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  transition: color 200ms;
-}
-
-.nav-link:hover { color: var(--text-primary); }
-
-.nav-sep { color: var(--text-muted); user-select: none; }
-
-.nav-cta {
-  border: 1px solid var(--accent-cyan);
-  color: var(--accent-cyan);
-  padding: 0.4rem 1rem;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  background: transparent;
-  cursor: pointer;
-  transition: background 200ms, color 200ms;
-  display: inline-block;
-}
-
-.nav-cta:hover {
-  background: var(--accent-cyan);
-  color: var(--bg-base);
-}
-
-.nav-hamburger {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.25rem;
-}
-
-.nav-hamburger svg { width: 24px; height: 24px; }
-
-.mobile-nav-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(8, 10, 15, 0.97);
-  z-index: 150;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.mobile-nav-overlay.active { display: flex; }
-
-.mobile-nav-overlay a,
-.mobile-nav-overlay button {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--text-secondary);
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 200ms;
-}
-
-.mobile-nav-overlay a:hover,
-.mobile-nav-overlay button:hover { color: var(--text-primary); }
-
-.mobile-nav-close {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 1.5rem;
-  color: var(--text-muted);
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.mobile-nav-close:hover { color: var(--text-primary); }
-
-@media (max-width: 767px) {
-  .nav-links { display: none; }
-  .nav-hamburger { display: block; }
-}
-
-/* ── LEGAL CONTENT ── */
-.legal-page {
-  padding: 10rem 0 6rem;
-}
-
-.legal-page .container {
-  max-width: 740px;
-}
-
-.legal-eyebrow {
-  font-size: 0.7rem;
-  font-family: var(--font-mono);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent-cyan);
-  margin-bottom: 1rem;
-}
-
-.legal-title {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-}
-
-.legal-updated {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.legal-section {
-  margin-bottom: 2.5rem;
-}
-
-.legal-section h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.3rem;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.01em;
-}
-
-.legal-section h3 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.05rem;
-  color: var(--text-primary);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.legal-section p {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-}
-
-.legal-section ul {
-  list-style: none;
-  margin-bottom: 1rem;
-  padding-left: 0;
-}
-
-.legal-section ul li {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  padding-left: 1.25rem;
-  position: relative;
-  margin-bottom: 0.4rem;
-}
-
-.legal-section ul li::before {
-  content: '·';
-  position: absolute;
-  left: 0;
-  color: var(--text-muted);
-  font-weight: bold;
-}
-
-.legal-section a {
-  color: var(--accent-cyan);
-  transition: opacity 200ms;
-}
-
-.legal-section a:hover {
-  opacity: 0.8;
-}
-
-.legal-contact {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1.5rem;
-  margin-top: 3rem;
-}
-
-.legal-contact h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.legal-contact p {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin: 0;
-}
-
-.legal-contact a {
-  color: var(--accent-cyan);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-}
-
-/* ── FOOTER ── */
-.site-footer {
-  background: var(--bg-base);
-  border-top: 1px solid var(--border);
-  padding: 3rem 0 2rem;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-}
-
-.footer-brand .nav-brand { margin-bottom: 0.75rem; }
-.footer-brand .nav-brand span { font-size: 1rem; }
-
-.footer-tagline {
-  font-family: var(--font-body);
-  font-style: italic;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-
-.footer-copyright {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.footer-links-row { display: flex; gap: 3rem; }
-
-.footer-links-col .footer-heading {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 0.75rem;
-  font-weight: 400;
-  display: block;
-}
-
-.footer-links-col a {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  padding: 0.2rem 0;
-  transition: color 200ms;
-}
-
-.footer-links-col a:hover { color: var(--text-primary); }
-
-.footer-contact a,
-.footer-contact span {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  margin-bottom: 0.5rem;
-  transition: color 200ms;
-}
-
-.footer-contact a.email-link { color: var(--accent-cyan); }
-.footer-contact a.social-link { color: var(--text-secondary); }
-.footer-contact a.social-link:hover { color: var(--text-primary); }
-
-.footer-contact svg {
-  width: 16px; height: 16px;
-  fill: var(--text-muted);
-  transition: fill 200ms;
-  flex-shrink: 0;
-}
-
-.footer-contact a:hover svg { fill: var(--text-primary); }
-
-.footer-bottom-bar {
-  border-top: 1px solid var(--border);
-  padding-top: 1.5rem;
-  margin-top: 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
-
-@media (min-width: 768px) {
-  .footer-grid { grid-template-columns: 1.2fr 1fr 1fr; }
-}
-
-/* ── MODAL ── */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 200;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-overlay.active { display: flex; }
-
-.modal-panel {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-bright);
-  border-radius: 8px;
-  padding: 2rem;
-  max-width: 480px;
-  width: 90%;
-  position: relative;
-}
-
-.modal-close {
-  position: absolute;
-  top: 1rem; right: 1rem;
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-family: var(--font-mono);
-  color: var(--text-muted);
-  background: none;
-  border: none;
-  transition: color 200ms;
-}
-
-.modal-close:hover { color: var(--text-primary); }
-
-.modal-panel h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.3rem;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.modal-panel .modal-sub {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
-
-.form-group { margin-bottom: 1rem; }
-
-.form-group label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 0.4rem;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  box-sizing: border-box;
-  background: var(--bg-base);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  padding: 0.65rem 0.9rem;
-  outline: none;
-  transition: border-color 200ms;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus { border-color: var(--accent-cyan); }
-
-.form-group input:focus-visible,
-.form-group select:focus-visible,
-.form-group textarea:focus-visible {
-  outline: 2px solid var(--accent-cyan);
-  outline-offset: 2px;
-}
-
-.form-group input.error,
-.form-group select.error,
-.form-group textarea.error { border-color: #ef4444; }
-
-.form-group select {
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%236B7280' stroke-width='1.5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  padding-right: 2rem;
-}
-
-.form-group select option {
-  background: var(--bg-base);
-  color: var(--text-primary);
-}
-
-.form-group textarea { resize: vertical; }
-
-.form-submit {
-  width: 100%;
-  background: var(--accent-amber);
-  color: var(--bg-base);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 500;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: opacity 200ms;
-  margin-top: 0.5rem;
-}
-
-.form-submit:hover { opacity: 0.85; }
-
-.success-state { text-align: center; padding: 2rem 0; }
-.success-icon { font-size: 48px; color: var(--accent-amber); margin-bottom: 1rem; }
-
-.success-state h3 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.success-state p {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.error-msg {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent-amber);
-  text-align: center;
-  margin-top: 0.75rem;
-  display: none;
-}
-
-.contact-email-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-bottom: 1.25rem;
-}
-
-.contact-email-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-
-.contact-email-link {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  color: var(--accent-cyan);
-  transition: opacity 200ms;
-}
-
-.contact-email-link:hover { opacity: 0.8; }
-
-.contact-divider {
-  border-top: 1px solid var(--border);
-  margin-bottom: 1.25rem;
-  position: relative;
-}
-
-.contact-divider::after {
-  content: 'or send a message';
-  position: absolute;
-  top: -0.6em;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-elevated);
-  padding: 0 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  white-space: nowrap;
-}
-
-/* ── DOCS TOAST ── */
-.docs-toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(120%);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-bright);
-  border-radius: 6px;
-  padding: 0.85rem 1.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  z-index: 300;
-  white-space: nowrap;
-  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.docs-toast.visible {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
-@media (max-width: 600px) {
-  .docs-toast {
-    white-space: normal;
-    left: 1rem;
-    right: 1rem;
-    transform: translateY(120%);
-  }
-  .docs-toast.visible {
-    transform: translateY(0);
-  }
-}
-</style>
 <link rel="stylesheet" href="assets/site.css">
+<style>
+  .nav { background: rgba(8, 10, 15, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--border); }
+  .legal { color: var(--text-secondary); font-size: 1.02rem; }
+  .legal h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; letter-spacing: -0.015em; color: var(--text-primary); margin: 2.6rem 0 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--border); }
+  .legal h2 .n { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-amber); letter-spacing: 0.14em; margin-right: 0.8rem; }
+  .legal p + p { margin-top: 1rem; }
+  .legal ul { margin: 0.9rem 0 0.9rem 1.3rem; display: grid; gap: 0.4rem; }
+  .legal li::marker { color: var(--text-muted); }
+  .legal strong { color: var(--text-primary); font-weight: 500; }
+  .legal a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
+  .legal a:hover { border-bottom-color: var(--accent-cyan); }
+  .summary { margin: 0 0 1rem; padding: 1.2rem 1.4rem; border-left: 2px solid var(--accent-cyan); background: rgba(0,200,255,0.05); border-radius: 0 var(--radius) var(--radius) 0; }
+  .summary strong { color: var(--accent-cyan); }
+  .legal-contact { margin-top: 3rem; padding: 1.5rem 1.7rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); }
+  .legal-contact h2 { border: 0; margin: 0 0 0.5rem; padding: 0; font-size: 1.15rem; }
+  .legal-contact p { font-size: 0.95rem; }
+  .legal-contact .mono { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; margin-top: 0.8rem; }
+</style>
 </head>
-
 <body>
 
 <nav class="nav scrolled" id="nav" aria-label="Main navigation">
@@ -666,7 +43,7 @@ button { font-family: inherit; }
     <div class="nav-links">
       <a href="index.html#work" class="nav-link">Work</a>
       <a href="index.html#services" class="nav-link">Work with me</a>
-      <a href="about.html" class="nav-link" aria-current="page">About</a>
+      <a href="about.html" class="nav-link">About</a>
       <a href="changelog.html" class="nav-link">Log</a>
       <a href="index.html#contact" class="nav-cta">Discuss a project →</a>
     </div>
@@ -684,101 +61,65 @@ button { font-family: inherit; }
   <a href="index.html#contact">Discuss a project →</a>
 </div>
 
-<main class="legal-page">
-  <div class="container">
-    <div class="legal-eyebrow">LEGAL</div>
-    <h1 class="legal-title">Terms of Service</h1>
-    <div class="legal-updated">Last updated: March 1, 2026</div>
+<main class="page">
+  <div class="container container--narrow">
+    <header class="page-header">
+      <div class="eyebrow">Legal</div>
+      <h1 class="section-headline">Terms of Use</h1>
+      <p class="page-meta">Last updated: October 10, 2026 · Dev of Codes LLC</p>
+    </header>
 
-    <div class="legal-section">
-      <h2>1. The basics</h2>
-      <p>These terms are a contract between you and DevOfCodes LLC. By using Falcon — our project management platform — you're agreeing to them. If you're signing up on behalf of a company or team, you're agreeing on their behalf too, and confirming you have the authority to do that.</p>
-      <p>If you don't agree, please don't use the service.</p>
-    </div>
+    <article class="legal">
+      <div class="summary">
+        <p><strong>In short.</strong> This is the website of a one-person software company. There is nothing to sign up for, nothing to buy on the site, and no service running behind it. Contract work is agreed in a separate written agreement, never through this page. The rest is the ordinary fine print, written plainly.</p>
+      </div>
 
-    <div class="legal-section">
-      <h2>2. What Falcon is</h2>
-      <p>Falcon is a project management platform built for engineering teams. It includes tools for tracking projects, managing sprints and tasks, and an AI layer that draws from your team's project history to answer questions and surface context. The AI features work with whichever model or provider you configure — we don't lock you to one.</p>
-    </div>
+      <h2><span class="n">01</span>Who and what these terms cover</h2>
+      <p>These terms apply to your use of devofcodes.com and its pages (the "site"). The site is operated by Dev of Codes LLC, a single-member limited liability company based in San Diego, California ("I", "me", or "DevOfCodes"). By using the site you agree to these terms. If you don't agree, please don't use it.</p>
+      <p>An earlier version of this page described a product called Falcon as a subscription service with accounts and billing. Falcon is a prototype that is not offered to anyone. There are no user accounts, subscriptions, free tiers, or paid plans on this site, and no terms for them.</p>
 
-    <div class="legal-section">
-      <h2>3. Your account</h2>
+      <h2><span class="n">02</span>What the site is for</h2>
+      <p>The site presents work I'm doing, describes the kinds of contract projects I take on, and gives you a way to get in touch. Project descriptions, statuses, roadmaps and plans are accurate to the best of my knowledge on the date they were written, and they change as the work does. They are information, not promises, and nothing on the site is professional, legal, financial or technical advice for your situation.</p>
+
+      <h2><span class="n">03</span>Contract work is agreed separately</h2>
+      <p>The "Work with me" section and anything else on the site describing services is an invitation to start a conversation. It is not an offer that you can accept by sending a message, and no contract is formed by using the site or the contact form.</p>
       <ul>
-        <li>Use a real name and a working email address when you sign up</li>
-        <li>Keep your password secure — don't share it with others</li>
-        <li>If you think someone has accessed your account without permission, tell us immediately at <a href="mailto:security@devofcodes.com">security@devofcodes.com</a></li>
-        <li>Free accounts are one per person or organisation</li>
+        <li>Every engagement is governed by its own written agreement covering scope, acceptance criteria, price, schedule, intellectual property and confidentiality. If that agreement and these terms ever disagree, the agreement wins.</li>
+        <li>Estimates, timelines and prices I mention in conversation are not binding until they're in that written agreement.</li>
+        <li>Until an agreement (or a non-disclosure agreement) is signed, please don't send me confidential material. Treat anything you put in the contact form or an email as non-confidential, and only share what you have the right to share.</li>
       </ul>
-      <p>You're responsible for anything that happens under your account.</p>
-    </div>
 
-    <div class="legal-section">
-      <h2>4. Your data belongs to you</h2>
-      <p>Everything you put into Falcon — your projects, tasks, documents, comments — is yours. We don't claim any ownership over it.</p>
-      <p>You give us permission to store and process your data to run the service. That's the only reason we touch it. We don't use your project data to train AI models or sell it to third parties.</p>
-      <p>Your data is isolated from other teams at every layer of the platform. See our <a href="privacy.html">Privacy Policy</a> for the full picture.</p>
-    </div>
+      <h2><span class="n">04</span>The contact form and email</h2>
+      <p>When you use the contact form, you confirm that the details you provide are yours or that you're entitled to provide them, and that you're asking me to reply. Submissions go through Formspree, a third-party form service, to my inbox. The <a href="privacy.html">privacy policy</a> explains what happens to that information.</p>
 
-    <div class="legal-section">
-      <h2>5. Things you can't do</h2>
-      <p>Pretty much anything reasonable goes, but a few things are off limits:</p>
-      <ul>
-        <li>Using Falcon for anything illegal</li>
-        <li>Trying to break into parts of the platform you're not supposed to access</li>
-        <li>Doing anything that would damage or overload our infrastructure</li>
-        <li>Attempting to reverse-engineer the software</li>
-        <li>Uploading or transmitting malware or malicious code</li>
-        <li>Reselling or repackaging the service without our written permission</li>
-      </ul>
-    </div>
+      <h2><span class="n">05</span>Content and intellectual property</h2>
+      <p>The text, design, images and code of the site are owned by Dev of Codes LLC unless stated otherwise. You're welcome to link to any page and to quote short passages with attribution. Please don't republish whole pages, pass the work off as your own, or use the DevOfCodes name or logo in a way that suggests endorsement.</p>
+      <p>Third-party material stays under its own licence: the fonts are served by Google Fonts under their licences, the live backgrounds use the open-source <a href="https://github.com/shader-effects-inc/shaders" rel="noopener">shaders</a> library under the MIT licence, and the projects described on the site belong to their respective owners as stated on the page. Screenshots of my own tools show synthetic data.</p>
 
-    <div class="legal-section">
-      <h2>6. Billing and payment</h2>
-      <p>Paid plans are billed monthly, in advance. We don't offer refunds except where required by law.</p>
-      <p>If we change our prices, we'll give you at least 30 days' notice by email before it takes effect.</p>
-      <p>If you're on a Founding Customer rate, that price is locked for as long as your subscription stays active and continuous — it won't go up as long as you stay on board.</p>
-    </div>
+      <h2><span class="n">06</span>Acceptable use</h2>
+      <p>Don't use the site to do anything unlawful, don't try to gain access to anything that isn't publicly served, don't send malware or abusive submissions through the form, and don't load the site in a way designed to disrupt it or the services it depends on. Automated reading of public pages for ordinary purposes (search engines, link previews) is fine.</p>
 
-    <div class="legal-section">
-      <h2>7. Uptime and maintenance</h2>
-      <p>We aim to keep Falcon available at all times, but we can't guarantee it. Occasionally we need to take things down for maintenance — we'll give you reasonable notice when we can. Formal SLA guarantees are available on the Scale plan as outlined in your service agreement.</p>
-    </div>
+      <h2><span class="n">07</span>Third-party links and services</h2>
+      <p>The site links to other websites and loads resources from third-party services (fonts, a content delivery network, the form service). I don't control those sites or services and am not responsible for their content, availability or practices. Their own terms apply when you use them.</p>
 
-    <div class="legal-section">
-      <h2>8. AI features</h2>
-      <p>Falcon's AI features are designed to help your team, not replace your judgment. AI-generated suggestions, summaries, and analysis can be wrong or incomplete. Always review AI outputs before acting on them — especially for anything business-critical.</p>
-      <p>The quality of AI responses depends on the model and provider you've configured. We're not responsible for the outputs of third-party AI providers you connect.</p>
-    </div>
+      <h2><span class="n">08</span>No warranty</h2>
+      <p>The site is provided as is and as available. I try to keep it accurate and online, but I don't promise that it will be error-free, uninterrupted, or free of things that might affect your device. The live backgrounds use WebGPU where your browser supports it and fall back to plain styling where it doesn't.</p>
 
-    <div class="legal-section">
-      <h2>9. Our liability is limited</h2>
-      <p>We build Falcon carefully, but we can't be held responsible for indirect losses — things like lost profits, lost data, or business disruption — resulting from your use of the service.</p>
-      <p>If something does go wrong and we're at fault, the most we'll be liable for is what you paid us in the twelve months before the issue arose.</p>
-      <p>Nothing in these terms limits liability that can't legally be limited, such as for fraud or death caused by negligence.</p>
-    </div>
+      <h2><span class="n">09</span>Limitation of liability</h2>
+      <p>To the extent the law allows, Dev of Codes LLC is not liable for indirect, incidental or consequential losses arising from your use of the site, and its total liability for any claim connected to the site is limited to one hundred US dollars. Nothing in these terms limits liability that can't legally be limited, such as liability for fraud. Liability for contract work is dealt with in the written agreement for that work, not here.</p>
 
-    <div class="legal-section">
-      <h2>10. Cancellation and data export</h2>
-      <p>You can cancel at any time. When you do, your access ends at the close of your billing period.</p>
-      <p>After cancellation, we'll keep your data available for export for 30 days. After that, we'll delete it. If you need your data in a specific format, contact us before cancelling and we'll do our best to help.</p>
-      <p>We can also terminate your account if you seriously or repeatedly violate these terms. We'll tell you why unless we're legally prevented from doing so.</p>
-    </div>
+      <h2><span class="n">10</span>Governing law</h2>
+      <p>These terms are governed by the laws of the State of California, without regard to its conflict-of-law rules. Any dispute about the site will be heard in the state or federal courts located in San Diego County, California, and both of us agree to that jurisdiction.</p>
 
-    <div class="legal-section">
-      <h2>11. Governing law</h2>
-      <p>These terms are governed by the laws of California. If a dispute ends up in court, it'll be heard in San Diego County, California. Both parties agree to that jurisdiction.</p>
-    </div>
+      <h2><span class="n">11</span>Changes</h2>
+      <p>I may update these terms as the site changes. The date at the top tells you when, and the repository history keeps every earlier version. Continuing to use the site after a change means you accept the updated terms.</p>
 
-    <div class="legal-section">
-      <h2>12. Changes to these terms</h2>
-      <p>We may update these terms from time to time. If the changes are material, we'll notify you by email at least 30 days before they take effect. Carrying on using Falcon after that date means you accept the new terms.</p>
-      <p>We'll always keep a dated version here so you can see what changed.</p>
-    </div>
-
-    <div class="legal-contact">
-      <h2>Questions?</h2>
-      <p>If anything here is unclear, email us at <a href="mailto:legal@devofcodes.com">legal@devofcodes.com</a> and we'll give you a straight answer.</p>
-    </div>
+      <div class="legal-contact">
+        <h2>Questions?</h2>
+        <p>Email <a href="mailto:legal@devofcodes.com">legal@devofcodes.com</a> and you'll get a straight answer from the one person who runs this.</p>
+        <div class="mono">Dev of Codes LLC<br>1050 Kettner Blvd, Suite D, PMB 1020<br>San Diego, CA 92101, United States</div>
+      </div>
+    </article>
   </div>
 </main>
 
