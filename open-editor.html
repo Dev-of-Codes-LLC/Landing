@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Editor Platform — research and implementation plan — DevOfCodes</title>
+<meta name="description" content="A research and implementation plan for a fully open-source editor SDK serving software developers and book authors equally: CodeMirror 6, Tiptap on ProseMirror, Yjs, and a shared platform for comments, versions, search and optional AI.">
+<meta property="og:title" content="Open Editor Platform — research and implementation plan">
+<meta property="og:description" content="A plan for an open-source editor SDK that treats developers and book authors as equals.">
+<meta property="og:site_name" content="DevOfCodes">
+<link rel="canonical" href="https://devofcodes.com/open-editor.html">
+<link rel="icon" type="image/png" href="assets/DoC Icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .nav { background: rgba(8, 10, 15, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--border); }
+  .plan { color: var(--text-secondary); font-size: 1.02rem; }
+  .plan h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.015em; color: var(--text-primary); margin: 3rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .plan h2 .n { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-amber); letter-spacing: 0.14em; display: block; margin-bottom: 0.5rem; }
+  .plan p + p { margin-top: 1.05rem; }
+  .plan strong { color: var(--text-primary); font-weight: 500; }
+  .plan a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
+  .plan a:hover { border-bottom-color: var(--accent-cyan); }
+  .plan ul, .plan ol { margin: 1rem 0 1rem 1.3rem; display: grid; gap: 0.45rem; }
+  .plan li::marker { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85em; }
+  .plan code { font-family: var(--font-mono); font-size: 0.85em; color: var(--text-primary); background: var(--bg-elevated); padding: 0.1em 0.4em; border-radius: 4px; }
+  .plan pre { margin: 1.2rem 0; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.3rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.65; color: var(--text-primary); }
+  .plan pre code { background: none; padding: 0; font-size: inherit; }
+  .callout { margin: 1.5rem 0; padding: 1.2rem 1.4rem; border-left: 2px solid var(--accent-cyan); background: rgba(0,200,255,0.05); border-radius: 0 var(--radius) var(--radius) 0; }
+  .callout strong { color: var(--accent-cyan); }
+  .lede { font-size: 1.12rem; color: var(--text-secondary); }
+  .lede strong { color: var(--text-primary); }
+
+  .tbl { width: 100%; border-collapse: collapse; margin: 1.3rem 0; font-size: 0.9rem; line-height: 1.55; }
+  .tbl th { text-align: left; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--border-bright); vertical-align: bottom; }
+  .tbl td { padding: 0.8rem 0.8rem 0.8rem 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .tbl td:first-child { color: var(--text-primary); font-weight: 500; white-space: nowrap; }
+  .tbl-wrap { overflow-x: auto; margin: 0 -1.5rem; padding: 0 1.5rem; }
+  @media (max-width: 700px) { .tbl { min-width: 640px; } }
+
+  .flow { margin: 1.5rem 0; display: grid; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.78rem; }
+  .flow-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.5rem; }
+  .flow-box { border: 1px solid var(--border-bright); border-radius: 6px; padding: 0.6rem 0.75rem; background: var(--bg-surface); color: var(--text-primary); line-height: 1.4; }
+  .flow-box.hub { border-color: rgba(0,200,255,0.5); background: rgba(0,200,255,0.06); }
+  .flow-box small { display: block; color: var(--text-muted); font-size: 0.68rem; margin-top: 0.2rem; }
+  .flow-arrow { text-align: center; color: var(--text-muted); font-size: 0.9rem; line-height: 1; }
+
+  .toc { margin: 2rem 0 0; padding: 1.3rem 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); }
+  .toc h2 { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+  .toc ol { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1.5rem; font-size: 0.92rem; }
+  .toc a { color: var(--text-secondary); }
+  .toc a:hover { color: var(--accent-cyan); }
+  @media (max-width: 600px) { .toc ol { grid-template-columns: 1fr; } }
+
+  .plan-foot { margin-top: 3.5rem; padding: 1.6rem 1.8rem; border: 1px solid rgba(245,158,11,0.35); border-radius: var(--radius); background: rgba(245,158,11,0.05); }
+  .plan-foot h2 { border: 0; margin: 0 0 0.6rem; padding: 0; font-size: 1.2rem; }
+  .plan-foot p { color: var(--text-secondary); }
+  .plan-foot .btn { margin-top: 1.2rem; }
+</style>
+</head>
+<body>
+
+<nav class="nav scrolled" id="nav" aria-label="Main navigation">
+  <div class="container">
+    <a href="index.html" class="nav-brand" aria-label="DevOfCodes home">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><text x="1" y="21" font-family="monospace" font-size="19" font-weight="bold" fill="#E8EAF0">D&lt;</text></svg>
+      <span>DevOfCodes</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#work" class="nav-link">Work</a>
+      <a href="index.html#services" class="nav-link">Work with me</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="changelog.html" class="nav-link">Log</a>
+      <a href="index.html#contact" class="nav-cta">Discuss a project →</a>
+    </div>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E8EAF0" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Close menu">×</button>
+  <a href="index.html#work">Work</a>
+  <a href="index.html#services">Work with me</a>
+  <a href="about.html">About</a>
+  <a href="changelog.html">Log</a>
+  <a href="index.html#contact">Discuss a project →</a>
+</div>
+
+<main class="page">
+  <div class="container container--narrow">
+    <header class="page-header">
+      <div class="eyebrow">Project 03 · Research plan</div>
+      <h1 class="section-headline">Open Editor Platform: research and implementation plan</h1>
+      <p class="page-meta">Prepared October 10, 2026 · Max Wahlgren · Status: plan, not started</p>
+    </header>
+
+    <article class="plan">
+      <p class="lede"><strong>Scope.</strong> Software developers and book authors are equal priorities from the first release; web applications first, desktop and mobile afterward. Technology descriptions below link to primary sources. Architecture, targets, staffing and schedules are recommendations, not measured results or vendor commitments.</p>
+
+      <div class="callout">
+        <p><strong>Recommendation.</strong> Build a framework-independent TypeScript SDK with CodeMirror 6 for code and plain text and Tiptap's open-source packages on ProseMirror for manuscripts. Give both a shared platform for integration, collaboration, comments, versions, search, extensions and optional AI. Ship a small embeddable surface and an optional complete workspace for each audience. The opportunity is to make sophisticated editing easy to integrate, reliable, portable and fully open source.</p>
+      </div>
+
+      <p>"Most powerful" should mean a published combination of capability, correctness, responsiveness, accessibility, interoperability and integration quality. No engine is best at every workload. Establish separate profiles and disclose their performance limits.</p>
+
+      <nav class="toc" aria-label="Contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#existing">1. What already exists</a></li>
+          <li><a href="#product">2. The product we should own</a></li>
+          <li><a href="#stack">3. Recommended stack</a></li>
+          <li><a href="#contracts">4. Architecture contracts</a></li>
+          <li><a href="#integrate">5. What "easy to integrate" must mean</a></li>
+          <li><a href="#reuse">6. Reuse versus build</a></li>
+          <li><a href="#fidelity">7. Authoring and format fidelity</a></li>
+          <li><a href="#gates">8. Release gates and benchmarks</a></li>
+          <li><a href="#delivery">9. Delivery plan</a></li>
+          <li><a href="#oss">10. Open-source and maintenance plan</a></li>
+          <li><a href="#month1">11. First-month work package</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="existing"><span class="n">01</span>What already exists and how to use it</h2>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Project</th><th>Available foundation</th><th>Decision for this project</th></tr></thead>
+        <tbody>
+          <tr><td>CodeMirror 6</td><td>MIT; composable code editor with transactions, extensibility, mobile input, accessibility and bidirectional text. <a href="https://codemirror.net/docs/guide/" rel="noopener">Architecture</a>, <a href="https://codemirror.net/" rel="noopener">features</a>, <a href="https://github.com/codemirror/dev/blob/main/LICENSE" rel="noopener">license</a>.</td><td>Default code and plain-text engine. Reuse its input, selection, rendering, history and language packages.</td></tr>
+          <tr><td>Monaco</td><td>MIT; VS Code-derived browser editor. Its FAQ excludes mobile support and says VS Code extensions do not automatically work. <a href="https://github.com/microsoft/monaco-editor" rel="noopener">Official repository</a>.</td><td>Benchmark and potential later adapter for customers with an existing Monaco integration. Avoid maintaining two code backends at launch.</td></tr>
+          <tr><td>Ace</td><td>Mature JavaScript editor with language modes and editing commands; BSD-3-Clause. <a href="https://ace.c9.io/" rel="noopener">Features</a>, <a href="https://github.com/ajaxorg/ace/blob/master/package.json" rel="noopener">package and license</a>.</td><td>Credible alternative and migration source. CodeMirror is my preferred foundation for the new SDK's composition model.</td></tr>
+          <tr><td>ProseMirror + Tiptap OSS</td><td>MIT foundations for schema-based documents, transactions and extensions. Tiptap provides a higher-level integration layer. <a href="https://github.com/ProseMirror/prosemirror-model" rel="noopener">ProseMirror</a>, <a href="https://tiptap.dev/open-source-to-platform" rel="noopener">Tiptap OSS boundary</a>.</td><td>Default manuscript engine. Audit each extension; advanced features advertised by Tiptap are not automatically included in its MIT editor.</td></tr>
+          <tr><td>Lexical</td><td>MIT editor framework; framework-independent core, optional React bindings and collaboration packages. <a href="https://github.com/facebook/lexical" rel="noopener">Repository</a>.</td><td>Strong alternative to evaluate against Tiptap during the first month's prototype. Choose one rich-document backend for v1.</td></tr>
+          <tr><td>Slate</td><td>Customizable rich-document framework with a React integration; its introduction still describes the core as beta. <a href="https://docs.slatejs.org/" rel="noopener">Documentation</a>.</td><td>Useful alternative, but less attractive for our initial stable, broadly embeddable API commitment.</td></tr>
+          <tr><td>CKEditor 5 / TinyMCE</td><td>Established rich-text products with GPL/commercial licensing and premium features. <a href="https://ckeditor.com/docs/ckeditor5/latest/getting-started/licensing/license-and-legal.html" rel="noopener">CKEditor licensing</a>, <a href="https://www.tiny.cloud/docs/tinymce/latest/license-key/" rel="noopener">TinyMCE licensing</a>.</td><td>Feature and usability references. Prefer permissive dependencies for the broadly reusable SDK.</td></tr>
+          <tr><td>Scintilla / Neovim / Zed</td><td>Native component, embeddable editor process and native editor respectively. <a href="https://www.scintilla.org/index.html" rel="noopener">Scintilla</a>, <a href="https://neovim.io/doc/user/api/" rel="noopener">Neovim API</a>, <a href="https://zed.dev/software-overview" rel="noopener">Zed licensing</a>.</td><td>Evaluate for later native integrations or architectural lessons. These are different integration categories from browser components; review licenses per component.</td></tr>
+          <tr><td>Yjs / Automerge</td><td>Open-source collaboration foundations. Yjs has bindings across code and rich-text engines; Automerge offers another local-first document approach. <a href="https://docs.yjs.dev/" rel="noopener">Yjs</a>, <a href="https://github.com/automerge/automerge" rel="noopener">Automerge</a>.</td><td>Use Yjs initially to reuse editor bindings. Keep network and storage adapters replaceable; support one collaboration engine at launch.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Current maintenance nuance: CodeMirror and ProseMirror's archived GitHub repositories point to a move to code.haverbeke.berlin. The archive flags alone do not indicate abandonment. Follow the upstream locations and released packages. <a href="https://github.com/codemirror/dev" rel="noopener">CodeMirror notice</a>, <a href="https://github.com/ProseMirror/prosemirror-model" rel="noopener">ProseMirror notice</a>.</p>
+
+      <h2 id="product"><span class="n">02</span>The product we should own</h2>
+      <p>The SDK has three layers: minimal editing surfaces; optional capability packages; ready-made developer and author workspaces. Host products can adopt any layer. A customer embedding a code field should not download manuscript formatting and export features. A writing app should not load programming-language servers.</p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Audience</th><th>Complete v1 workflow</th><th>Advanced expansion</th></tr></thead>
+        <tbody>
+          <tr><td>Software developer</td><td>Open and save UTF-8 source files, multiple cursors, search and replace, syntax highlighting, folding, completion, diagnostics, navigation, formatting and diff. Demonstrate multi-file editing through a host filesystem adapter.</td><td>More language integrations, structural editing, refactoring workflows, three-way merge, very large files, richer modal editing.</td></tr>
+          <tr><td>Book author</td><td>Organize chapters, outline and navigate a manuscript, format prose, use footnotes and images, count words, search the whole book, comment, save named versions, recover work and export a manuscript.</td><td>Attributed tracked changes, advanced citations, research and character notes, publisher templates, sophisticated print layout, continuous whole-book editing.</td></tr>
+          <tr><td>Both</td><td>Keyboard access, international input, themes, offline saving, optional live collaboration, review tools, portable backups, extension APIs and optional AI edit proposals.</td><td>Branch and review workflows, deeper automation, native platform adapters and an extension ecosystem.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Treat a code workspace, a novel manuscript and a technical book containing code blocks as the three reference applications. Recruit at least two integration partners from each main audience; validate real author and developer tasks as well as SDK adoption.</p>
+
+      <h2 id="stack"><span class="n">03</span>Recommended stack and responsibilities</h2>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Layer</th><th>Choice</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Public SDK</td><td>TypeScript, ES modules, explicit typed capabilities</td><td>Framework-independent integration and a stable API.</td></tr>
+          <tr><td>Code surface</td><td>CodeMirror 6 and its existing Lezer language packages</td><td>Proven browser editing and syntax support.</td></tr>
+          <tr><td>Manuscript surface</td><td>Tiptap OSS on ProseMirror</td><td>Structured prose, schema extensions, rich paste and embedded content.</td></tr>
+          <tr><td>UI</td><td>Optional React reference workspaces; CSS variables and design tokens; thin React, Vue and Svelte adapters and a Web Component</td><td>Ready-made experiences without requiring React in the SDK.</td></tr>
+          <tr><td>Collaboration</td><td>Yjs, y-codemirror.next, compatible ProseMirror bindings</td><td>Shared editing and collaboration-aware undo.</td></tr>
+          <tr><td>Local storage</td><td>IndexedDB adapter with visible persistence status</td><td>Offline editing and restart recovery.</td></tr>
+          <tr><td>Optional shared service</td><td>TypeScript/Node.js with Hocuspocus, PostgreSQL and object storage</td><td>Authentication integration, persistent updates, snapshots and attachments. Add distributed infrastructure only when measured load needs it.</td></tr>
+          <tr><td>Code intelligence</td><td>Language Server Protocol adapters</td><td>Reuse language servers for completion, diagnostics, navigation and rename.</td></tr>
+          <tr><td>Heavy processing</td><td>Web Workers first; optional Rust/Wasm after profiling</td><td>Keep expensive analysis, diff, search and conversion away from typing.</td></tr>
+          <tr><td>Import/export</td><td>Explicit schema converters; Mammoth candidate for DOCX import, docx for export; EPUB packaging and EPUBCheck</td><td>Portable manuscript exchange with a documented fidelity contract.</td></tr>
+          <tr><td>Engineering</td><td>pnpm workspace, TypeScript, Vite for examples, Vitest, Playwright, property-based testing, automated releases</td><td>Consistent development and reproducible compatibility and performance checks.</td></tr>
+          <tr><td>Desktop/mobile later</td><td>WebView integrations, with Tauri as a reference application shell</td><td>Reuse the web editor while implementing platform-specific file, input and lifecycle behavior.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Yjs's CodeMirror binding currently recommends stable Yjs v13 with y-codemirror.next while the next major integration remains unstable. Pin and test a compatible dependency set at implementation time. Hocuspocus is available under MIT. <a href="https://github.com/yjs/y-codemirror.next" rel="noopener">Binding guidance</a>, <a href="https://tiptap.dev/open-source-to-platform" rel="noopener">Hocuspocus OSS status</a>.</p>
+      <p>Lezer supplies syntax parsing within CodeMirror. LSP supplies semantic language services. Tree-sitter is an optional incremental parser for specific language coverage or structural features; avoid paying for two parsers for the same task without evidence. Language servers may run in a browser worker when compatible, a host process, or an isolated remote service. A browser cannot launch arbitrary native language servers. <a href="https://lezer.codemirror.net/docs/guide/" rel="noopener">Lezer</a>, <a href="https://microsoft.github.io/language-server-protocol/" rel="noopener">LSP</a>, <a href="https://tree-sitter.github.io/tree-sitter/" rel="noopener">Tree-sitter</a>.</p>
+      <p>Rust is a later optimization tool, not a prerequisite for an advanced editor. A second mandatory text buffer would create synchronization, position mapping, undo and input complexity. Preserve the engines' proven editing paths until profiling identifies a specific replacement worth making. Likewise, WebAssembly does not supply native selection, input methods or accessibility. Tauri uses system WebViews; true native widgets would be a separate development track. <a href="https://v2.tauri.app/start/" rel="noopener">Tauri architecture overview</a>.</p>
+
+      <h2 id="contracts"><span class="n">04</span>Architecture contracts</h2>
+      <div class="flow" role="img" aria-label="Host application and framework adapters feed the public SDK, which drives the code surface (CodeMirror) and the manuscript surface (Tiptap / ProseMirror). Both surfaces share a platform for comments, versions, persistence and collaboration, which stores to host storage or an optional self-hosted service. The code surface also uses language and analysis services; the manuscript surface uses book organization and format converters. The SDK optionally talks to AI proposal providers.">
+        <div class="flow-row"><div class="flow-box">Host application and framework adapters</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-row"><div class="flow-box hub">Public SDK and capability APIs<small>→ optional AI proposal providers</small></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-row">
+          <div class="flow-box">Code surface<small>CodeMirror → language and analysis services</small></div>
+          <div class="flow-box">Manuscript surface<small>Tiptap / ProseMirror → book organization and format converters</small></div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-row"><div class="flow-box hub">Shared platform<small>comments, versions, persistence, collaboration</small></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-row"><div class="flow-box">Host storage or optional self-hosted service</div></div>
+      </div>
+      <p>Keep source text and structured documents as distinct models. Source files preserve text and supported encoding and line-ending metadata. Manuscripts use a versioned schema for paragraphs, headings, lists, footnotes, media and extensions. Share commands, lifecycle, identifiers, themes, permissions hooks, review metadata and persistence contracts. Engine-specific capabilities remain available through explicit extension interfaces rather than being flattened into a restrictive common API.</p>
+      <p>A book should be a manifest with stable chapter IDs, ordering, metadata and chapter documents. Load the active chapter and necessary neighbors. Search, counts, named versions and exports still operate across the complete manuscript. Capture a consistent set of chapter revisions for each book snapshot or export. Chapter moves and deletion must preserve or explicitly orphan references and comments. Specify recoverable operations for changes spanning multiple chapter documents.</p>
+      <p>Each document has one authoritative editing path. When collaboration is enabled, engine bindings project shared state and collaboration-aware undo owns undo behavior. Preserve collaboration state for continued synchronization; portable JSON and text snapshots serve export and recovery purposes. Do not repeatedly re-create the collaborative document from snapshots during normal edits.</p>
+      <p>Comments need stable anchors with explicit behavior when their target is deleted. Schema versions must be negotiated before clients collaborate; incompatible clients must upgrade or open read-only. Tiptap documents the risk of older schemas removing unfamiliar content. <a href="https://tiptap.dev/docs/hocuspocus/guides/collaborative-editing" rel="noopener">Schema compatibility guidance</a>, <a href="https://docs.yjs.dev/api/relative-positions" rel="noopener">Yjs anchors</a>.</p>
+      <p>For mixed documents, embed CodeMirror in a ProseMirror node view with explicit selection and history bridging. An official example already demonstrates this pattern. Markdown source and manuscript JSON must never be independently editable sources of truth for the same document; conversion requires a declared supported subset. <a href="https://prosemirror.net/examples/codemirror/" rel="noopener">Embedded editor example</a>.</p>
+
+      <h2 id="integrate"><span class="n">05</span>What "easy to integrate" must mean</h2>
+      <ul>
+        <li>A plain JavaScript developer can embed either profile in under 15 minutes using the quickstart.</li>
+        <li>Editing works without an account or mandatory backend. Hosts choose local storage, their own backend, or the reference collaboration service.</li>
+        <li>Imports do not assume a browser exists; views mount client-side. Worker, style and language assets have documented loading paths that work with common bundlers and content-security policies.</li>
+        <li>Small packages load only selected capabilities. Every instance supports disposal, cancellation and predictable resource cleanup.</li>
+        <li>Hosts control themes, keyboard shortcuts, accessibility labels, focus, file access, authentication, telemetry and network providers.</li>
+        <li>Stable public APIs use semantic versioning, migration guides and a tested support matrix. Keep engine-native escape hatches explicitly outside the portable API guarantees.</li>
+        <li>Web Components are a packaging option; iframe embedding is an optional isolation route. Test focus, clipboard, composition and accessibility for each supported route.</li>
+      </ul>
+      <p>An illustrative target API, not an existing package:</p>
+<pre><code>const editor = createEditor({
+  mount: element,
+  profile: "manuscript", // or "code"
+  document: initialDocument,
+  extensions: [comments(), namedVersions()],
+  storage: hostStorage,
+});
+
+editor.on("change", handleChange);
+editor.execute("find", { query: "chapter" });
+editor.destroy();</code></pre>
+
+      <h2 id="reuse"><span class="n">06</span>Reuse versus build</h2>
+      <p>Reuse the editing engines, their parsers, collaboration bindings, language servers, sanitization libraries, conversion primitives and browser-test infrastructure. Prefer upstream contributions over a permanent fork.</p>
+      <p>Build the SDK contracts, cross-profile review experience, book model, reliable persistence integration, portable schema, conversion mappings, capability registry, performance harness and documentation. Build or adopt independently licensed open-source comments, named versions, and later tracked changes. Tiptap's commercial platform is a useful feature reference, but its managed history and commercial advanced features are not free dependencies. <a href="https://tiptap.dev/open-source-to-platform" rel="noopener">OSS and platform distinction</a>.</p>
+      <p>AI should be an optional provider interface supporting completion, explanation and proposed edits for both audiences. Proposals carry a document revision and target range, show a reviewable diff, and reject or rebase stale changes. Host applications choose model providers and decide what content can leave the device. Normal editing remains available without AI.</p>
+
+      <h2 id="fidelity"><span class="n">07</span>Authoring and format fidelity</h2>
+      <p>Launch with a written manuscript format contract: paragraphs, headings, emphasis, lists, links, images, simple tables, footnotes, chapter order and book metadata. Implement DOCX import and export for that subset and EPUB export with navigation and metadata. Offer plain text, HTML and a documented Markdown subset too. Keep the original imported file and report unsupported constructs.</p>
+      <p>Mammoth targets semantic DOCX-to-HTML conversion and explicitly does not reproduce all formatting; evaluate its output against our schema and sanitize it before insertion. The docx library can generate DOCX in JavaScript and TypeScript. Neither dependency gives us faithful round-tripping automatically. <a href="https://github.com/mwilliamson/mammoth.js" rel="noopener">Mammoth</a>, <a href="https://github.com/dolanmiu/docx" rel="noopener">docx</a>, <a href="https://github.com/cure53/DOMPurify" rel="noopener">DOMPurify</a>.</p>
+      <p>Validate EPUB output using EPUBCheck and inspect it in representative readers. Keep print and export layout separate from the interactive editing layout. Full Word compatibility, arbitrary imported tracked changes and professional book pagination require additional dedicated work. <a href="https://www.w3.org/publishing/epub3/" rel="noopener">EPUB format</a>, <a href="https://github.com/w3c/epubcheck" rel="noopener">EPUBCheck</a>.</p>
+      <p>Comments, named snapshots, comparison and restoration are v1 review capabilities. Attributed tracked changes with accept and reject, formatting edits, collaboration and DOCX interoperability are a separate expansion milestone. This boundary must be visible in the roadmap and product claims.</p>
+
+      <h2 id="gates"><span class="n">08</span>Release gates and benchmarks</h2>
+      <p>These are proposed acceptance targets to calibrate during the prototype; none has been measured in this project.</p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Area</th><th>Target or required evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Integration</td><td>At least five unfamiliar developers embed both profiles from the documentation; median first-working-editor time under 15 minutes.</td></tr>
+          <tr><td>Typing</td><td>p95 input-to-next-paint at or below 32 ms on named reference hardware, separately measured for a 1 MB source file and an active manuscript chapter.</td></tr>
+          <tr><td>Manuscripts</td><td>150,000-word, 30-chapter fixture; additionally test a 20,000-word chapter, images, footnotes and hundreds of comments. Measure opening, navigation, search, export and peak memory.</td></tr>
+          <tr><td>Code</td><td>Test 10 MB files, exceptionally long lines, many cursors, decorations, malformed syntax and many open editors. Treat 100 MB editing as a later reduced-feature profile.</td></tr>
+          <tr><td>Durability</td><td>Fault-injection tests lose no durably acknowledged edits across reload, disconnection or restart. Show distinct local-save and remote-save states. Provide backups and recovery export.</td></tr>
+          <tr><td>Collaboration</td><td>Randomized edits, concurrent undo, duplicate and out-of-order updates, reconnect, schema mismatch and permission changes converge within the supported model.</td></tr>
+          <tr><td>Input/accessibility</td><td>Manual keyboard and screen-reader checks plus Japanese, Chinese and Korean composition, RTL mixtures, emoji, dictation, paste, focus and selection behavior. Include early mobile-browser checks.</td></tr>
+          <tr><td>Conversion</td><td>Semantic round-trip fixtures for the supported DOCX subset, explicit loss reports, EPUB validation and visual export inspection.</td></tr>
+          <tr><td>Packaging</td><td>Separate size and startup budgets for each profile, languages, workers and collaboration. Set numerical budgets after the first-month measurements.</td></tr>
+          <tr><td>Compatibility</td><td>Published browser and framework matrix; stable API and schema migration tests; no retained editor resources after repeated mounting and disposal.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Compare alternatives using the same documents, hardware, enabled features and cold and warm conditions. Publish raw results and regression thresholds. Automated browser checks complement manual input and accessibility tests. <a href="https://playwright.dev/docs/intro" rel="noopener">Playwright documentation</a>.</p>
+      <p>Untrusted paste and import, shared documents and optional extensions require specific controls: schema validation, sanitization, document-level authorization on the service, resource limits, and isolated conversion jobs where appropriate. Workers protect responsiveness but are not by themselves a sandbox for malicious plugins. Start with trusted plugins; add a separately designed restricted plugin environment before an open marketplace.</p>
+
+      <h2 id="delivery"><span class="n">09</span>Delivery plan</h2>
+      <p>Planning estimate: 9 to 12 months for a credible scoped web v1 with 8 to 10 experienced engineers, a designer and dedicated QA and accessibility support. This assumes mature engines, constrained format support and no custom renderer. Both audiences participate in every milestone. A three-month prototype is feasible under these assumptions; worldwide leadership is a multiyear maintenance and ecosystem effort.</p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Period</th><th>Deliverables</th><th>Exit gate</th></tr></thead>
+        <tbody>
+          <tr><td>Weeks 1–4</td><td>Compare CodeMirror/Monaco and Tiptap/Lexical on the hardest fixtures. Prototype language services, chaptered books, collaboration and DOCX/EPUB conversion. Recruit design partners and publish architecture decisions.</td><td>Select engines; define v1 schema and format support, benchmark budgets and both audience workflows.</td></tr>
+          <tr><td>Months 2–3</td><td>Shared SDK alpha; code editing, language packs and a basic language-service adapter; manuscript chapters, outline, formatting and word counts; vanilla and React examples; local persistence.</td><td>Developer and author can each complete an end-to-end workflow in the same SDK; recovery and input basics work.</td></tr>
+          <tr><td>Months 4–6</td><td>Collaboration, stable comment anchors, named versions, source diff, whole-book search, documented DOCX subset, EPUB export, host authentication and storage hooks.</td><td>Private beta in real host products; conversion, schema, recovery and concurrent-edit suites pass.</td></tr>
+          <tr><td>Months 7–9</td><td>Public beta; more framework adapters; multi-file and code service hardening; large-manuscript work; accessible reference workspaces; extension and integration documentation.</td><td>Independent design partners use both profiles regularly; performance and compatibility budgets hold.</td></tr>
+          <tr><td>Months 10–12</td><td>Stable API and schema; migration tools; self-hosted deployment guide; recovery utilities; dependency and release review; complete v1 support policy.</td><td>Release v1 only after both profiles satisfy the agreed gates.</td></tr>
+          <tr><td>After v1</td><td>Desktop and mobile adapters, tracked changes, deeper author tools, structural code editing, optional acceleration and restricted third-party extensions.</td><td>Each track is justified by user demand and measured technical evidence.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Suggested engineering allocation at ten: two code and language engineers; three manuscript, schema and conversion engineers; two shared storage, collaboration and review engineers; one SDK and integration engineer; one performance and accessibility engineer; one test-infrastructure engineer. At eight, combine related roles and use the later end of the schedule. Keep design and independent QA involvement outside those allocations. Funding estimates should use local staffing costs; there is no reliable universal budget from the information supplied.</p>
+      <p>If fewer people are available, preserve both audience workflows and reduce the number of languages, formats and optional features. Keep recovery, input correctness and accessibility release gates intact.</p>
+
+      <h2 id="oss"><span class="n">10</span>Open-source and maintenance plan</h2>
+      <p>Recommend Apache-2.0 for new platform code, preserving all upstream license notices; its express contributor patent grant is useful for a reusable SDK. The exact dependency set still needs a per-package license review, including language servers, grammars, dictionaries, fonts and converters. <a href="https://www.apache.org/licenses/LICENSE-2.0" rel="noopener">Apache license</a>.</p>
+      <p>Keep the editor, advanced capability packages we develop, document formats and the self-hosted reference service open source. Optional managed hosting, support and integration services can fund maintenance. Establish public design proposals, contribution rules, maintainer ownership, security reporting, reproducible releases, a compatibility policy and funding for important upstream projects.</p>
+
+      <h2 id="month1"><span class="n">11</span>First-month work package</h2>
+      <ol>
+        <li>Write two acceptance scripts: integrate a developer workspace; integrate an author workspace and edit and export a chaptered manuscript.</li>
+        <li>Gather licensed or synthetic benchmark fixtures and representative partner documents.</li>
+        <li>Run the engine comparisons and the hardest input, collaboration and conversion experiments.</li>
+        <li>Define the public document, command, storage and extension contracts and draft the manuscript schema.</li>
+        <li>Publish measured results, a precise v1 feature list, staffing responsibilities and the first alpha backlog.</li>
+      </ol>
+      <p>The first investment decision should follow that evidence. The recommended starting stack is TypeScript + CodeMirror 6 + Tiptap OSS/ProseMirror + Yjs, with a shared integration and review platform that gives developers and authors equal standing.</p>
+
+      <div class="plan-foot">
+        <h2>Where this stands</h2>
+        <p>This is a plan, not a product. It's sized for a team of eight to ten, and I'm one person. The honest next step is the first-month work package above, cut down to what one developer can measure in a few weeks: the engine comparison, the two acceptance scripts, and a draft of the manuscript schema. If you're building something in this space and want to compare notes, or you'd use an SDK like this, I'd like to hear from you.</p>
+        <a href="index.html#contact" class="btn btn-amber">Get in touch →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer" id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-brand">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true"><text x="1" y="21" font-family="monospace" font-size="19" font-weight="bold" fill="#E8EAF0">D&lt;</text></svg>
+          <span>DevOfCodes</span>
+        </a>
+        <div class="footer-tagline">A one-person software company. Products, tools and experiments, plus focused contract development.</div>
+        <div class="footer-copyright">© 2025–2026 DevOfCodes LLC</div>
+      </div>
+      <div class="footer-links-col">
+        <span class="footer-heading">Site</span>
+        <a href="index.html#work">Work</a>
+        <a href="index.html#services">Work with me</a>
+        <a href="about.html">About</a>
+        <a href="changelog.html">Log</a>
+        <a href="open-editor.html">Open editor plan</a>
+      </div>
+      <div class="footer-links-col">
+        <span class="footer-heading">Elsewhere</span>
+        <a href="mailto:hello@devofcodes.com">hello@devofcodes.com</a>
+        <a href="https://github.com/Dev-of-Codes-LLC" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/company/devofcodes/" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/DevOfCodes" rel="noopener">@devofcodes</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <span>Built in San Diego, California</span>
+      <span>devofcodes.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
