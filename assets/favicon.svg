@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- The D< mark: JetBrains Mono ExtraBold outlines, as on the org avatar -->
+  <rect width="32" height="32" rx="6" fill="#080A0F"/>
+  <g fill="#E8EAF0" transform="translate(1.996 24.715) scale(0.023878 -0.023878)">
+    <path d="M63 0V730H300Q376 730 432.5 701Q489 672 520.5 619.5Q552 567 552 496V235Q552 165 520.5 112Q489 59 432.5 29.5Q376 0 300 0ZM213 140H300Q346 140 374 166Q402 192 402 235V496Q402 538 374 564Q346 590 300 590H213Z"/>
+    <path transform="translate(580 0)" d="M530 49 70 257V400L530 609V473L254 352Q234 343 212 337Q190 331 177 329Q190 327 212 321.5Q234 316 254 307L530 186Z"/>
+  </g>
+</svg>
