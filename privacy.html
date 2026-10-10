@@ -83,15 +83,15 @@
 
       <h2><span class="n">01</span>Who is responsible</h2>
       <p>Dev of Codes LLC ("I", "me", or "DevOfCodes"), a single-member company based in San Diego, California, operates devofcodes.com and is responsible for the personal information described here. I'm the only person who handles it. Contact details are at the end of this page.</p>
-      <p>This policy covers the website only. There is no product, app or online service behind it. An earlier version of this page was a generic template that mentioned user accounts, analytics and advertising; none of those exist on this site, and this version describes what actually happens.</p>
+      <p>This policy covers the website only. There is no product, app or online service behind it; the one piece of server-side code is the contact-form function described below. An earlier version of this page was a generic template that mentioned user accounts, analytics and advertising; none of those exist on this site, and this version describes what actually happens.</p>
 
       <h2><span class="n">02</span>What is collected, and why</h2>
       <h3>Messages you send me</h3>
       <p>When you use the contact form you provide your name, your email address, optionally the kind of project you have in mind, and your message. If you email me directly, I receive whatever you include. I use this information for one purpose: to read your message, reply, and, if we go on to work together, to set up and carry out that work. The legal basis, where one is required, is your request (taking steps before entering a contract) and my legitimate interest in answering people who contact me.</p>
       <h3>Technical information from your browser</h3>
-      <p>Like every website, this one is served over the internet, and the servers involved can record standard technical details of each request: your IP address, the page requested, the time, your browser and operating system, and the referring page. I don't add any tracking to this. The hosting provider may keep ordinary server logs for security and operations, and the third-party services listed in section 4 receive the same kind of request details when your browser fetches a resource from them.</p>
+      <p>Like every website, this one is served over the internet, and the servers involved can record standard technical details of each request: your IP address, the page requested, the time, your browser and operating system, and the referring page. I don't add any tracking to this. The hosting provider may keep ordinary server logs for security and operations, and the third-party services listed in section 3 receive the same kind of request details when your browser fetches a resource from them.</p>
       <h3>Nothing else</h3>
-      <p>The site has no login, no user accounts, no analytics or advertising scripts, no social-media trackers, and no newsletter. It sets no cookies of its own and stores nothing in your browser. The live backgrounds are rendered by an open-source library whose optional telemetry is switched off.</p>
+      <p>The site has no login, no user accounts, no analytics or advertising scripts, no social-media trackers, and no newsletter. It sets no cookies of its own and stores nothing in your browser. The live backgrounds are rendered by an open-source library whose optional telemetry is switched off. The contact form includes a hidden field and a timing check to drop automated submissions; neither records anything about you.</p>
 
       <h2><span class="n">03</span>Where it goes</h2>
       <p>I don't sell personal information, share it for advertising, or hand it to anyone else to use for their own purposes. The services below process information on my behalf or because your browser requests resources from them.</p>
@@ -99,10 +99,9 @@
       <table class="tbl">
         <thead><tr><th>Service</th><th>What it does</th><th>What it receives</th></tr></thead>
         <tbody>
-          <tr><td>Formspree<br><a href="https://formspree.io/legal/privacy-policy/" rel="noopener">privacy policy</a></td><td>Delivers contact-form submissions to my inbox (United States).</td><td>The form fields you submit and the technical details of the submission request.</td></tr>
+          <tr><td>Amazon Web Services<br><a href="https://aws.amazon.com/privacy/" rel="noopener">privacy notice</a></td><td>Hosts the site (S3 and CloudFront) and runs the small function (Lambda and Simple Email Service) that turns a contact-form submission into an email to my inbox (United States).</td><td>Standard request details for every page, and the form fields you submit. The function keeps no copy; its log records only that a message was sent, its length, and the project type.</td></tr>
           <tr><td>Google Fonts<br><a href="https://policies.google.com/privacy" rel="noopener">privacy policy</a></td><td>Serves the site's typefaces.</td><td>Your IP address and the font request, when your browser loads the fonts.</td></tr>
           <tr><td>jsDelivr<br><a href="https://www.jsdelivr.com/terms/privacy-policy-jsdelivr-net" rel="noopener">privacy policy</a></td><td>Content delivery network that serves the open-source library used for the live backgrounds.</td><td>Your IP address and the file request, when your browser loads the library.</td></tr>
-          <tr><td>Hosting provider</td><td>Serves the pages of the site.</td><td>Standard server-log details of each request.</td></tr>
           <tr><td>Email provider</td><td>Holds the inbox that receives your messages.</td><td>Your message and address, like any email.</td></tr>
         </tbody>
       </table>
