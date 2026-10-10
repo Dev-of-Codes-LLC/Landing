@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!-- Org avatar. render.mjs captures .card at 512×512, 2x. GitHub rounds the corners itself. -->
+<html lang="en"><head><meta charset="UTF-8"><title>avatar</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.card { width: 512px; height: 512px; display: grid; place-items: center; }
+.card.surface {
+  background:
+    radial-gradient(circle at 82% 14%, rgba(0, 200, 255, 0.34), transparent 52%),
+    radial-gradient(circle at 96% 100%, rgba(245, 158, 11, 0.30), transparent 42%),
+    radial-gradient(circle at 30% 80%, rgba(13, 52, 70, 0.80), transparent 60%),
+    var(--bg-base);
+}
+.card.surface::after { background: radial-gradient(circle at 46% 50%, rgba(8,10,15,0.55), transparent 62%); }
+.mark { font-size: 236px; line-height: 1; transform: translate(-4px, -10px); }
+</style></head>
+<body>
+<div class="card surface"><span class="mark">D&lt;</span></div>
+</body></html>
