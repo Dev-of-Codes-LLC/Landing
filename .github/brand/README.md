@@ -5,11 +5,11 @@ Images and copy that carry the devofcodes.com design onto GitHub. Same tokens as
 | File | Where it goes | How |
 |---|---|---|
 | `avatar.png` (1024×1024) | Organization avatar | Org settings → Profile → Profile picture → Upload |
-| `org-profile/` | `profile/` in the [`Dev-of-Codes-LLC/.github`](https://github.com/Dev-of-Codes-LLC/.github) repository | Copy the folder's six files into `profile/` on `main`. GitHub shows `profile/README.md` on the org page. |
+| `org-profile/` | Images for the org profile | Loaded by absolute URL from this repo's `main` branch. Keep the file names and paths, or the profile's images break. |
 | `social-landing.png` (1280×640) | Social preview of this repository | Repository settings → General → Social preview → Edit → Upload |
 | `assets/favicon.svg` | The site's favicon | Already linked from every page. The `D<` outlines come from JetBrains Mono ExtraBold; `favicon.ico` (16, 32, 48) is an export of it, and `assets/apple-touch-icon.png` is `avatar.png` at 180×180. |
 
-The org profile lives here because the `.github` repository holds nothing else yet; once it is copied over, `.github` is the copy to edit. The project statuses in `org-profile/README.md` repeat the ledger on the home page, so change both together.
+The org profile's text lives in [`profile/README.md`](https://github.com/Dev-of-Codes-LLC/.github/blob/main/profile/README.md) in the `.github` repository; edit it there. Its project statuses repeat the ledger on the home page, so change both together.
 
 ## Regenerate
 
