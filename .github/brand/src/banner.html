@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- Org profile banner. render.mjs captures .card at 1280×320, 2x. -->
+<html lang="en"><head><meta charset="UTF-8"><title>banner</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.card {
+  width: 1280px; height: 320px; border-radius: 16px; border: 1px solid var(--border-bright);
+  padding: 46px 64px 0; display: flex; flex-direction: column;
+}
+.lockup { font-size: 22px; }
+.lockup .mark { font-size: 24px; }
+.eyebrow { font-size: 13px; margin-top: 44px; }
+.headline { font-size: 50px; margin-top: 18px; white-space: nowrap; }
+.url { position: absolute; right: 52px; bottom: 32px; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.06em; color: var(--text-primary); opacity: 0.8; }
+.url b { color: var(--accent-cyan); font-weight: 500; }
+</style></head>
+<body>
+<div class="card surface">
+  <div class="lockup"><span class="mark">D&lt;</span><span>DevOfCodes</span></div>
+  <div class="eyebrow"><span class="dot"></span><span>Available for contract work</span><span class="sep">/</span><span>San Diego, CA</span></div>
+  <h1 class="headline">
+    <span class="line">Independent developer.</span>
+    <span class="line">Building <span class="accent">useful</span> software.</span>
+  </h1>
+  <div class="url"><b>❯</b> devofcodes.com</div>
+</div>
+</body></html>
