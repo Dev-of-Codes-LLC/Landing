@@ -12,6 +12,7 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 | `assets/site.css`, `assets/site.js` | Shared tokens, nav, reveals, contact form |
 | `assets/shaders.js` | WebGPU presets, mounted lazily |
 | `.github/workflows/deploy.yml` | Deploy to S3 and CloudFront |
+| `.claude/skills/` | The `transitions-dev` and `transitions-polish` agent skills, copied from [transitions.dev](https://github.com/Jakubantalik/transitions.dev/tree/a0c6e7bbf603a0a46588e37c6c6a4d0af3290d52/skills) at commit `a0c6e7b`. Their licence files sit next to each `SKILL.md`. |
 | `.github/brand/` | GitHub avatar, banner and social previews, and the templates that render them |
 
 ## Preview
