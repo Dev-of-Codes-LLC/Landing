@@ -118,8 +118,19 @@
   .hero-headline { font-size: calc(9.4vw - 0.25rem); }
 }
 .hero-headline .line { display: block; }
-.hero-headline .hw { display: inline-block; opacity: 0; transform: translateY(22px); }
-.hero-headline .hw.anim-in { opacity: 1; transform: translateY(0); transition: opacity 380ms ease, transform 380ms ease; }
+/* Texts reveal (transitions.dev 18): each word rises --distance-medium out of a
+   --blur-medium blur. The inline script staggers words by --duration-micro. */
+.hero-headline .hw {
+  display: inline-block; opacity: 0;
+  transform: translateY(var(--distance-medium)); filter: blur(var(--blur-medium));
+}
+.hero-headline .hw.anim-in {
+  opacity: 1; transform: translateY(0); filter: blur(0);
+  transition:
+    opacity   var(--duration-very-slow) var(--ease-smooth-out),
+    transform var(--duration-very-slow) var(--ease-smooth-out),
+    filter    var(--duration-very-slow) var(--ease-smooth-out);
+}
 .hero-headline .accent { color: var(--accent-cyan); }
 .hero-headline .amber { color: var(--accent-amber); }
 .hero-sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 520px; margin-bottom: 2rem; }
@@ -128,10 +139,14 @@
 .hero-note { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.02em; }
 .hero-note a { color: var(--text-secondary); border-bottom: 1px dotted var(--text-muted); }
 .hero-note a:hover { color: var(--accent-cyan); }
-[data-stage] { opacity: 0; transform: translateY(10px); }
-[data-stage].anim-in { opacity: 1; transform: none; transition: opacity 450ms ease, transform 450ms ease; }
+[data-stage] { opacity: 0; transform: translateY(var(--distance-medium)); }
+[data-stage].anim-in {
+  opacity: 1; transform: none;
+  transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
+}
 @media (prefers-reduced-motion: reduce) {
-  [data-stage], .hero-headline .hw { opacity: 1; transform: none; transition: none; }
+  [data-stage], [data-stage].anim-in,
+  .hero-headline .hw, .hero-headline .hw.anim-in { opacity: 1; transform: none; filter: none; transition: none; }
 }
 
 /* Ledger panel */
@@ -157,9 +172,15 @@
 .ledger-row {
   display: grid; grid-template-columns: 1.2rem 1fr auto; gap: 0.6rem; align-items: baseline;
   padding: 0.35rem 0; border-top: 1px dashed rgba(255,255,255,0.06);
-  opacity: 0; transform: translateX(-8px);
+  opacity: 0; transform: translateX(calc(var(--distance-base) * -1));
 }
-.ledger-row.anim-in { opacity: 1; transform: none; transition: opacity 400ms ease, transform 400ms ease; }
+.ledger-row.anim-in {
+  opacity: 1; transform: none;
+  transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ledger-row, .ledger-row.anim-in { opacity: 1; transform: none; transition: none; }
+}
 .ledger-row:first-of-type { border-top: 0; }
 .ledger-row a { color: var(--text-primary); }
 .ledger-row a:hover { color: var(--accent-cyan); }
@@ -414,10 +435,10 @@
       <div class="ledger-body">
         <div class="ledger-cmd"><span class="prompt">❯</span> ls --status</div>
         <div class="ledger-row" data-stage="1300"><span class="idx">01</span><span><a href="#bbi">block-based-build-instructions</a><span class="desc">AI-assisted design and build instructions for Minecraft</span></span><span class="st st--amber">in development</span></div>
-        <div class="ledger-row" data-stage="1420"><span class="idx">02</span><span><a href="#dfs">dfs-command-center</a><span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="st st--green">in daily use</span></div>
-        <div class="ledger-row" data-stage="1540"><span class="idx">03</span><span><a href="#editor">open-editor-platform</a><span class="desc">A plan for an open-source editor SDK</span></span><span class="st st--cyan">research plan</span></div>
-        <div class="ledger-row" data-stage="1660"><span class="idx">04</span><span><a href="#platform">devofcodes-platform</a><span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="st st--muted">prototype</span></div>
-        <div class="ledger-foot" data-stage="1800"><span>4 projects · 0 customers · 1 person</span><span>updated: <!--deploy-date-->Oct 10, 2026<!--/deploy-date--> <span class="cursor">▋</span></span></div>
+        <div class="ledger-row" data-stage="1380"><span class="idx">02</span><span><a href="#dfs">dfs-command-center</a><span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="st st--green">in daily use</span></div>
+        <div class="ledger-row" data-stage="1460"><span class="idx">03</span><span><a href="#editor">open-editor-platform</a><span class="desc">A plan for an open-source editor SDK</span></span><span class="st st--cyan">research plan</span></div>
+        <div class="ledger-row" data-stage="1540"><span class="idx">04</span><span><a href="#platform">devofcodes-platform</a><span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="st st--muted">prototype</span></div>
+        <div class="ledger-foot" data-stage="1620"><span>4 projects · 0 customers · 1 person</span><span>updated: <!--deploy-date-->Oct 10, 2026<!--/deploy-date--> <span class="cursor">▋</span></span></div>
       </div>
     </aside>
   </div>
@@ -646,11 +667,11 @@
             </div>
             <div class="form-group">
               <label for="c-name">Name</label>
-              <input type="text" id="c-name" name="name" autocomplete="name" placeholder="Your name" required>
+              <input type="text" id="c-name" name="name" class="t-input" autocomplete="name" placeholder="Your name" required>
             </div>
             <div class="form-group">
               <label for="c-email">Email</label>
-              <input type="email" id="c-email" name="email" autocomplete="email" placeholder="you@example.com" required>
+              <input type="email" id="c-email" name="email" class="t-input" autocomplete="email" placeholder="you@example.com" required>
             </div>
             <div class="form-group">
               <label for="c-kind">What kind of project?</label>
@@ -666,13 +687,16 @@
             </div>
             <div class="form-group">
               <label for="c-message">The project</label>
-              <textarea id="c-message" name="message" rows="5" placeholder="What should exist when we're done? What exists today?" required></textarea>
+              <textarea id="c-message" name="message" class="t-input" rows="5" placeholder="What should exist when we're done? What exists today?" required></textarea>
             </div>
             <button type="submit" class="btn btn-amber">Send →</button>
             <div class="form-error" id="contactError" role="alert"></div>
             <p class="contact-fine">Delivered straight to my inbox by a small function in my own AWS account. No third-party form service, no newsletter, no automation.</p>
           </form>
           <div class="form-success" id="contactSuccess">
+            <span class="form-success-check t-success-check" id="contactCheck" data-state="out" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M14 25 L21 32 L34 17" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
             <h3>Got it.</h3>
             <p>Thanks. I'll read it and reply personally, usually within a day.</p>
           </div>
@@ -725,7 +749,8 @@
 <script>
   (function () {
     var words = document.querySelectorAll('#heroHeadline .hw');
-    words.forEach(function (w, i) { setTimeout(function () { w.classList.add('anim-in'); }, 450 + i * 90); });
+    var step = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-micro')) || 80;
+    words.forEach(function (w, i) { setTimeout(function () { w.classList.add('anim-in'); }, 450 + i * step); });
   })();
 </script>
 <script type="module" src="assets/shaders.js"></script>
