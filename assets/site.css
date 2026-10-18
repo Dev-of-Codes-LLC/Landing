@@ -23,6 +23,30 @@
 
   --radius: 10px;
   --container: 1180px;
+
+  /* Motion tokens, from the transitions.dev skill (.claude/skills/transitions-dev/_root.css).
+     Pick a token by what the motion does, not by the nearest number. */
+  --duration-stagger: 40ms;    /* per-item stagger offset */
+  --duration-micro: 80ms;      /* intent delay, shake segment, large stagger */
+  --duration-quick: 150ms;     /* close, hover feedback, text swap */
+  --duration-fast: 250ms;      /* open, icon swap, page slide */
+  --duration-medium: 350ms;    /* panel close, toast close */
+  --duration-slow: 400ms;      /* panel open, content reveal */
+  --duration-very-slow: 500ms; /* text reveal, success check, emphasis */
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1); /* surfaces opening, closing, sliding, revealing */
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+  --ease-linear: linear;
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);  /* entrance pop, never a close */
+  --distance-micro: 4px;
+  --distance-small: 6px;       /* error shake */
+  --distance-base: 8px;        /* slide, list row */
+  --distance-medium: 12px;     /* text reveal */
+  --distance-large: 30px;      /* success check rise */
+  --scale-large: 0.96;         /* modal and full overlay */
+  --blur-small: 2px;
+  --blur-medium: 3px;          /* text reveal */
+  --blur-large: 8px;           /* success check */
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -88,7 +112,10 @@ img { max-width: 100%; display: block; }
 .mono { font-family: var(--font-mono); }
 
 /* ── Scroll reveal ── */
-.fade-up { opacity: 0; transform: translateY(22px); transition: opacity 600ms ease, transform 600ms ease; }
+.fade-up {
+  opacity: 0; transform: translateY(var(--distance-medium));
+  transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
+}
 .fade-up.is-visible { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
 
@@ -97,7 +124,9 @@ img { max-width: 100%; display: block; }
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
   padding: 0.8rem 1.4rem; border-radius: 6px; border: 1px solid transparent;
-  cursor: pointer; transition: transform 160ms ease, opacity 160ms ease, border-color 160ms, color 160ms, background 160ms;
+  cursor: pointer;
+  transition: transform var(--duration-quick) var(--ease-smooth-out), opacity var(--duration-quick) ease,
+    border-color var(--duration-quick), color var(--duration-quick), background var(--duration-quick);
   white-space: nowrap;
 }
 .btn:active { transform: translateY(1px); }
@@ -137,12 +166,31 @@ img { max-width: 100%; display: block; }
 .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.25rem; }
 .nav-hamburger svg { width: 24px; height: 24px; }
 
+/* Mobile nav opens like a modal (transitions.dev 06-modal): scale up from
+   --scale-large on --duration-fast, close faster on --duration-quick.
+   Closed, it is visibility: hidden, so links leave the tab order and the
+   accessibility tree, as display: none did. site.js swaps .is-open for
+   .is-closing and clears .is-closing after --duration-quick. */
 .mobile-nav-overlay {
-  display: none; position: fixed; inset: 0; z-index: 150;
+  display: flex; position: fixed; inset: 0; z-index: 150;
   background: rgba(8, 10, 15, 0.97);
   flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+  visibility: hidden; opacity: 0; pointer-events: none;
+  transform-origin: center; transform: scale(var(--scale-large));
+  transition:
+    transform var(--duration-fast) var(--ease-smooth-out),
+    opacity   var(--duration-fast) var(--ease-smooth-out);
 }
-.mobile-nav-overlay.active { display: flex; }
+.mobile-nav-overlay.is-open { visibility: visible; opacity: 1; pointer-events: auto; transform: scale(1); }
+.mobile-nav-overlay.is-closing {
+  visibility: visible; opacity: 0; pointer-events: none; transform: scale(var(--scale-large));
+  transition:
+    transform var(--duration-quick) var(--ease-smooth-out),
+    opacity   var(--duration-quick) var(--ease-smooth-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-overlay, .mobile-nav-overlay.is-closing { transition: none !important; }
+}
 .mobile-nav-overlay a {
   font-family: var(--font-display); font-size: 1.6rem; color: var(--text-secondary); transition: color 200ms;
 }
@@ -221,6 +269,80 @@ img { max-width: 100%; display: block; }
 .form-error { display: none; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-rose); }
 .form-success { display: none; padding: 1.5rem; border: 1px solid rgba(16,185,129,0.35); border-radius: var(--radius); background: rgba(16,185,129,0.06); }
 .form-success h3 { font-family: var(--font-display); margin-bottom: 0.4rem; }
+.form-success-check { display: block; width: 40px; height: 40px; margin-bottom: 0.9rem; color: var(--accent-green); }
+.form-success-check svg { width: 100%; height: 100%; }
+
+/* Error state shake (transitions.dev 12-error-state-shake). The existing
+   .error class keeps owning the border colour; this only adds the shake.
+   Stops are cumulative legs A, A, B, B: 80 + 80 + 60 + 60 = 280ms. */
+:root {
+  --shake-distance: var(--distance-small);
+  --shake-overshoot: 4px;
+  --shake-dur-a: var(--duration-micro);
+  --shake-dur-b: 60ms;
+  --shake-ease: var(--ease-smooth-out);
+}
+.t-input { will-change: transform; }
+.t-input.is-shaking {
+  animation: t-input-shake calc(var(--shake-dur-a) * 2 + var(--shake-dur-b) * 2) linear;
+}
+@keyframes t-input-shake {
+  0%      { transform: translateX(0);                                 animation-timing-function: var(--shake-ease); }
+  28.57%  { transform: translateX(var(--shake-distance));             animation-timing-function: var(--shake-ease); }
+  57.14%  { transform: translateX(calc(var(--shake-distance) * -1)); animation-timing-function: var(--shake-ease); }
+  78.57%  { transform: translateX(var(--shake-overshoot));            animation-timing-function: var(--shake-ease); }
+  100%    { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-input { animation: none !important; transform: none !important; }
+}
+
+/* Success check (transitions.dev 10-success-check), on the motion tokens.
+   Appear only: the success panel stays until the page reloads. */
+:root {
+  --check-opacity-dur: var(--duration-very-slow);
+  --check-rotate-dur: var(--duration-very-slow);
+  --check-rotate-from: 80deg;
+  --check-bob-dur: var(--duration-very-slow);
+  --check-y-amount: var(--distance-large);
+  --check-blur-dur: var(--duration-very-slow);
+  --check-blur-from: var(--blur-large);
+  --check-path-dur: var(--duration-very-slow);
+  --check-path-delay: var(--duration-micro);
+  --check-ease-out: var(--ease-smooth-out);
+  --check-ease-opacity: var(--ease-smooth-out);
+  --check-ease-rotate: var(--ease-smooth-out);
+  --check-ease-bob: var(--ease-bounce);
+  --check-ease-path: var(--ease-smooth-out);
+}
+.t-success-check {
+  display: inline-block;
+  transform-origin: center;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+.t-success-check svg { display: block; overflow: visible; }
+/* 31 is the check path's getTotalLength() (29.75) rounded up. */
+.t-success-check svg path { stroke-dasharray: 31; stroke-dashoffset: 31; }
+.t-success-check[data-state="in"] {
+  animation:
+    t-check-fade   var(--check-opacity-dur) var(--check-ease-opacity) forwards,
+    t-check-rotate var(--check-rotate-dur)  var(--check-ease-rotate)  forwards,
+    t-check-blur   var(--check-blur-dur)    var(--check-ease-out)     forwards,
+    t-check-bob    var(--check-bob-dur)     var(--check-ease-bob)     forwards;
+}
+.t-success-check[data-state="in"] svg path {
+  animation: t-check-draw var(--check-path-dur) var(--check-ease-path) var(--check-path-delay, 0ms) forwards;
+}
+@keyframes t-check-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes t-check-rotate { from { transform: rotate(var(--check-rotate-from)); } to { transform: rotate(0deg); } }
+@keyframes t-check-blur { from { filter: blur(var(--check-blur-from)); } to { filter: blur(0); } }
+@keyframes t-check-bob { from { translate: 0 var(--check-y-amount); } to { translate: 0 0; } }
+@keyframes t-check-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .t-success-check { animation: none !important; opacity: 1; }
+  .t-success-check svg path { animation: none !important; stroke-dashoffset: 0 !important; }
+}
 .form-success p { color: var(--text-secondary); font-size: 0.95rem; }
 
 :focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 3px; }

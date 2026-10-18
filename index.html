@@ -11,12 +11,49 @@
 <meta property="og:title" content="DevOfCodes — Independent developer. Building useful software.">
 <meta property="og:description" content="A one-person software company. See what I'm building, and hire me for focused contract development.">
 <meta property="og:site_name" content="DevOfCodes">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@devofcodes">
 <meta name="twitter:title" content="DevOfCodes — Independent developer. Building useful software.">
 <meta name="twitter:description" content="A one-person software company. See what I'm building, and hire me for focused contract development.">
 <link rel="canonical" href="https://devofcodes.com">
-<link rel="icon" type="image/png" href="assets/DoC Icon.png">
+<meta property="og:image" content="https://devofcodes.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DevOfCodes. Independent developer. Building useful software.">
+<meta name="twitter:image" content="https://devofcodes.com/assets/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://devofcodes.com/#website",
+      "url": "https://devofcodes.com/",
+      "name": "DevOfCodes",
+      "alternateName": "Dev of Codes",
+      "publisher": { "@id": "https://devofcodes.com/#organization" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://devofcodes.com/#organization",
+      "name": "DevOfCodes",
+      "alternateName": "Dev of Codes LLC",
+      "url": "https://devofcodes.com/",
+      "logo": "https://devofcodes.com/assets/apple-touch-icon.png",
+      "email": "hello@devofcodes.com",
+      "founder": { "@type": "Person", "name": "Max Wahlgren" },
+      "address": { "@type": "PostalAddress", "addressLocality": "San Diego", "addressRegion": "CA", "addressCountry": "US" },
+      "sameAs": [
+        "https://github.com/Dev-of-Codes-LLC",
+        "https://x.com/DevOfCodes"
+      ]
+    }
+  ]
+}
+</script>
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,8 +118,19 @@
   .hero-headline { font-size: calc(9.4vw - 0.25rem); }
 }
 .hero-headline .line { display: block; }
-.hero-headline .hw { display: inline-block; opacity: 0; transform: translateY(22px); }
-.hero-headline .hw.anim-in { opacity: 1; transform: translateY(0); transition: opacity 380ms ease, transform 380ms ease; }
+/* Texts reveal (transitions.dev 18): each word rises --distance-medium out of a
+   --blur-medium blur. The inline script staggers words by --duration-micro. */
+.hero-headline .hw {
+  display: inline-block; opacity: 0;
+  transform: translateY(var(--distance-medium)); filter: blur(var(--blur-medium));
+}
+.hero-headline .hw.anim-in {
+  opacity: 1; transform: translateY(0); filter: blur(0);
+  transition:
+    opacity   var(--duration-very-slow) var(--ease-smooth-out),
+    transform var(--duration-very-slow) var(--ease-smooth-out),
+    filter    var(--duration-very-slow) var(--ease-smooth-out);
+}
 .hero-headline .accent { color: var(--accent-cyan); }
 .hero-headline .amber { color: var(--accent-amber); }
 .hero-sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 520px; margin-bottom: 2rem; }
@@ -91,10 +139,14 @@
 .hero-note { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.02em; }
 .hero-note a { color: var(--text-secondary); border-bottom: 1px dotted var(--text-muted); }
 .hero-note a:hover { color: var(--accent-cyan); }
-[data-stage] { opacity: 0; transform: translateY(10px); }
-[data-stage].anim-in { opacity: 1; transform: none; transition: opacity 450ms ease, transform 450ms ease; }
+[data-stage] { opacity: 0; transform: translateY(var(--distance-medium)); }
+[data-stage].anim-in {
+  opacity: 1; transform: none;
+  transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
+}
 @media (prefers-reduced-motion: reduce) {
-  [data-stage], .hero-headline .hw { opacity: 1; transform: none; transition: none; }
+  [data-stage], [data-stage].anim-in,
+  .hero-headline .hw, .hero-headline .hw.anim-in { opacity: 1; transform: none; filter: none; transition: none; }
 }
 
 /* Ledger panel */
@@ -120,9 +172,15 @@
 .ledger-row {
   display: grid; grid-template-columns: 1.2rem 1fr auto; gap: 0.6rem; align-items: baseline;
   padding: 0.35rem 0; border-top: 1px dashed rgba(255,255,255,0.06);
-  opacity: 0; transform: translateX(-8px);
+  opacity: 0; transform: translateX(calc(var(--distance-base) * -1));
 }
-.ledger-row.anim-in { opacity: 1; transform: none; transition: opacity 400ms ease, transform 400ms ease; }
+.ledger-row.anim-in {
+  opacity: 1; transform: none;
+  transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ledger-row, .ledger-row.anim-in { opacity: 1; transform: none; transition: none; }
+}
 .ledger-row:first-of-type { border-top: 0; }
 .ledger-row a { color: var(--text-primary); }
 .ledger-row a:hover { color: var(--accent-cyan); }
@@ -377,10 +435,10 @@
       <div class="ledger-body">
         <div class="ledger-cmd"><span class="prompt">❯</span> ls --status</div>
         <div class="ledger-row" data-stage="1300"><span class="idx">01</span><span><a href="#bbi">block-based-build-instructions</a><span class="desc">AI-assisted design and build instructions for Minecraft</span></span><span class="st st--amber">in development</span></div>
-        <div class="ledger-row" data-stage="1420"><span class="idx">02</span><span><a href="#dfs">dfs-command-center</a><span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="st st--green">in daily use</span></div>
-        <div class="ledger-row" data-stage="1540"><span class="idx">03</span><span><a href="#editor">open-editor-platform</a><span class="desc">A plan for an open-source editor SDK</span></span><span class="st st--cyan">research plan</span></div>
-        <div class="ledger-row" data-stage="1660"><span class="idx">04</span><span><a href="#platform">devofcodes-platform</a><span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="st st--muted">prototype</span></div>
-        <div class="ledger-foot" data-stage="1800"><span style="margin-left:auto">updated: <!--deploy-date-->Oct 10, 2026<!--/deploy-date--> <span class="cursor">▋</span></span></div>
+        <div class="ledger-row" data-stage="1380"><span class="idx">02</span><span><a href="#dfs">dfs-command-center</a><span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="st st--green">in daily use</span></div>
+        <div class="ledger-row" data-stage="1460"><span class="idx">03</span><span><a href="#editor">open-editor-platform</a><span class="desc">A plan for an open-source editor SDK</span></span><span class="st st--cyan">research plan</span></div>
+        <div class="ledger-row" data-stage="1540"><span class="idx">04</span><span><a href="#platform">devofcodes-platform</a><span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="st st--muted">prototype</span></div>
+        <div class="ledger-foot" data-stage="1620"><span style="margin-left:auto">updated: <!--deploy-date-->Oct 10, 2026<!--/deploy-date--> <span class="cursor">▋</span></span></div>
       </div>
     </aside>
   </div>
@@ -616,11 +674,11 @@
             </div>
             <div class="form-group">
               <label for="c-name">Name</label>
-              <input type="text" id="c-name" name="name" autocomplete="name" placeholder="Your name" required>
+              <input type="text" id="c-name" name="name" class="t-input" autocomplete="name" placeholder="Your name" required>
             </div>
             <div class="form-group">
               <label for="c-email">Email</label>
-              <input type="email" id="c-email" name="email" autocomplete="email" placeholder="you@example.com" required>
+              <input type="email" id="c-email" name="email" class="t-input" autocomplete="email" placeholder="you@example.com" required>
             </div>
             <div class="form-group">
               <label for="c-kind">What kind of project?</label>
@@ -637,13 +695,16 @@
             </div>
             <div class="form-group">
               <label for="c-message">The project</label>
-              <textarea id="c-message" name="message" rows="5" placeholder="What should exist when we're done? What exists today?" required></textarea>
+              <textarea id="c-message" name="message" class="t-input" rows="5" placeholder="What should exist when we're done? What exists today?" required></textarea>
             </div>
             <button type="submit" class="btn btn-amber">Send →</button>
             <div class="form-error" id="contactError" role="alert"></div>
             <p class="contact-fine">Delivered straight to my inbox by a small function in my own AWS account. No third-party form service, no newsletter, no automation.</p>
           </form>
           <div class="form-success" id="contactSuccess">
+            <span class="form-success-check t-success-check" id="contactCheck" data-state="out" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M14 25 L21 32 L34 17" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
             <h3>Got it.</h3>
             <p>Thanks. I'll read it and reply personally, usually within a day.</p>
           </div>
@@ -680,7 +741,6 @@
         <span class="footer-heading">Elsewhere</span>
         <a href="mailto:hello@devofcodes.com">hello@devofcodes.com</a>
         <a href="https://github.com/Dev-of-Codes-LLC" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
-        <a href="https://www.linkedin.com/company/devofcodes/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
         <a href="https://x.com/DevOfCodes" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@devofcodes</a>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
@@ -697,7 +757,8 @@
 <script>
   (function () {
     var words = document.querySelectorAll('#heroHeadline .hw');
-    words.forEach(function (w, i) { setTimeout(function () { w.classList.add('anim-in'); }, 450 + i * 90); });
+    var step = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-micro')) || 80;
+    words.forEach(function (w, i) { setTimeout(function () { w.classList.add('anim-in'); }, 450 + i * step); });
   })();
 </script>
 <script type="module" src="assets/shaders.js"></script>

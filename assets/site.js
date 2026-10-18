@@ -12,15 +12,33 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* Mobile nav */
+  /* Motion tokens are read from CSS, so the timers match the stylesheet. */
+  function tokenMs(name, fallback) {
+    var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
+    return isFinite(v) ? v : fallback;
+  }
+
+  /* Mobile nav: opens and closes like a modal (see .mobile-nav-overlay in site.css).
+     Close swaps .is-open for .is-closing, then clears .is-closing once the
+     quicker close transition has run. */
   var mobileNav = document.getElementById('mobileNav');
+  var mobileNavTimer = null;
   window.toggleMobileNav = function () {
     if (!mobileNav) return;
-    var open = mobileNav.classList.toggle('active');
-    document.body.style.overflow = open ? 'hidden' : '';
+    clearTimeout(mobileNavTimer);
+    if (mobileNav.classList.contains('is-open')) {
+      mobileNav.classList.remove('is-open');
+      mobileNav.classList.add('is-closing');
+      mobileNavTimer = setTimeout(function () { mobileNav.classList.remove('is-closing'); }, tokenMs('--duration-quick', 150));
+      document.body.style.overflow = '';
+    } else {
+      mobileNav.classList.remove('is-closing');
+      mobileNav.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
   };
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) toggleMobileNav();
+    if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('is-open')) toggleMobileNav();
   });
 
   /* Scroll reveals */
@@ -46,8 +64,23 @@
      and a signed POST must carry the SHA-256 of its body in
      x-amz-content-sha256, so the hash is computed here before sending. */
   var form = document.getElementById('contactForm');
+  var contactCheck = document.getElementById('contactCheck');
   if (form) {
     var startedAt = Date.now();
+
+    /* Error state shake: replay from a clean start on every failed check. */
+    function shake(el) {
+      el.classList.remove('is-shaking');
+      void el.offsetWidth;
+      el.classList.add('is-shaking');
+      var ms = tokenMs('--shake-dur-a', 80) * 2 + tokenMs('--shake-dur-b', 60) * 2;
+      setTimeout(function () { el.classList.remove('is-shaking'); }, ms + 20);
+    }
+
+    /* Typing into a flagged field clears its error. */
+    form.querySelectorAll('.t-input').forEach(function (el) {
+      el.addEventListener('input', function () { el.classList.remove('error'); });
+    });
 
     function sha256Hex(text) {
       var bytes = new TextEncoder().encode(text);
@@ -71,7 +104,7 @@
 
       [nameEl, emailEl, messageEl].forEach(function (el) {
         el.classList.remove('error');
-        if (!el.value.trim()) { el.classList.add('error'); valid = false; }
+        if (!el.value.trim()) { el.classList.add('error'); shake(el); valid = false; }
       });
       if (!valid) return;
 
@@ -114,6 +147,7 @@
           if (!res.ok) throw new Error('Submit failed: ' + res.status);
           form.style.display = 'none';
           document.getElementById('contactSuccess').style.display = 'block';
+          if (contactCheck) contactCheck.setAttribute('data-state', 'in');
         })
         .catch(fail);
     });
@@ -131,6 +165,7 @@
       if (messageEl && message && !messageEl.value.trim()) messageEl.value = message + '\n\n';
       form.style.display = '';
       document.getElementById('contactSuccess').style.display = 'none';
+      if (contactCheck) contactCheck.setAttribute('data-state', 'out');
       setTimeout(function () {
         var nameEl = form.querySelector('[name="name"]');
         if (nameEl) nameEl.focus({ preventScroll: true });

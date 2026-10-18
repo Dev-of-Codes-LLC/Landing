@@ -1,0 +1,55 @@
+/* DevOfCodes — tokens for the GitHub images. Same values as assets/site.css. */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Literata:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;800&display=block');
+
+:root {
+  --bg-base: #080A0F;
+  --bg-surface: #0E1117;
+  --border-bright: rgba(255, 255, 255, 0.15);
+  --text-primary: #E8EAF0;
+  --text-secondary: #8B93A1;
+  --text-muted: #5C6573;
+  --accent-cyan: #00C8FF;
+  --accent-amber: #F59E0B;
+  --accent-green: #10B981;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Literata', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: transparent; -webkit-font-smoothing: antialiased; }
+
+/* The hero's CSS fallback, scaled to a card: cyan and amber glow on the right, deep teal under the text, dot grid on top. */
+.surface {
+  position: relative; overflow: hidden; color: var(--text-primary);
+  background:
+    radial-gradient(ellipse 48% 95% at 84% 18%, rgba(0, 200, 255, 0.30), transparent 62%),
+    radial-gradient(ellipse 34% 70% at 98% 104%, rgba(245, 158, 11, 0.30), transparent 60%),
+    radial-gradient(ellipse 70% 120% at 58% 78%, rgba(13, 52, 70, 0.85), transparent 68%),
+    var(--bg-base);
+}
+.surface::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(191, 234, 247, 0.22) 1px, transparent 1.4px);
+  background-size: 28px 28px; opacity: 0.5;
+}
+.surface::after {
+  /* keeps the text side readable, as on the site */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, rgba(8,10,15,0.92) 0%, rgba(8,10,15,0.74) 36%, rgba(8,10,15,0.22) 64%, rgba(8,10,15,0.04) 100%);
+}
+.surface > * { position: relative; z-index: 1; }
+
+.lockup { display: flex; align-items: center; gap: 0.6em; font-family: var(--font-display); font-weight: 700; letter-spacing: 0.02em; }
+.mark { font-family: var(--font-mono); font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+
+.eyebrow {
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.22em; color: var(--accent-cyan);
+  display: flex; align-items: center; gap: 0.75em;
+}
+.eyebrow .dot { width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 0 0.3em rgba(16,185,129,0.18); }
+.eyebrow .sep { color: var(--text-muted); }
+
+.headline { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; }
+.headline .line { display: block; }
+.headline .accent { color: var(--accent-cyan); }

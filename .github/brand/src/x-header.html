@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!-- X (Twitter) header, 1500×500 at 1x. The avatar covers the bottom-left corner and phones crop
+     the top and bottom, so the text sits in the right two thirds, vertically centred. -->
+<html lang="en"><head><meta charset="UTF-8"><title>x-header</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.card { width: 1500px; height: 500px; display: flex; flex-direction: column; justify-content: center; padding-left: 560px; }
+.card.surface::after { background: linear-gradient(90deg, rgba(8,10,15,0.15) 0%, rgba(8,10,15,0.55) 34%, rgba(8,10,15,0.82) 60%, rgba(8,10,15,0.6) 100%); }
+.eyebrow { font-size: 15px; }
+.headline { font-size: 44px; margin-top: 18px; white-space: nowrap; }
+.url { margin-top: 22px; font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.06em; color: var(--accent-amber); }
+</style></head>
+<body>
+<div class="card surface">
+  <div class="eyebrow"><span class="dot"></span><span>Available for contract work</span><span class="sep">/</span><span>San Diego, CA</span></div>
+  <h1 class="headline">
+    <span class="line">Independent developer.</span>
+    <span class="line">Building <span class="accent">useful</span> software.</span>
+  </h1>
+  <div class="url">devofcodes.com →</div>
+</div>
+</body></html>
