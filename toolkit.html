@@ -123,8 +123,9 @@
   .honest { border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); padding: 1.6rem 1.8rem; }
   .honest h3 { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-amber); margin-bottom: 0.9rem; font-weight: 500; }
   .honest ul { list-style: none; display: grid; gap: 0.6rem; }
-  .honest li { display: grid; grid-template-columns: 1.2rem 1fr; gap: 0.5rem; color: var(--text-secondary); font-size: 0.96rem; }
-  .honest li::before { content: "–"; color: var(--text-muted); }
+  /* block, not grid: inline code and links inside an item would each become a grid cell */
+  .honest li { position: relative; padding-left: 1.7rem; color: var(--text-secondary); font-size: 0.96rem; }
+  .honest li::before { content: "–"; position: absolute; left: 0; color: var(--text-muted); }
   .honest a, .credits a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
   .credits { margin-top: 3rem; color: var(--text-muted); font-size: 0.92rem; max-width: 46rem; }
 
