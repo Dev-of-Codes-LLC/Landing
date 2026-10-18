@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- Repository social preview, 1280×640 (GitHub's recommended size).
+     Parameters: ?repo=Landing&desc=...&stack=HTML,CSS,WebGPU -->
+<html lang="en"><head><meta charset="UTF-8"><title>social</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.card { width: 1280px; height: 640px; padding: 64px 76px; display: flex; flex-direction: column; }
+.top { display: flex; justify-content: space-between; align-items: center; }
+.lockup { font-size: 26px; }
+.lockup .mark { font-size: 28px; }
+.org { font-family: var(--font-mono); font-size: 16px; color: var(--text-secondary); letter-spacing: 0.04em; }
+.eyebrow { font-size: 15px; margin-top: auto; }
+.repo { font-family: var(--font-display); font-weight: 800; font-size: 112px; letter-spacing: -0.035em; line-height: 1; margin-top: 20px; }
+.desc { font-family: var(--font-body); font-size: 29px; line-height: 1.45; color: var(--text-secondary); max-width: 860px; margin-top: 24px; text-wrap: balance; }
+.bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 28px; border-top: 1px solid var(--border-bright); font-family: var(--font-mono); font-size: 17px; }
+.stack { display: flex; gap: 10px; }
+.stack span { padding: 6px 14px; border: 1px solid var(--border-bright); border-radius: 6px; color: var(--text-secondary); background: rgba(8,10,15,0.45); }
+.site { color: var(--accent-amber); font-weight: 500; letter-spacing: 0.04em; }
+</style></head>
+<body>
+<div class="card surface">
+  <div class="top">
+    <div class="lockup"><span class="mark">D&lt;</span><span>DevOfCodes</span></div>
+    <div class="org">github.com/Dev-of-Codes-LLC</div>
+  </div>
+  <div class="eyebrow"><span>Repository</span></div>
+  <div class="repo" id="repo"></div>
+  <p class="desc" id="desc"></p>
+  <div class="bottom"><div class="stack" id="stack"></div><div class="site">devofcodes.com →</div></div>
+</div>
+<script>
+const q = new URLSearchParams(location.search);
+document.getElementById('repo').textContent = q.get('repo') || 'Repository';
+document.getElementById('desc').textContent = q.get('desc') || '';
+for (const s of (q.get('stack') || '').split(',').filter(Boolean)) {
+  const el = document.createElement('span'); el.textContent = s.trim(); document.getElementById('stack').append(el);
+}
+</script>
+</body></html>
