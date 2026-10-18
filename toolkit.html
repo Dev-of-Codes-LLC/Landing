@@ -218,7 +218,7 @@
     <div class="tk-stat"><div class="n">6</div><div class="k">Skills</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Read-only agent</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Scheduled routine</div></div>
-    <div class="tk-stat"><div class="n">4</div><div class="k">Patterns, written up</div></div>
+    <div class="tk-stat"><div class="n">6</div><div class="k">Patterns, written up</div></div>
   </div>
 </section>
 
@@ -231,9 +231,9 @@
       <p class="section-sub">Every skill and agent in the set is held to the same five rules. They are written into each file, not left to a README.</p>
     </div>
     <div class="rules fade-up">
-      <div class="rule"><div class="i">01</div><h3>Read-only by default</h3><p>A sweep reads. A planner reads. Anything that writes says exactly which one write it makes.</p></div>
+      <div class="rule"><div class="i">01</div><h3>Read-only by default</h3><p>A digest reads. A planner reads. Anything that writes says exactly which one write it makes.</p></div>
       <div class="rule"><div class="i">02</div><h3>Drafts, not actions</h3><p>Agents return tickets and plans for a person to approve. They never file, merge or close on their own.</p></div>
-      <div class="rule"><div class="i">03</div><h3>Data is not instructions</h3><p>Text in issues, pull requests and web pages is reported, never obeyed. Public repos mean anyone can write there.</p></div>
+      <div class="rule"><div class="i">03</div><h3>Data is not instructions</h3><p>Text in issues, pull requests and web pages is reported, never obeyed. In a public repo anyone can write there.</p></div>
       <div class="rule"><div class="i">04</div><h3>Every fact has a date</h3><p>"Checked 2026-10-10: …" or it is a guess, and a guess is labelled as one.</p></div>
       <div class="rule"><div class="i">05</div><h3>Dry run first</h3><p>Destructive steps print the exact commands and wait. Data nobody named is never deleted.</p></div>
     </div>
@@ -249,11 +249,11 @@
         <h2 class="section-headline">What's in the box.</h2>
       </div>
       <div class="chips" role="group" aria-label="Filter by kind">
-        <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">12</span></button>
+        <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">14</span></button>
         <button class="chip" data-filter="skill" aria-pressed="false">Skills<span class="c">6</span></button>
         <button class="chip" data-filter="agent" aria-pressed="false">Agents<span class="c">1</span></button>
         <button class="chip" data-filter="routine" aria-pressed="false">Routines<span class="c">1</span></button>
-        <button class="chip" data-filter="pattern" aria-pressed="false">Patterns<span class="c">4</span></button>
+        <button class="chip" data-filter="pattern" aria-pressed="false">Patterns<span class="c">6</span></button>
       </div>
     </div>
 
@@ -261,40 +261,40 @@
       <article class="card featured fade-up" data-kind="skill">
         <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
         <h3>feature-doc</h3>
-        <p class="what">Turns a finished feature or pull request into a wiki-ready document in the repo, plus a one-page HTML reference sheet with lettered panels and a whiteboard-style diagram you can send to anyone. Writing follows a relaxed ASD-STE100 Simplified Technical English.</p>
+        <p class="what">Turns a finished feature or pull request into a wiki-ready page in the repo, plus a one-page HTML reference sheet with lettered panels and an optional whiteboard-style diagram. The writing follows a relaxed ASD-STE100 Simplified Technical English.</p>
         <div class="featured-extra"><span class="tag">Markdown + HTML</span><span class="tag">Node renderer</span><span class="tag">Evals included</span></div>
-        <p class="refuses"><b>Won't</b>claim anything it could not find in the code, tests or PR. Gaps are listed, not filled.</p>
+        <p class="refuses"><b>Won't</b>claim a fact it could not trace to the code, a record or a command. Gaps are listed, not filled.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/feature-doc" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
         <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
         <h3>land-branch</h3>
-        <p class="what">Lands a branch on a main that moved ahead: measures the divergence, rebases, opens the PR, waits for every check, squash-merges, then runs your rebuild command.</p>
-        <p class="refuses"><b>Won't</b>skip a failing check or force-push over someone else's work.</p>
+        <p class="what">Lands a branch on a main that moved ahead: shows the overlap, rebases, opens the PR, waits for every check, squash-merges, then runs your rebuild command.</p>
+        <p class="refuses"><b>Won't</b>merge with a check pending or red, use --auto or --admin, or force-push main.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/land-branch" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
         <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
         <h3>docker-cleanup</h3>
-        <p class="what">Audits a local Docker install by compose project and reclaims space tier by tier: build cache, broken builders, orphan networks, old images.</p>
-        <p class="refuses"><b>Won't</b>delete a volume you did not name. Ever.</p>
+        <p class="what">Audits a local Docker install by compose project and frees space tier by tier: build cache, broken builders, orphan networks, exited containers, old images. Dry run first.</p>
+        <p class="refuses"><b>Won't</b>delete a volume you did not name, or run a wholesale prune.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/docker-cleanup" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
         <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
         <h3>ticket-writer</h3>
-        <p class="what">Turns a request or finding into GitHub issues in one house format: the right repo, a duplicate check, one outcome per issue, a task list with exact steps, and a place on your project board.</p>
-        <p class="refuses"><b>Won't</b>file a second issue when one already covers the work.</p>
+        <p class="what">Turns a request or finding into GitHub issues in one format: the right repo, a duplicate check, one outcome per issue, a task list with exact steps, and a Status and Due on your project board.</p>
+        <p class="refuses"><b>Won't</b>file a second issue when one already covers the work, or file anything when you asked only for a plan.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/ticket-writer" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
         <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
         <h3>status-digest</h3>
-        <p class="what">Sweeps every repo you list for red CI, failed deploys, stale or conflicting PRs, overdue issues and board drift, and writes one digest of what needs you.</p>
+        <p class="what">Checks every repo you list for red CI, failed deploys, stale or conflicting PRs, overdue and blocked backlog items and board drift, and writes one short digest of what needs you.</p>
         <p class="refuses"><b>Won't</b>re-run, merge, label or close anything it finds.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/status-digest" rel="noopener">Source on GitHub →</a>
       </article>
@@ -302,23 +302,23 @@
       <article class="card fade-up" data-kind="skill">
         <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
         <h3>org-map</h3>
-        <p class="what">A template for one page that maps every repo, account and rule you have, with the command that shows each one's live state. Ships with a fictional example org.</p>
-        <p class="refuses"><b>Won't</b>state a fact as current without reading it live first.</p>
+        <p class="what">Answers org-level questions from one page that maps every repo, account and rule, with the command that shows each one's live state. Builds that page from a template. Ships with a fictional example org.</p>
+        <p class="refuses"><b>Won't</b>state a fact as current without reading it live, or edit the map without asking.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/org-map" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="agent">
         <div class="card-top"><span class="kind kind--agent">Agent</span><span class="plugin">repo-ops</span></div>
         <h3>backlog-planner</h3>
-        <p class="what">Give it a goal or a messy list. It reads the live state across your repos and returns draft tickets in order, with what blocks what and what only a person can do.</p>
-        <p class="refuses"><b>Won't</b>run a single write command. Its tool list makes sure of it.</p>
+        <p class="what">Give it a goal or a messy list. It reads the live state across your repos and returns draft tickets in order, with what blocks what and what only the owner can do.</p>
+        <p class="refuses"><b>Won't</b>create or edit anything. It has no edit tools, its prompt names the only commands it may run, and it returns drafts.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/agents/backlog-planner.md" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="routine">
-        <div class="card-top"><span class="kind kind--routine">Routine</span><span class="plugin">Mon · Thu</span></div>
+        <div class="card-top"><span class="kind kind--routine">Routine</span><span class="plugin">Twice a week</span></div>
         <h3>status-digest, scheduled</h3>
-        <p class="what">The digest as a cloud routine: twice a week it posts one comment on a pinned "Status digest" issue, covering everything since the last one.</p>
+        <p class="what">The digest as a scheduled cloud routine: it posts one comment on a pinned "Status digest" issue, covering everything since the last one.</p>
         <p class="refuses"><b>Won't</b>write anywhere except that one comment.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/routines/status-digest.md" rel="noopener">Recipe on GitHub →</a>
       </article>
@@ -327,28 +327,42 @@
         <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
         <h3>The repo is the marketplace</h3>
         <p class="what">Keep a plugin next to the work it serves, load it from project settings, and version it so installed copies update.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/repo-is-the-marketplace.md" rel="noopener">Read it →</a>
       </article>
 
       <article class="card fade-up" data-kind="pattern">
         <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
         <h3>Skills for sessions without plugins</h3>
-        <p class="what">Cloud sessions and routines can't load plugins, so they read the skill file straight from the checkout. One source serves both.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+        <p class="what">Cloud sessions and routines may not load plugins, so they read the skill file from the checkout. One source serves both.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/skills-without-plugins.md" rel="noopener">Read it →</a>
       </article>
 
       <article class="card fade-up" data-kind="pattern">
         <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
         <h3>Read-only agents that return drafts</h3>
-        <p class="what">Limit the tools, list the forbidden commands by name, and make the output a draft a person files.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+        <p class="what">Limit the tools, name the forbidden commands, back them with permission rules, and make the output a draft a person files.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/read-only-agents.md" rel="noopener">Read it →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="pattern">
+        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
+        <h3>Data is not instructions</h3>
+        <p class="what">Text in issues, pull requests and pages is reported, never obeyed. Every skill that reads outside text says so.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/data-is-not-instructions.md" rel="noopener">Read it →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="pattern">
+        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
+        <h3>Every fact has a date</h3>
+        <p class="what">Live facts carry the date they were read and the command to read them again. What could not be checked is listed.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/every-fact-has-a-date.md" rel="noopener">Read it →</a>
       </article>
 
       <article class="card fade-up" data-kind="pattern">
         <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
         <h3>Config, not names</h3>
         <p class="what">Skills read one small <span class="mono">toolkit.json</span> for your repos, board and owner, and offer to write it when it is missing.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/config-not-names.md" rel="noopener">Read it →</a>
       </article>
     </div>
   </div>
@@ -369,7 +383,7 @@
         <li class="loop-step"><span class="node"><i></i>land-branch</span><p>Rebased, checked, merged, and the local stack rebuilt.</p></li>
         <li class="loop-step"><span class="node"><i></i>feature-doc</span><p>What shipped is written up for the wiki and for the people who asked.</p></li>
       </ol>
-      <div class="loop-return"><span class="node">status-digest · Mon &amp; Thu</span><span>reads all of it and feeds what's red, stale or overdue back to the top. <span class="mono" style="color:var(--accent-amber)">backlog-planner</span> turns the bigger items into drafts.</span></div>
+      <div class="loop-return"><span class="node">status-digest · twice a week</span><span>reads all of it and feeds what's red, stale or overdue back to the top. <span class="mono" style="color:var(--accent-amber)">backlog-planner</span> turns the bigger items into drafts.</span></div>
     </div>
   </div>
 </section>
@@ -387,14 +401,14 @@
         <ul>
           <li>Add the marketplace and install one or both plugins with the commands at the top of this page.</li>
           <li>The repo-ops skills ask for a <span class="mono">toolkit.json</span> the first time. Copy the one in <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/examples/acme" rel="noopener">examples/acme</a> to start.</li>
-          <li>Prefer to read first? Every skill is one Markdown file. Copy the ones you want into <span class="mono">.claude/skills/</span>.</li>
+          <li>Prefer to read first? Every skill is a folder with one <span class="mono">SKILL.md</span>. Copy the ones you want into <span class="mono">.claude/skills/</span>.</li>
         </ul>
       </div>
       <div class="honest fade-up">
         <h3>Plain facts</h3>
         <ul>
           <li>These were built for a one-person company. Your team may want more approvals, not fewer.</li>
-          <li>The repo-ops skills assume GitHub and the <span class="mono">gh</span> CLI. The Docker scripts are PowerShell 7, which runs on macOS and Linux too.</li>
+          <li>The repo-ops skills assume GitHub and the <span class="mono">gh</span> CLI. The Docker scripts run on Windows PowerShell 5.1, and on PowerShell 7 on macOS and Linux. CI runs them on Linux.</li>
           <li>They are written for Claude Code. The rules and patterns carry over to other agents; the install steps do not.</li>
           <li>Issues and pull requests are welcome. I review them myself, so expect days, not hours.</li>
         </ul>
