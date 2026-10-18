@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Toolkit — DevOfCodes</title>
+<meta name="description" content="The Claude Code skills, agents and routines DevOfCodes runs on, cleaned of company specifics and published under the MIT licence.">
+<meta property="og:title" content="AI Toolkit — DevOfCodes">
+<meta property="og:description" content="Skills, agents and routines for AI coding tools, with the rules they follow. Open source.">
+<meta property="og:site_name" content="DevOfCodes">
+<link rel="canonical" href="https://devofcodes.com/toolkit.html">
+<link rel="icon" type="image/png" href="assets/DoC Icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .nav { background: rgba(8, 10, 15, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--border); }
+
+  /* ── Hero ── */
+  .tk-hero { padding: 9rem 0 4.5rem; position: relative; }
+  .tk-hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(600px 320px at 78% 30%, rgba(0,200,255,0.10), transparent 70%),
+      radial-gradient(520px 300px at 12% 80%, rgba(245,158,11,0.07), transparent 70%);
+  }
+  .tk-hero .container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: center; }
+  .tk-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 4.6vw, 3.7rem); line-height: 1.06; letter-spacing: -0.035em; text-wrap: balance; }
+  .tk-title .accent { color: var(--accent-cyan); }
+  .tk-lede { margin-top: 1.4rem; color: var(--text-secondary); font-size: 1.12rem; max-width: 34rem; }
+  .tk-lede strong { color: var(--text-primary); font-weight: 500; }
+  .tk-ctas { margin-top: 2rem; display: flex; gap: 0.9rem; flex-wrap: wrap; }
+  .tk-ctas svg { width: 16px; height: 16px; fill: currentColor; }
+  .tk-note { margin-top: 1.4rem; font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); }
+
+  /* terminal */
+  .term { border: 1px solid var(--border-bright); border-radius: var(--radius); background: rgba(14,17,23,0.85); box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,200,255,0.04); overflow: hidden; min-width: 0; }
+  .term-bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
+  .term-bar .dots { display: flex; gap: 6px; }
+  .term-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-elevated); border: 1px solid var(--border-bright); }
+  .term-body { padding: 1.1rem 1.2rem 1.3rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.9; }
+  .term-line { display: flex; gap: 0.6rem; align-items: baseline; min-width: 0; }
+  .term-line code { color: var(--text-primary); overflow-wrap: anywhere; }
+  .term-line .p { color: var(--accent-cyan); flex: none; }
+  .term-out { color: var(--text-muted); padding-left: 1.2rem; }
+  .term-out b { color: var(--accent-green); font-weight: 500; }
+  .term-copy { margin-left: auto; flex: none; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); background: transparent; border: 1px solid var(--border-bright); border-radius: 4px; padding: 0.2rem 0.55rem; cursor: pointer; transition: color 160ms, border-color 160ms; }
+  .term-copy:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+  .term-copy.done { color: var(--accent-green); border-color: rgba(16,185,129,0.5); }
+  .term-gap { height: 0.6rem; }
+
+  /* ── Strip ── */
+  .tk-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(14,17,23,0.6); }
+  .tk-strip .container { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .tk-stat { padding: 1.6rem 1.2rem; border-left: 1px solid var(--border); }
+  .tk-stat:first-child { border-left: none; padding-left: 0; }
+  .tk-stat .n { font-family: var(--font-display); font-weight: 700; font-size: 2.1rem; line-height: 1; }
+  .tk-stat .k { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+
+  section.tk { padding: 6rem 0 0; }
+
+  /* ── Rules ── */
+  .rules { margin-top: 2.8rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .rule { background: var(--bg-surface); padding: 1.5rem 1.3rem 1.6rem; }
+  .rule .i { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-amber); letter-spacing: 0.1em; }
+  .rule h3 { margin-top: 0.8rem; font-family: var(--font-display); font-weight: 700; font-size: 1.08rem; line-height: 1.25; }
+  .rule p { margin-top: 0.6rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+
+  /* ── Catalog ── */
+  .cat-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
+  .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .chip { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-secondary); background: transparent; border: 1px solid var(--border-bright); border-radius: 999px; padding: 0.4rem 0.9rem; cursor: pointer; transition: color 160ms, border-color 160ms, background 160ms; }
+  .chip:hover { color: var(--text-primary); }
+  .chip[aria-pressed="true"] { color: var(--bg-base); background: var(--accent-cyan); border-color: var(--accent-cyan); }
+  .chip .c { opacity: 0.6; margin-left: 0.35rem; }
+
+  .cards { margin-top: 2.2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius); background: linear-gradient(180deg, var(--bg-surface), rgba(14,17,23,0.6)); padding: 1.5rem 1.4rem 1.3rem; transition: border-color 200ms, transform 200ms; }
+  .card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
+  .card[hidden] { display: none; }
+  .card.featured { grid-column: span 2; background: linear-gradient(135deg, rgba(0,200,255,0.07), var(--bg-surface) 55%); border-color: rgba(0,200,255,0.22); }
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+  .kind { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; }
+  .kind--skill { color: var(--accent-cyan); }
+  .kind--agent { color: var(--accent-amber); }
+  .kind--routine { color: var(--accent-green); }
+  .kind--pattern { color: var(--text-secondary); }
+  .plugin { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); }
+  .card h3 { margin-top: 0.9rem; font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; color: var(--text-primary); }
+  .card .what { margin-top: 0.55rem; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.62; }
+  .card .refuses { margin-top: 0.9rem; padding-top: 0.8rem; border-top: 1px dashed var(--border-bright); font-size: 0.86rem; color: var(--text-muted); line-height: 1.55; }
+  .card .refuses b { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-rose); font-weight: 500; margin-right: 0.4rem; }
+  .card .src { margin-top: auto; padding-top: 1.1rem; font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-cyan); align-self: flex-start; }
+  .card .src:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .card .src::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+  .card .src:focus-visible { outline: none; }
+  .card:has(.src:focus-visible) { outline: 2px solid var(--accent-cyan); outline-offset: 3px; }
+  .featured-extra { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary); border: 1px solid var(--border); border-radius: 4px; padding: 0.15rem 0.5rem; }
+
+  /* ── Loop ── */
+  .loop { margin-top: 2.8rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); padding: 2.2rem 1.8rem 1.8rem; }
+  .loop-track { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4rem; position: relative; }
+  .loop-step { position: relative; }
+  .loop-step:not(:last-child)::after { content: "→"; position: absolute; right: -1.75rem; top: 0.55rem; font-family: var(--font-mono); color: var(--text-muted); }
+  .loop-step .node { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-primary); border: 1px solid var(--border-bright); border-radius: 6px; padding: 0.45rem 0.75rem; background: var(--bg-base); }
+  .loop-step .node i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-cyan); }
+  .loop-step.you .node i { background: var(--text-secondary); }
+  .loop-step p { margin-top: 0.7rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; }
+  .loop-return { margin-top: 1.8rem; padding-top: 1.3rem; border-top: 1px dashed rgba(16,185,129,0.35); display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap; color: var(--text-secondary); font-size: 0.92rem; }
+  .loop-return .node { font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-green); border: 1px solid rgba(16,185,129,0.4); border-radius: 6px; padding: 0.3rem 0.7rem; }
+
+  /* ── Install + honest note ── */
+  .install-grid { margin-top: 2.6rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; align-items: start; }
+  .honest { border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); padding: 1.6rem 1.8rem; }
+  .honest h3 { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-amber); margin-bottom: 0.9rem; font-weight: 500; }
+  .honest ul { list-style: none; display: grid; gap: 0.6rem; }
+  .honest li { display: grid; grid-template-columns: 1.2rem 1fr; gap: 0.5rem; color: var(--text-secondary); font-size: 0.96rem; }
+  .honest li::before { content: "–"; color: var(--text-muted); }
+  .honest a, .credits a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
+  .credits { margin-top: 3rem; color: var(--text-muted); font-size: 0.92rem; max-width: 46rem; }
+
+  @media (max-width: 1020px) {
+    .rules { grid-template-columns: repeat(2, 1fr); }
+    .rule:last-child { grid-column: span 2; }
+    .cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 860px) {
+    .tk-hero .container { grid-template-columns: 1fr; gap: 2.5rem; }
+    .loop-track { grid-template-columns: 1fr; gap: 1.6rem; }
+    .loop-step:not(:last-child)::after { content: "↓"; right: auto; left: 1rem; top: auto; bottom: -1.45rem; }
+    .install-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .tk-hero { padding-top: 7.5rem; }
+    .tk-strip .container { grid-template-columns: repeat(2, 1fr); }
+    .tk-stat { padding: 1.3rem 1rem; }
+    .tk-stat:nth-child(odd) { border-left: none; padding-left: 0; }
+    .tk-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
+    .rules { grid-template-columns: 1fr; }
+    .rule:last-child { grid-column: auto; }
+    .cards { grid-template-columns: 1fr; }
+    .card.featured { grid-column: auto; }
+    .loop { padding: 1.6rem 1.2rem; }
+    section.tk { padding-top: 4.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .card, .card:hover { transition: none; transform: none; } }
+</style>
+</head>
+<body>
+
+<nav class="nav scrolled" id="nav" aria-label="Main navigation">
+  <div class="container">
+    <a href="index.html" class="nav-brand" aria-label="DevOfCodes home">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><text x="1" y="21" font-family="monospace" font-size="19" font-weight="bold" fill="#E8EAF0">D&lt;</text></svg>
+      <span>DevOfCodes</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#work" class="nav-link">Work</a>
+      <a href="toolkit.html" class="nav-link" aria-current="page">Toolkit</a>
+      <a href="index.html#services" class="nav-link">Work with me</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="changelog.html" class="nav-link">Log</a>
+      <a href="index.html#contact" class="nav-cta">Discuss a project →</a>
+    </div>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E8EAF0" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Close menu">×</button>
+  <a href="index.html#work">Work</a>
+  <a href="toolkit.html">Toolkit</a>
+  <a href="index.html#services">Work with me</a>
+  <a href="about.html">About</a>
+  <a href="changelog.html">Log</a>
+  <a href="index.html#contact">Discuss a project →</a>
+</div>
+
+<main>
+<!-- ═══════════ HERO ═══════════ -->
+<section class="tk-hero">
+  <div class="container">
+    <div>
+      <div class="eyebrow">Open source · MIT</div>
+      <h1 class="tk-title">The AI toolkit I <span class="accent">actually</span> run on.</h1>
+      <p class="tk-lede">These are the skills, agents and routines that plan, ship and document the work at DevOfCodes, with my own names and accounts taken out. They are written for Claude Code. <strong>Each skill and agent says what it will not do</strong>, because that is the part that took the longest to get right.</p>
+      <div class="tk-ctas">
+        <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit" class="btn btn-amber" rel="noopener">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+        <a href="#catalog" class="btn btn-ghost">Browse the catalog ↓</a>
+      </div>
+      <p class="tk-note">Built for a one-person company. Fork it and make it yours.</p>
+    </div>
+
+    <aside class="term" aria-label="Install commands">
+      <div class="term-bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><span>claude — install</span></div>
+      <div class="term-body">
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd1">/plugin marketplace add Dev-of-Codes-LLC/agent-toolkit</code><button class="term-copy" data-copy="cmd1">Copy</button></div>
+        <div class="term-out">✓ marketplace <b>agent-toolkit</b> added</div>
+        <div class="term-gap"></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd2">/plugin install dev-workflow@agent-toolkit</code><button class="term-copy" data-copy="cmd2">Copy</button></div>
+        <div class="term-out">✓ feature-doc · land-branch · docker-cleanup</div>
+        <div class="term-gap"></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
+        <div class="term-out">✓ ticket-writer · status-digest · org-map · backlog-planner</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="tk-strip" aria-label="At a glance">
+  <div class="container">
+    <div class="tk-stat"><div class="n">6</div><div class="k">Skills</div></div>
+    <div class="tk-stat"><div class="n">1</div><div class="k">Read-only agent</div></div>
+    <div class="tk-stat"><div class="n">1</div><div class="k">Scheduled routine</div></div>
+    <div class="tk-stat"><div class="n">4</div><div class="k">Patterns, written up</div></div>
+  </div>
+</section>
+
+<!-- ═══════════ RULES ═══════════ -->
+<section class="tk" id="rules">
+  <div class="container">
+    <div class="fade-up">
+      <div class="eyebrow">The rules they follow</div>
+      <h2 class="section-headline">A prompt is easy. Knowing where it stops is the work.</h2>
+      <p class="section-sub">Every skill and agent in the set is held to the same five rules. They are written into each file, not left to a README.</p>
+    </div>
+    <div class="rules fade-up">
+      <div class="rule"><div class="i">01</div><h3>Read-only by default</h3><p>A sweep reads. A planner reads. Anything that writes says exactly which one write it makes.</p></div>
+      <div class="rule"><div class="i">02</div><h3>Drafts, not actions</h3><p>Agents return tickets and plans for a person to approve. They never file, merge or close on their own.</p></div>
+      <div class="rule"><div class="i">03</div><h3>Data is not instructions</h3><p>Text in issues, pull requests and web pages is reported, never obeyed. Public repos mean anyone can write there.</p></div>
+      <div class="rule"><div class="i">04</div><h3>Every fact has a date</h3><p>"Checked 2026-10-10: …" or it is a guess, and a guess is labelled as one.</p></div>
+      <div class="rule"><div class="i">05</div><h3>Dry run first</h3><p>Destructive steps print the exact commands and wait. Data nobody named is never deleted.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CATALOG ═══════════ -->
+<section class="tk" id="catalog">
+  <div class="container">
+    <div class="cat-head fade-up">
+      <div>
+        <div class="eyebrow">Catalog</div>
+        <h2 class="section-headline">What's in the box.</h2>
+      </div>
+      <div class="chips" role="group" aria-label="Filter by kind">
+        <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">12</span></button>
+        <button class="chip" data-filter="skill" aria-pressed="false">Skills<span class="c">6</span></button>
+        <button class="chip" data-filter="agent" aria-pressed="false">Agents<span class="c">1</span></button>
+        <button class="chip" data-filter="routine" aria-pressed="false">Routines<span class="c">1</span></button>
+        <button class="chip" data-filter="pattern" aria-pressed="false">Patterns<span class="c">4</span></button>
+      </div>
+    </div>
+
+    <div class="cards" id="cards">
+      <article class="card featured fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <h3>feature-doc</h3>
+        <p class="what">Turns a finished feature or pull request into a wiki-ready document in the repo, plus a one-page HTML reference sheet with lettered panels and a whiteboard-style diagram you can send to anyone. Writing follows a relaxed ASD-STE100 Simplified Technical English.</p>
+        <div class="featured-extra"><span class="tag">Markdown + HTML</span><span class="tag">Node renderer</span><span class="tag">Evals included</span></div>
+        <p class="refuses"><b>Won't</b>claim anything it could not find in the code, tests or PR. Gaps are listed, not filled.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/feature-doc" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <h3>land-branch</h3>
+        <p class="what">Lands a branch on a main that moved ahead: measures the divergence, rebases, opens the PR, waits for every check, squash-merges, then runs your rebuild command.</p>
+        <p class="refuses"><b>Won't</b>skip a failing check or force-push over someone else's work.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/land-branch" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <h3>docker-cleanup</h3>
+        <p class="what">Audits a local Docker install by compose project and reclaims space tier by tier: build cache, broken builders, orphan networks, old images.</p>
+        <p class="refuses"><b>Won't</b>delete a volume you did not name. Ever.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/docker-cleanup" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <h3>ticket-writer</h3>
+        <p class="what">Turns a request or finding into GitHub issues in one house format: the right repo, a duplicate check, one outcome per issue, a task list with exact steps, and a place on your project board.</p>
+        <p class="refuses"><b>Won't</b>file a second issue when one already covers the work.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/ticket-writer" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <h3>status-digest</h3>
+        <p class="what">Sweeps every repo you list for red CI, failed deploys, stale or conflicting PRs, overdue issues and board drift, and writes one digest of what needs you.</p>
+        <p class="refuses"><b>Won't</b>re-run, merge, label or close anything it finds.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/status-digest" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <h3>org-map</h3>
+        <p class="what">A template for one page that maps every repo, account and rule you have, with the command that shows each one's live state. Ships with a fictional example org.</p>
+        <p class="refuses"><b>Won't</b>state a fact as current without reading it live first.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/org-map" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="agent">
+        <div class="card-top"><span class="kind kind--agent">Agent</span><span class="plugin">repo-ops</span></div>
+        <h3>backlog-planner</h3>
+        <p class="what">Give it a goal or a messy list. It reads the live state across your repos and returns draft tickets in order, with what blocks what and what only a person can do.</p>
+        <p class="refuses"><b>Won't</b>run a single write command. Its tool list makes sure of it.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/agents/backlog-planner.md" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="routine">
+        <div class="card-top"><span class="kind kind--routine">Routine</span><span class="plugin">Mon · Thu</span></div>
+        <h3>status-digest, scheduled</h3>
+        <p class="what">The digest as a cloud routine: twice a week it posts one comment on a pinned "Status digest" issue, covering everything since the last one.</p>
+        <p class="refuses"><b>Won't</b>write anywhere except that one comment.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/routines/status-digest.md" rel="noopener">Recipe on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="pattern">
+        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
+        <h3>The repo is the marketplace</h3>
+        <p class="what">Keep a plugin next to the work it serves, load it from project settings, and version it so installed copies update.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="pattern">
+        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
+        <h3>Skills for sessions without plugins</h3>
+        <p class="what">Cloud sessions and routines can't load plugins, so they read the skill file straight from the checkout. One source serves both.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="pattern">
+        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
+        <h3>Read-only agents that return drafts</h3>
+        <p class="what">Limit the tools, list the forbidden commands by name, and make the output a draft a person files.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="pattern">
+        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
+        <h3>Config, not names</h3>
+        <p class="what">Skills read one small <span class="mono">toolkit.json</span> for your repos, board and owner, and offer to write it when it is missing.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns" rel="noopener">Read it →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LOOP ═══════════ -->
+<section class="tk" id="loop">
+  <div class="container">
+    <div class="fade-up">
+      <div class="eyebrow">How it fits together</div>
+      <h2 class="section-headline">One loop, from idea to write-up.</h2>
+      <p class="section-sub">The pieces are useful alone. Together they keep a small backlog honest without anyone having to remember it.</p>
+    </div>
+    <div class="loop fade-up">
+      <ol class="loop-track">
+        <li class="loop-step"><span class="node"><i></i>ticket-writer</span><p>An idea becomes one issue with one outcome and the exact steps.</p></li>
+        <li class="loop-step you"><span class="node"><i></i>you + the AI</span><p>The work happens in a branch, under the issue's acceptance criteria.</p></li>
+        <li class="loop-step"><span class="node"><i></i>land-branch</span><p>Rebased, checked, merged, and the local stack rebuilt.</p></li>
+        <li class="loop-step"><span class="node"><i></i>feature-doc</span><p>What shipped is written up for the wiki and for the people who asked.</p></li>
+      </ol>
+      <div class="loop-return"><span class="node">status-digest · Mon &amp; Thu</span><span>reads all of it and feeds what's red, stale or overdue back to the top. <span class="mono" style="color:var(--accent-amber)">backlog-planner</span> turns the bigger items into drafts.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ INSTALL + NOTE ═══════════ -->
+<section class="tk" id="use">
+  <div class="container">
+    <div class="fade-up">
+      <div class="eyebrow">Use it</div>
+      <h2 class="section-headline">Take what's useful. Leave the rest.</h2>
+    </div>
+    <div class="install-grid">
+      <div class="honest fade-up">
+        <h3>Getting started</h3>
+        <ul>
+          <li>Add the marketplace and install one or both plugins with the commands at the top of this page.</li>
+          <li>The repo-ops skills ask for a <span class="mono">toolkit.json</span> the first time. Copy the one in <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/examples/acme" rel="noopener">examples/acme</a> to start.</li>
+          <li>Prefer to read first? Every skill is one Markdown file. Copy the ones you want into <span class="mono">.claude/skills/</span>.</li>
+        </ul>
+      </div>
+      <div class="honest fade-up">
+        <h3>Plain facts</h3>
+        <ul>
+          <li>These were built for a one-person company. Your team may want more approvals, not fewer.</li>
+          <li>The repo-ops skills assume GitHub and the <span class="mono">gh</span> CLI. The Docker scripts are PowerShell 7, which runs on macOS and Linux too.</li>
+          <li>They are written for Claude Code. The rules and patterns carry over to other agents; the install steps do not.</li>
+          <li>Issues and pull requests are welcome. I review them myself, so expect days, not hours.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="credits fade-up">I also lean on skills I didn't write, and they stay with their authors: Anthropic's <a href="https://github.com/anthropics/skills" rel="noopener">skills</a>, Vercel's web interface guidelines, and the AWS plugin. They are not in this repo.</p>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer" id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-brand">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true"><text x="1" y="21" font-family="monospace" font-size="19" font-weight="bold" fill="#E8EAF0">D&lt;</text></svg>
+          <span>DevOfCodes</span>
+        </a>
+        <div class="footer-tagline">A one-person software company. Products, tools and experiments, plus focused contract development.</div>
+        <div class="footer-copyright">© 2025–2026 DevOfCodes LLC</div>
+      </div>
+      <div class="footer-links-col">
+        <span class="footer-heading">Site</span>
+        <a href="index.html#work">Work</a>
+        <a href="toolkit.html">AI toolkit</a>
+        <a href="index.html#services">Work with me</a>
+        <a href="about.html">About</a>
+        <a href="changelog.html">Log</a>
+        <a href="open-editor.html">Open editor plan</a>
+      </div>
+      <div class="footer-links-col">
+        <span class="footer-heading">Elsewhere</span>
+        <a href="mailto:hello@devofcodes.com">hello@devofcodes.com</a>
+        <a href="https://github.com/Dev-of-Codes-LLC" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/company/devofcodes/" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/DevOfCodes" rel="noopener">@devofcodes</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <span>Built in San Diego, California</span>
+      <span>devofcodes.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  var chips = document.querySelectorAll('.chip');
+  var cards = document.querySelectorAll('#cards .card');
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var f = chip.getAttribute('data-filter');
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+      cards.forEach(function (card) {
+        var show = f === 'all' || card.getAttribute('data-kind') === f;
+        card.hidden = !show;
+        if (show) card.classList.add('is-visible');
+        card.classList.toggle('featured', show && f === 'all' && card === cards[0]);
+      });
+    });
+  });
+
+  document.querySelectorAll('.term-copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = document.getElementById(btn.getAttribute('data-copy')).textContent;
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
