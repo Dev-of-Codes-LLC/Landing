@@ -9,7 +9,14 @@
 <meta property="og:description" content="Skills, agents and routines for AI coding tools, with the rules they follow. Open source.">
 <meta property="og:site_name" content="DevOfCodes">
 <link rel="canonical" href="https://devofcodes.com/toolkit.html">
-<link rel="icon" type="image/png" href="assets/DoC Icon.png">
+<meta property="og:image" content="https://devofcodes.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DevOfCodes. Independent developer. Building useful software.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -200,6 +207,7 @@
     <aside class="term" aria-label="Install commands">
       <div class="term-bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><span>claude — install</span></div>
       <div class="term-body">
+        <!-- toolkit:install -->
         <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd1">/plugin marketplace add Dev-of-Codes-LLC/agent-toolkit</code><button class="term-copy" data-copy="cmd1">Copy</button></div>
         <div class="term-out">✓ marketplace <b>agent-toolkit</b> added</div>
         <div class="term-gap"></div>
@@ -208,6 +216,7 @@
         <div class="term-gap"></div>
         <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
         <div class="term-out">✓ ticket-writer · status-digest · org-map · backlog-planner</div>
+        <!-- /toolkit:install -->
       </div>
     </aside>
   </div>
@@ -215,10 +224,12 @@
 
 <section class="tk-strip" aria-label="At a glance">
   <div class="container">
+    <!-- toolkit:stats -->
     <div class="tk-stat"><div class="n">6</div><div class="k">Skills</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Read-only agent</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Scheduled routine</div></div>
     <div class="tk-stat"><div class="n">6</div><div class="k">Patterns, written up</div></div>
+    <!-- /toolkit:stats -->
   </div>
 </section>
 
@@ -231,11 +242,13 @@
       <p class="section-sub">Every skill and agent in the set is held to the same five rules. They are written into each file, not left to a README.</p>
     </div>
     <div class="rules fade-up">
+      <!-- toolkit:rules -->
       <div class="rule"><div class="i">01</div><h3>Read-only by default</h3><p>A digest reads. A planner reads. Anything that writes says exactly which one write it makes.</p></div>
       <div class="rule"><div class="i">02</div><h3>Drafts, not actions</h3><p>Agents return tickets and plans for a person to approve. They never file, merge or close on their own.</p></div>
       <div class="rule"><div class="i">03</div><h3>Data is not instructions</h3><p>Text in issues, pull requests and web pages is reported, never obeyed. In a public repo anyone can write there.</p></div>
-      <div class="rule"><div class="i">04</div><h3>Every fact has a date</h3><p>"Checked 2026-10-10: …" or it is a guess, and a guess is labelled as one.</p></div>
+      <div class="rule"><div class="i">04</div><h3>Every fact has a date</h3><p>&quot;Checked 2026-10-10: …&quot; or it is a guess, and a guess is labelled as one.</p></div>
       <div class="rule"><div class="i">05</div><h3>Dry run first</h3><p>Destructive steps print the exact commands and wait. Data nobody named is never deleted.</p></div>
+      <!-- /toolkit:rules -->
     </div>
   </div>
 </section>
@@ -249,15 +262,18 @@
         <h2 class="section-headline">What's in the box.</h2>
       </div>
       <div class="chips" role="group" aria-label="Filter by kind">
+        <!-- toolkit:chips -->
         <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">14</span></button>
         <button class="chip" data-filter="skill" aria-pressed="false">Skills<span class="c">6</span></button>
         <button class="chip" data-filter="agent" aria-pressed="false">Agents<span class="c">1</span></button>
         <button class="chip" data-filter="routine" aria-pressed="false">Routines<span class="c">1</span></button>
         <button class="chip" data-filter="pattern" aria-pressed="false">Patterns<span class="c">6</span></button>
+        <!-- /toolkit:chips -->
       </div>
     </div>
 
     <div class="cards" id="cards">
+      <!-- toolkit:cards -->
       <article class="card featured fade-up" data-kind="skill">
         <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
         <h3>feature-doc</h3>
@@ -318,7 +334,7 @@
       <article class="card fade-up" data-kind="routine">
         <div class="card-top"><span class="kind kind--routine">Routine</span><span class="plugin">Twice a week</span></div>
         <h3>status-digest, scheduled</h3>
-        <p class="what">The digest as a scheduled cloud routine: it posts one comment on a pinned "Status digest" issue, covering everything since the last one.</p>
+        <p class="what">The digest as a scheduled cloud routine: it posts one comment on a pinned &quot;Status digest&quot; issue, covering everything since the last one.</p>
         <p class="refuses"><b>Won't</b>write anywhere except that one comment.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/routines/status-digest.md" rel="noopener">Recipe on GitHub →</a>
       </article>
@@ -364,6 +380,7 @@
         <p class="what">Skills read one small <span class="mono">toolkit.json</span> for your repos, board and owner, and offer to write it when it is missing.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/config-not-names.md" rel="noopener">Read it →</a>
       </article>
+      <!-- /toolkit:cards -->
     </div>
   </div>
 </section>
@@ -443,7 +460,6 @@
         <span class="footer-heading">Elsewhere</span>
         <a href="mailto:hello@devofcodes.com">hello@devofcodes.com</a>
         <a href="https://github.com/Dev-of-Codes-LLC" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/company/devofcodes/" rel="noopener">LinkedIn</a>
         <a href="https://x.com/DevOfCodes" rel="noopener">@devofcodes</a>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
