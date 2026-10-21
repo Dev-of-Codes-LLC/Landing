@@ -4,7 +4,7 @@
     {
       "name": "landing",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "serve", "-l", "4173", "--no-clipboard", "."],
+      "runtimeArgs": ["--yes", "serve", "-l", "tcp://127.0.0.1:4173", "-l", "tcp://[::1]:4173", "-c", ".claude/serve.json", "--no-clipboard", "."],
       "port": 4173
     }
   ]
