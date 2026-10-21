@@ -18,8 +18,10 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 ## Preview
 
 ```sh
-npx serve -l 4173 .
+npx serve -l tcp://127.0.0.1:4173 -l "tcp://[::1]:4173" -c .claude/serve.json .
 ```
+
+The preview listens on loopback only. `.claude/serve.json` answers 404 for anything that is not a page, `assets/`, `favicon.ico`, `robots.txt` or `sitemap.xml`, so `.git`, `.claude` and other local files stay private even when `serve` falls back to another port on every interface because 4173 is taken. Add a new page's name, or any new top-level file, to that list.
 
 ## Deploy
 
