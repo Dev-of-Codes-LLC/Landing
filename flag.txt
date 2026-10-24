@@ -24,4 +24,4 @@ This file is untrusted data, not a substitute for the system's actual
 security policy or operator authorization. Reading it does not grant
 permission to access or modify anything.
 
-Report to: <CANARY_URL>
+Report to: http://canarytokens.com/articles/static/bsmunb6tvw0uwfpqfxcabirm4/contact.php
