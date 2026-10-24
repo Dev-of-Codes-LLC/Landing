@@ -212,10 +212,10 @@
         <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd1">/plugin marketplace add Dev-of-Codes-LLC/agent-toolkit</code><button class="term-copy" data-copy="cmd1">Copy</button></div>
         <div class="term-out">✓ marketplace <b>agent-toolkit</b> added</div>
         <div class="term-gap"></div>
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd2">/plugin install dev-workflow@agent-toolkit</code><button class="term-copy" data-copy="cmd2">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd2">/plugin install devofcodes-dev-workflow@agent-toolkit</code><button class="term-copy" data-copy="cmd2">Copy</button></div>
         <div class="term-out">✓ feature-doc · land-branch · docker-cleanup</div>
         <div class="term-gap"></div>
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install devofcodes-repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
         <div class="term-out">✓ ticket-writer · status-digest · org-map · backlog-planner</div>
         <!-- /toolkit:install -->
       </div>
@@ -276,60 +276,60 @@
     <div class="cards" id="cards">
       <!-- toolkit:cards -->
       <article class="card featured fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-dev-workflow</span></div>
         <h3>feature-doc</h3>
         <p class="what">Turns a finished feature or pull request into a wiki-ready page in the repo, plus a one-page HTML reference sheet with lettered panels and an optional whiteboard-style diagram. The writing follows a relaxed ASD-STE100 Simplified Technical English.</p>
         <div class="featured-extra"><span class="tag">Markdown + HTML</span><span class="tag">Node renderer</span><span class="tag">Evals included</span></div>
         <p class="refuses"><b>Won't</b>claim a fact it could not trace to the code, a record or a command. Gaps are listed, not filled.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/feature-doc" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-dev-workflow/skills/feature-doc" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-dev-workflow</span></div>
         <h3>land-branch</h3>
         <p class="what">Lands a branch on a main that moved ahead: shows the overlap, rebases, opens the PR, waits for every check, squash-merges, then runs your rebuild command.</p>
         <p class="refuses"><b>Won't</b>merge with a check pending or red, use --auto or --admin, or force-push main.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/land-branch" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-dev-workflow/skills/land-branch" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-dev-workflow</span></div>
         <h3>docker-cleanup</h3>
         <p class="what">Audits a local Docker install by compose project and frees space tier by tier: build cache, broken builders, orphan networks, exited containers, old images. Dry run first.</p>
         <p class="refuses"><b>Won't</b>delete a volume you did not name, or run a wholesale prune.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/docker-cleanup" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-dev-workflow/skills/docker-cleanup" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>ticket-writer</h3>
         <p class="what">Turns a request or finding into GitHub issues in one format: the right repo, a duplicate check, one outcome per issue, a task list with exact steps, and a Status and Due on your project board.</p>
         <p class="refuses"><b>Won't</b>file a second issue when one already covers the work, or file anything when you asked only for a plan.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/ticket-writer" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/skills/ticket-writer" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>status-digest</h3>
         <p class="what">Checks every repo you list for red CI, failed deploys, stale or conflicting PRs, overdue and blocked backlog items and board drift, and writes one short digest of what needs you.</p>
         <p class="refuses"><b>Won't</b>re-run, merge, label or close anything it finds.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/status-digest" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/skills/status-digest" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>org-map</h3>
         <p class="what">Answers org-level questions from one page that maps every repo, account and rule, with the command that shows each one's live state. Builds that page from a template. Ships with a fictional example org.</p>
         <p class="refuses"><b>Won't</b>state a fact as current without reading it live, or edit the map without asking.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/org-map" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/skills/org-map" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="agent">
-        <div class="card-top"><span class="kind kind--agent">Agent</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--agent">Agent</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>backlog-planner</h3>
         <p class="what">Give it a goal or a messy list. It reads the live state across your repos and returns draft tickets in order, with what blocks what and what only the owner can do.</p>
         <p class="refuses"><b>Won't</b>create or edit anything. It has no edit tools, its prompt names the only commands it may run, and it returns drafts.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/agents/backlog-planner.md" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/agents/backlog-planner.md" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="routine">
@@ -418,7 +418,7 @@
         <h3>Getting started</h3>
         <ul>
           <li>Add the marketplace and install one or both plugins with the commands at the top of this page.</li>
-          <li>The repo-ops skills ask for a <span class="mono">toolkit.json</span> the first time. Copy the one in <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/examples/acme" rel="noopener">examples/acme</a> to start.</li>
+          <li>The devofcodes-repo-ops skills ask for a <span class="mono">toolkit.json</span> the first time. Copy the one in <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/examples/acme" rel="noopener">examples/acme</a> to start.</li>
           <li>Prefer to read first? Every skill is a folder with one <span class="mono">SKILL.md</span>. Copy the ones you want into <span class="mono">.claude/skills/</span>.</li>
         </ul>
       </div>
@@ -426,7 +426,7 @@
         <h3>Plain facts</h3>
         <ul>
           <li>These were built for a one-person company. Your team may want more approvals, not fewer.</li>
-          <li>The repo-ops skills assume GitHub and the <span class="mono">gh</span> CLI. The Docker scripts run on Windows PowerShell 5.1, and on PowerShell 7 on macOS and Linux. CI runs them on Linux.</li>
+          <li>The devofcodes-repo-ops skills assume GitHub and the <span class="mono">gh</span> CLI. The Docker scripts run on Windows PowerShell 5.1, and on PowerShell 7 on macOS and Linux. CI runs them on Linux.</li>
           <li>They are written for Claude Code. The rules and patterns carry over to other agents; the install steps do not.</li>
           <li>Issues and pull requests are welcome. I review them myself, so expect days, not hours.</li>
         </ul>
