@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DevOfCodes — Independent developer. Building useful software.</title>
-<meta name="description" content="DevOfCodes is Max Wahlgren's one-person software company in San Diego. Products, tools and experiments in progress, and focused contract development for small, well-defined projects.">
+<meta name="description" content="DevOfCodes (Dev of Codes LLC) is Max Wahlgren's one-person software company in San Diego. Products, tools and experiments in progress, and focused contract development for small, well-defined projects.">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://devofcodes.com">
@@ -30,23 +30,43 @@
       "@id": "https://devofcodes.com/#website",
       "url": "https://devofcodes.com/",
       "name": "DevOfCodes",
-      "alternateName": "Dev of Codes",
+      "alternateName": ["Dev of Codes", "Dev of Codes LLC"],
       "publisher": { "@id": "https://devofcodes.com/#organization" }
     },
     {
       "@type": "Organization",
       "@id": "https://devofcodes.com/#organization",
       "name": "DevOfCodes",
-      "alternateName": "Dev of Codes LLC",
+      "legalName": "Dev of Codes LLC",
+      "alternateName": ["Dev of Codes", "Dev of Codes LLC"],
       "url": "https://devofcodes.com/",
       "logo": "https://devofcodes.com/assets/apple-touch-icon.png",
       "email": "hello@devofcodes.com",
-      "founder": { "@type": "Person", "name": "Max Wahlgren" },
-      "address": { "@type": "PostalAddress", "addressLocality": "San Diego", "addressRegion": "CA", "addressCountry": "US" },
+      "description": "A one-person software company in San Diego. Products, tools and experiments, plus focused contract development.",
+      "founder": { "@id": "https://devofcodes.com/#max" },
+      "numberOfEmployees": { "@type": "QuantitativeValue", "value": 1 },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1050 Kettner Blvd, Suite D, PMB 1020",
+        "addressLocality": "San Diego",
+        "addressRegion": "CA",
+        "postalCode": "92101",
+        "addressCountry": "US"
+      },
       "sameAs": [
         "https://github.com/Dev-of-Codes-LLC",
-        "https://x.com/DevOfCodes"
+        "https://x.com/DevOfCodes",
+        "https://maxwahlgren.com/"
       ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://devofcodes.com/#max",
+      "name": "Max Wahlgren",
+      "jobTitle": "Founder and engineer",
+      "worksFor": { "@id": "https://devofcodes.com/#organization" },
+      "url": "https://maxwahlgren.com/",
+      "sameAs": ["https://maxwahlgren.com/"]
     }
   ]
 }
@@ -656,10 +676,10 @@
         <h2 class="section-headline">Hi, I'm Max.</h2>
         <div class="about-text" style="margin-top:1.4rem">
           <p>I'm a software engineer in San Diego. I've spent seven years building internal tools and systems across enterprise operations, going from analyst to senior engineer, and I've watched the same problems repeat on every team: context that lived in a chat thread nobody could find, decisions that couldn't be traced, software that worked until someone else had to maintain it.</p>
-          <p>DevOfCodes LLC is the work I do on my own account, alongside my full-time engineering job. I build things I want to exist, I document them as if a stranger will take them over tomorrow, and I take on a small number of contract projects where that way of working is worth paying for. Because it runs alongside a day job, I only take work I can scope honestly and deliver on the schedule I quote.</p>
+          <p>Dev of Codes LLC is the work I do on my own account, alongside my full-time engineering job. I build things I want to exist, I document them as if a stranger will take them over tomorrow, and I take on a small number of contract projects where that way of working is worth paying for. Because it runs alongside a day job, I only take work I can scope honestly and deliver on the schedule I quote.</p>
           <p><strong>If you've read this far, you probably have something in mind.</strong> Send it over. I read every message myself and reply, usually within a day.</p>
         </div>
-        <div class="signature"><b>Max Wahlgren</b><br>Founder and engineer, DevOfCodes LLC<br>San Diego, California</div>
+        <div class="signature"><b>Max Wahlgren</b><br>Founder and engineer, Dev of Codes LLC<br>San Diego, California</div>
       </div>
 
       <div class="contact-card fade-up">
@@ -729,7 +749,7 @@
           <span>DevOfCodes</span>
         </a>
         <div class="footer-tagline">A one-person software company. Products, tools and experiments, plus focused contract development.</div>
-        <div class="footer-copyright">© 2025–2026 DevOfCodes LLC</div>
+        <div class="footer-copyright">© 2025–2026 Dev of Codes LLC</div>
       </div>
       <div class="footer-links-col">
         <span class="footer-heading">Site</span>
