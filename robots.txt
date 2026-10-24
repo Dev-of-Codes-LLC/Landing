@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /flag.txt
 
 Sitemap: https://devofcodes.com/sitemap.xml
