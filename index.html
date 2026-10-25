@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DevOfCodes — Independent developer. Building useful software.</title>
+<title>DevOfCodes — Work you can inspect.</title>
 <meta name="description" content="DevOfCodes (Dev of Codes LLC) is Max Wahlgren's one-person software company in San Diego. Products, tools and experiments in progress, and focused contract development for small, well-defined projects.">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://devofcodes.com">
-<meta property="og:title" content="DevOfCodes — Independent developer. Building useful software.">
+<meta property="og:title" content="DevOfCodes — Work you can inspect.">
 <meta property="og:description" content="A one-person software company. See what I'm building, and hire me for focused contract development.">
 <meta property="og:site_name" content="DevOfCodes">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@devofcodes">
-<meta name="twitter:title" content="DevOfCodes — Independent developer. Building useful software.">
+<meta name="twitter:title" content="DevOfCodes — Work you can inspect.">
 <meta name="twitter:description" content="A one-person software company. See what I'm building, and hire me for focused contract development.">
 <link rel="canonical" href="https://devofcodes.com">
 <meta property="og:image" content="https://devofcodes.com/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="DevOfCodes. Independent developer. Building useful software.">
+<meta property="og:image:alt" content="DevOfCodes. Work you can inspect.">
 <meta name="twitter:image" content="https://devofcodes.com/assets/og.png">
 <script type="application/ld+json">
 {
@@ -129,15 +129,11 @@
 .hero-eyebrow .sep { color: var(--text-muted); }
 .hero-headline {
   font-family: var(--font-display); font-weight: 800;
-  font-size: clamp(2.6rem, 6.2vw, 4.9rem);
+  /* Sized so "Work you can" fits the hero column: two lines, never "can" on its own */
+  font-size: clamp(2.1rem, 4.6vw, 3.6rem); text-wrap: balance;
   letter-spacing: -0.035em; line-height: 1.04;
   margin-bottom: 1.6rem; color: var(--text-primary);
 }
-@media (max-width: 480px) {
-  /* "Independent" is ~9.9em wide in Syne 800; the 2.6rem floor pushed it past the gutters on phones */
-  .hero-headline { font-size: calc(9.4vw - 0.25rem); }
-}
-.hero-headline .line { display: block; }
 /* Texts reveal (transitions.dev 18): each word rises --distance-medium out of a
    --blur-medium blur. The inline script staggers words by --duration-micro. */
 .hero-headline .hw {
@@ -151,12 +147,9 @@
     transform var(--duration-very-slow) var(--ease-smooth-out),
     filter    var(--duration-very-slow) var(--ease-smooth-out);
 }
-.hero-headline .accent { color: var(--accent-cyan); }
-.hero-headline .amber { color: var(--accent-amber); }
 .hero-sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 520px; margin-bottom: 2rem; }
 .hero-sub strong { color: var(--text-primary); font-weight: 500; }
 .hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
-.hero-note { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.02em; }
 [data-stage] { opacity: 0; transform: translateY(var(--distance-medium)); }
 [data-stage].anim-in {
   opacity: 1; transform: none;
@@ -203,6 +196,7 @@
 
 @media (max-width: 960px) {
   .hero .container { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-headline { font-size: clamp(2.1rem, 7.5vw, 4.4rem); }
   .ledger { justify-self: start; max-width: 520px; }
   .hero-shader::after { background: linear-gradient(180deg, rgba(8,10,15,0.55) 0%, rgba(8,10,15,0.8) 100%); }
 }
@@ -240,6 +234,9 @@
 }
 .project:last-of-type { border-bottom: 1px solid var(--border); }
 .project:nth-of-type(even) .project-cover { order: 2; }
+/* A project with nothing real to show yet gets no cover, only its record */
+.project--text { grid-template-columns: minmax(0, 1fr); }
+.project--text .project-text { max-width: 760px; }
 .project-index { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 .project h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 2.6vw, 2.2rem); letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.4rem; }
 .project .kicker { font-family: var(--font-body); font-style: italic; color: var(--text-secondary); margin-bottom: 1.2rem; }
@@ -267,13 +264,6 @@
   position: absolute; left: 0.9rem; bottom: 0.8rem; z-index: 5;
   font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--text-secondary); background: rgba(8,10,15,0.65); padding: 0.3rem 0.55rem; border-radius: 4px; border: 1px solid var(--border);
-}
-.cover--bbi .shader-fallback {
-  background:
-    linear-gradient(135deg, rgba(245,158,11,0.18), transparent 45%),
-    repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 28px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 28px),
-    #0B0E14;
 }
 .shader-surface.shader-ready .shader-fallback::after { opacity: 0; transition: opacity 900ms; }
 
@@ -351,15 +341,7 @@
   position: relative; border: 1px solid var(--border-bright); border-radius: var(--radius);
   overflow: hidden; background: var(--bg-surface);
 }
-.contact-shader { position: absolute; inset: 0; z-index: 0; }
-.contact-shader .shader-fallback {
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,200,255,0.18), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 80% 10%, rgba(245,158,11,0.12), transparent 60%),
-    var(--bg-surface);
-}
-.contact-card::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(14,17,23,0.1) 0%, rgba(14,17,23,0.85) 35%, rgba(14,17,23,0.98) 100%); pointer-events: none; }
-.contact-inner { position: relative; z-index: 2; padding: 2.2rem; }
+.contact-inner { padding: 2.2rem; }
 .contact-inner h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.015em; margin-bottom: 0.4rem; }
 .contact-inner > p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.4rem; }
 .contact-direct { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 0.9rem 0; margin-bottom: 1.2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -419,17 +401,15 @@
         <span class="sep" aria-hidden="true">/</span><span>San Diego, CA</span>
       </div>
       <h1 class="hero-headline" id="heroHeadline">
-        <span class="line"><span class="hw">Independent</span> <span class="hw">developer.</span></span>
-        <span class="line"><span class="hw">Building</span> <span class="hw accent">useful</span> <span class="hw">software.</span></span>
+        <span class="hw">Work</span> <span class="hw">you</span> <span class="hw">can</span> <span class="hw">inspect.</span>
       </h1>
       <p class="hero-sub" data-stage="1100">
-        DevOfCodes is my one-person software company. I build my own products and tools here, and I take on <strong>focused contract work</strong>: web applications, data pipelines, and connecting AI models to the systems you already run.
+        Dev of Codes LLC is Max Wahlgren, a senior engineer in San Diego. I build my own tools and take a few <strong>fixed-scope contracts</strong>: web apps, data pipelines, and AI wired into systems you already run.
       </p>
       <div class="hero-ctas" data-stage="1250">
         <a href="#contact" class="btn btn-amber">Discuss a project →</a>
         <a href="#work" class="btn btn-ghost">Explore my work ↓</a>
       </div>
-      <p class="hero-note" data-stage="1400">One person, an LLC, and work you can inspect.</p>
     </div>
 
     <aside class="ledger" aria-labelledby="ledgerTitle" data-stage="900">
@@ -505,11 +485,7 @@
     </article>
 
     <!-- BBI -->
-    <article class="project fade-up" id="bbi">
-      <div class="project-cover cover--bbi shader-surface" data-shader="bbi">
-        <div class="shader-fallback"></div>
-        <span class="cover-label">Illustration · not a generated build</span>
-      </div>
+    <article class="project project--text fade-up" id="bbi">
       <div class="project-text">
         <div class="project-index"><span class="pill pill--dev">In development</span><span>Private repository · 120+ merged PRs</span></div>
         <h3>Block-Based Build Instructions</h3>
@@ -636,7 +612,6 @@
       </div>
 
       <div class="contact-card fade-up">
-        <div class="contact-shader shader-surface" data-shader="contact" aria-hidden="true"><div class="shader-fallback"></div></div>
         <div class="contact-inner">
           <h3>Discuss a project</h3>
           <p>Tell me what you're trying to get built, roughly when, and anything that already exists.</p>
@@ -724,7 +699,7 @@
     </div>
     <div class="footer-bottom-bar">
       <span>Built in San Diego, California</span>
-      <span>Backgrounds rendered live with WebGPU · <a href="https://github.com/shader-effects-inc/shaders" rel="noopener">shaders</a> (MIT)</span>
+      <span>Hero background rendered live with WebGPU · <a href="https://github.com/shader-effects-inc/shaders" rel="noopener">shaders</a> (MIT)</span>
     </div>
   </div>
 </footer>
