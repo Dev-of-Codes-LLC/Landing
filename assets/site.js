@@ -79,7 +79,7 @@
 
     /* Typing into a flagged field clears its error. */
     form.querySelectorAll('.t-input').forEach(function (el) {
-      el.addEventListener('input', function () { el.classList.remove('error'); });
+      el.addEventListener('input', function () { el.classList.remove('error'); el.removeAttribute('aria-invalid'); });
     });
 
     function sha256Hex(text) {
@@ -100,13 +100,24 @@
       var honeypotEl = form.querySelector('[name="website"]');
       var errorEl = document.getElementById('contactError');
       var submitBtn = form.querySelector('[type="submit"]');
-      var valid = true;
+      var missing = [];
 
+      /* A red border alone says nothing to a screen reader, so a failed check
+         also names the empty fields in the alert and moves focus to the first. */
       [nameEl, emailEl, messageEl].forEach(function (el) {
         el.classList.remove('error');
-        if (!el.value.trim()) { el.classList.add('error'); shake(el); valid = false; }
+        el.removeAttribute('aria-invalid');
+        if (!el.value.trim()) {
+          el.classList.add('error'); el.setAttribute('aria-invalid', 'true'); shake(el);
+          missing.push(form.querySelector('label[for="' + el.id + '"]').textContent);
+        }
       });
-      if (!valid) return;
+      if (missing.length) {
+        errorEl.textContent = 'Still needed: ' + missing.join(', ') + '.';
+        errorEl.style.display = 'block';
+        form.querySelector('[aria-invalid="true"]').focus();
+        return;
+      }
 
       var payload = JSON.stringify({
         name: nameEl.value.trim(),

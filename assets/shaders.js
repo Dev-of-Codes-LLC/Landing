@@ -33,7 +33,8 @@ const PRESETS = {
     ]
   },
 
-  /* BBI: a slowly turning voxel cube, lit like a tabletop model. */
+  /* BBI: a slowly turning voxel cube, lit like a tabletop model. A stand-in, labelled as one
+     on the page, until a real generated build replaces it. */
   bbi: {
     components: [
       {
@@ -51,23 +52,6 @@ const PRESETS = {
           glossiness: 0.3, specular: 0.5, scale: 0.85
         }
       }
-    ]
-  },
-
-  /* Open editor plan: a flowing gradient rendered as text, the way an editor would see it. */
-  editor: {
-    components: [
-      { type: 'FlowingGradient', props: { colorA: '#080A0F', colorB: '#0D3446', colorC: '#00C8FF', colorD: '#F59E0B', colorSpace: 'oklch', speed: 0.35, distortion: 0.8, seed: 3 } },
-      { type: 'Ascii', props: { characters: '@%#*+=-:. ', cellSize: 15, fontFamily: 'JetBrains Mono', spacing: 0.9, gamma: 1.15 } }
-    ]
-  },
-
-  /* Platform: a hex lattice with light coming in from one corner. */
-  platform: {
-    components: [
-      { type: 'HexGrid', props: { colorA: '#0B0F16', colorB: '#1B5E73', cells: 11, thickness: 0.6, variation: 0.4, softness: 0.08 } },
-      { type: 'Godrays', props: { center: { x: 0.9, y: 0.05 }, rayColor: '#00C8FF', density: 0.25, intensity: 0.55, spotty: 0.5, speed: 0.25, opacity: 0.55, blendMode: 'screen' } },
-      { type: 'Vignette', props: { color: '#080A0F', radius: 0.5, falloff: 0.85, intensity: 0.85 } }
     ]
   },
 
