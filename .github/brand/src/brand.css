@@ -1,5 +1,5 @@
 /* DevOfCodes — tokens for the GitHub images. Same values as assets/site.css. */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Literata:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;800&display=block');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=JetBrains+Mono:wght@400;500;800&display=block');
 
 :root {
   --bg-base: #080A0F;
@@ -7,11 +7,12 @@
   --border-bright: rgba(255, 255, 255, 0.15);
   --text-primary: #E8EAF0;
   --text-secondary: #8B93A1;
-  --text-muted: #5C6573;
+  --text-muted: #7C8594;
   --accent-cyan: #00C8FF;
   --accent-amber: #F59E0B;
   --accent-green: #10B981;
-  --font-display: 'Syne', sans-serif;
+  --font-display: 'Syne', sans-serif;   /* the wordmark and repo names */
+  --font-heading: 'Literata', serif;    /* headlines, as the site's H1 since Landing#46 */
   --font-body: 'Literata', serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -50,6 +51,6 @@ html, body { background: transparent; -webkit-font-smoothing: antialiased; }
 .eyebrow .dot { width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 0 0.3em rgba(16,185,129,0.18); }
 .eyebrow .sep { color: var(--text-muted); }
 
-.headline { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; }
+.headline { font-family: var(--font-heading); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; }
 .headline .line { display: block; }
 .headline .accent { color: var(--accent-cyan); }
