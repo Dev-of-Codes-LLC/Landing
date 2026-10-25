@@ -10,12 +10,15 @@
 
   --text-primary:   #E8EAF0;
   --text-secondary: #8B93A1;
-  --text-muted:     #5C6573;
+  --text-muted:     #7C8594; /* 4.6:1 or better on every background below; WCAG AA for small text */
 
+  /* Amber is for things you can act on, cyan for links and focus. Status hues
+     appear only on status pills and the legend. */
   --accent-cyan:    #00C8FF;
   --accent-amber:   #F59E0B;
   --accent-green:   #10B981;
   --accent-rose:    #F43F5E;
+  --status-dev:     #A78BFA;
 
   --font-display:   'Syne', sans-serif;
   --font-body:      'Literata', serif;
@@ -83,13 +86,13 @@ img { max-width: 100%; display: block; }
   font-size: 0.7rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent-cyan);
+  color: var(--text-secondary);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
-.eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--accent-cyan); opacity: 0.7; }
+.eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--text-muted); }
 
 .section-headline {
   font-family: var(--font-display);
@@ -133,9 +136,7 @@ img { max-width: 100%; display: block; }
 .btn-amber { background: var(--accent-amber); color: var(--bg-base); }
 .btn-amber:hover { opacity: 0.88; }
 .btn-ghost { background: rgba(8,10,15,0.35); color: var(--text-primary); border-color: var(--border-bright); backdrop-filter: blur(6px); }
-.btn-ghost:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
-.btn-cyan { background: transparent; color: var(--accent-cyan); border-color: var(--accent-cyan); }
-.btn-cyan:hover { background: var(--accent-cyan); color: var(--bg-base); }
+.btn-ghost:hover { border-color: var(--accent-amber); color: var(--accent-amber); }
 
 /* ── Navigation ── */
 .nav {
@@ -157,12 +158,12 @@ img { max-width: 100%; display: block; }
 .nav-link { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--text-secondary); transition: color 200ms; }
 .nav-link:hover, .nav-link[aria-current="page"] { color: var(--text-primary); }
 .nav-cta {
-  border: 1px solid var(--accent-cyan); color: var(--accent-cyan);
+  border: 1px solid var(--accent-amber); color: var(--accent-amber);
   padding: 0.45rem 1rem; border-radius: 4px;
   font-family: var(--font-mono); font-size: 0.78rem; background: transparent;
   transition: background 200ms, color 200ms;
 }
-.nav-cta:hover { background: var(--accent-cyan); color: var(--bg-base); }
+.nav-cta:hover { background: var(--accent-amber); color: var(--bg-base); }
 .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.25rem; }
 .nav-hamburger svg { width: 24px; height: 24px; }
 
@@ -222,9 +223,12 @@ img { max-width: 100%; display: block; }
   color: var(--text-secondary); background: rgba(8,10,15,0.5);
 }
 .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.pill--green { color: var(--accent-green); border-color: rgba(16,185,129,0.4); }
-.pill--amber { color: var(--accent-amber); border-color: rgba(245,158,11,0.4); }
-.pill--cyan  { color: var(--accent-cyan);  border-color: rgba(0,200,255,0.4); }
+/* One class per status, named for the state. A plan has a hollow dot: nothing is built yet. */
+.pill--use   { color: var(--accent-green); border-color: rgba(16,185,129,0.4); }
+.pill--dev   { color: var(--status-dev);   border-color: rgba(167,139,250,0.4); }
+.pill--proto { color: var(--text-secondary); }
+.pill--plan  { color: var(--text-secondary); border-style: dashed; }
+.pill--plan::before { background: transparent; box-shadow: inset 0 0 0 1px currentColor; }
 .pill--muted { color: var(--text-secondary); }
 
 /* ── Footer ── */
