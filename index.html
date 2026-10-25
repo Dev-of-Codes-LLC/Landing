@@ -194,6 +194,7 @@
 @media (prefers-reduced-motion: reduce) { .ledger-row summary, .ledger-row .name::before { transition: none; } }
 .ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.95rem; font-weight: 400; }
 .ledger-row .pill { font-size: 0.75rem; padding: 0.25rem 0.6rem; white-space: nowrap; }
+}
 .ledger-more { display: grid; gap: 0.3rem; padding: 0 0 0.9rem 1.2rem; font-size: 0.95rem; color: var(--text-secondary); }
 .ledger-more .go { color: var(--accent-cyan); justify-self: start; }
 .ledger-more .go:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -280,27 +281,23 @@
 .project-links { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin-top: 0.5rem; }
 .project-links .note { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
 
-.project-cover {
-  position: relative; aspect-ratio: 16 / 10; margin: 1.6rem 0 0.4rem; border-radius: var(--radius); overflow: hidden;
-  border: 1px solid var(--border-bright); background: var(--bg-surface);
+/* The DFS screenshot: a frame that opens the full image, with its label as a caption under it */
+.project-shot { margin: 1.6rem 0 0.4rem; }
+.shot {
+  position: relative; display: block; aspect-ratio: 16 / 10; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border-bright); background: #0B0E14;
 }
-.project-cover .cover-label {
-  position: absolute; left: 0.9rem; bottom: 0.8rem; z-index: 5;
-  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--text-secondary); background: rgba(8,10,15,0.65); padding: 0.3rem 0.55rem; border-radius: 4px; border: 1px solid var(--border);
-}
-
-/* Screenshot cover (DFS) */
-.cover--shot { background: #0B0E14; }
-.cover--shot .browser-bar {
+.shot:hover { border-color: var(--text-muted); }
+.shot .browser-bar {
   position: absolute; top: 0; left: 0; right: 0; z-index: 3; height: 30px;
   background: rgba(22,27,36,0.95); border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 6px; padding: 0 0.8rem;
+  display: flex; align-items: center; padding: 0 0.8rem;
 }
-.cover--shot .browser-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--border-bright); display: block; }
-.cover--shot .browser-bar span { margin-left: 0.6rem; font-family: var(--font-mono); font-size: 0.64rem; color: var(--text-muted); letter-spacing: 0.06em; }
-.cover--shot img { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 30px); object-fit: cover; object-position: top left; }
-.cover--shot .shot-shade { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, transparent 55%, rgba(8,10,15,0.55) 100%); pointer-events: none; }
+.shot .browser-bar span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.06em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shot img { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 30px); object-fit: cover; object-position: top left; }
+.shot .shot-shade { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, transparent 55%, rgba(8,10,15,0.55) 100%); pointer-events: none; }
+.shot-caption { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+.phone-only, .status-inline { display: none; }
 
 /* Earlier-stage projects: one row each, sized to what exists */
 .bench { margin-top: 3.5rem; }
@@ -319,15 +316,43 @@
 .bench-meta .log-link { font-family: var(--font-body); font-size: 0.88rem; }
 
 @media (max-width: 900px) {
-  /* the rail becomes a two-column fact sheet above the story */
-  .project { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; padding: 3rem 0; }
-  .record-rail { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  /* the record reads title first: the name with its status, the dek, then the rail as a
+     two-column fact sheet, then the story. The text wrapper steps aside so its children
+     can be ordered around the rail. */
+  .project { display: flex; flex-direction: column; gap: 0; padding: 3rem 0; }
+  .project-text { display: contents; }
+  .project h3 { order: 1; }
+  .project .kicker { order: 2; }
+  .project > .record-rail { order: 3; }
+  .project-text > :not(h3):not(.kicker) { order: 4; }
+  .project h3 { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+  .status-inline { display: inline-flex; font-size: 0.72rem; }
+  .record-rail .status { display: none; }
+  .record-rail { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 1.5rem; margin-bottom: 1.4rem; padding: 1rem 0 1.2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .record-rail .wide { grid-column: 1 / -1; }
   .work-header { grid-template-columns: 1fr; }
   .facts { grid-template-columns: 1fr; }
   .bench-row { grid-template-columns: 1fr; }
   .bench-row .btn { justify-self: start; }
 }
+
+@media (max-width: 480px) {
+  /* a phone's first screen: a short eyebrow, one sentence, one button, then the board */
+  .hero { padding-top: 5.5rem; }
+  .hero-eyebrow .long, .hero-sub .sub-more, .hero-ctas .btn-ghost { display: none; }
+  .hero-eyebrow { margin-bottom: 1rem; }
+  .hero-sub { margin-bottom: 1.4rem; }
+  .hero-ctas { margin-bottom: 0; }
+  .hero .container { gap: 1.8rem; }
+  /* one log entry on the board; the log link sits in its header */
+  .ledger-latest li + li { display: none; }
+  /* the pills carry the statuses, so the legend goes */
+  .work-header .legend { display: none; }
+  .project .kicker-more { display: none; }
+  .phone-only { display: inline; }
+  /* the screenshot shows one panel at full size: the infeasible run, explained */
+  .shot { aspect-ratio: 4 / 3; }
+  .shot img { object-fit: none; object-position: -282px -1060px; }
 
 /* ═══════════════════════════════════════════
    WORK WITH ME
@@ -428,14 +453,14 @@
   <div class="container">
     <div class="hero-text">
       <div class="hero-eyebrow" data-stage="350">
-        <span class="dot" aria-hidden="true"></span><span>Available for contract work</span>
-        <span class="sep" aria-hidden="true">/</span><span>San Diego, CA</span>
+        <span class="dot" aria-hidden="true"></span><span>Available<span class="long"> for contract work</span></span>
+        <span class="sep" aria-hidden="true">/</span><span>San Diego<span class="long">, CA</span></span>
       </div>
       <h1 class="hero-headline" id="heroHeadline">
         <span class="hw">Work</span> <span class="hw">you</span> <span class="hw">can</span> <span class="hw">inspect.</span>
       </h1>
       <p class="hero-sub" data-stage="1100">
-        Dev of Codes LLC is Max Wahlgren, a senior engineer in San Diego. I build my own tools and take a few <strong>fixed-scope contracts</strong>: web apps, data pipelines, and AI wired into systems you already run.
+        Dev of Codes LLC is Max Wahlgren, a senior engineer in San Diego. <span class="sub-more">I build my own tools and take a few <strong>fixed-scope contracts</strong>: web apps, data pipelines, and AI wired into systems you already run.</span>
       </p>
       <div class="hero-ctas" data-stage="1250">
         <a href="#contact" class="btn btn-amber">Discuss a project →</a>
@@ -530,24 +555,26 @@
     <!-- DFS: in daily use, so it leads -->
     <article class="project fade-up" id="dfs">
       <dl class="record-rail" aria-label="DFS Command Center at a glance">
-        <div><dt>Status</dt><dd><span class="pill pill--use">In daily use</span></dd></div>
+        <div class="status"><dt>Status</dt><dd><span class="pill pill--use">In daily use</span></dd></div>
         <div><dt>Latest entry</dt><dd><a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep 30, 2026</span></a></dd></div>
         <div><dt>Repository</dt><dd>Private</dd></div>
         <div><dt>Deployed</dt><dd>No public instance. A personal tool</dd></div>
         <div class="wide"><dt>Stack</dt><dd class="data">Python 3.12, FastAPI, SQLAlchemy, Celery, Polars, SciPy · React 19, TanStack Query, Tailwind 4 · Docker Compose, Prometheus</dd></div>
       </dl>
       <div class="project-text">
-        <h3>DFS Command Center</h3>
-        <p class="kicker">A research and portfolio workbench for daily fantasy sports on DraftKings and FanDuel. It consolidates provider exports, public sports data, projections, lineup construction, contest evaluation and results into one audited record.</p>
+        <h3>DFS Command Center <span class="pill pill--use status-inline">In daily use</span></h3>
+        <p class="kicker">A research and portfolio workbench for daily fantasy sports on DraftKings and FanDuel. <span class="kicker-more">It consolidates provider exports, public sports data, projections, lineup construction, contest evaluation and results into one audited record.</span></p>
         <div class="project-body">
           <p>I built it for myself, which means it gets used every slate. It imports the platforms' real export files (parsers verified against the actual downloads), ingests schedules, rosters, game logs and injury reports from public sources behind a licensing gate, generates lineups under constraints, and reconciles what was actually entered against what the plan said.</p>
           <p><strong>What it refuses to do:</strong> it never enters a contest or moves money, nothing in it says "profitable", and a feature that isn't ready shows an explicit unavailable state instead of a placeholder that looks real.</p>
         </div>
-        <figure class="project-cover cover--shot">
-          <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>dfs command center · lineup studio · synthetic workspace</span></div>
+        <figure class="project-shot">
+          <a class="shot" href="assets/dfs-lineup-studio.png">
+          <div class="browser-bar" aria-hidden="true"><span>dfs command center · lineup studio · synthetic workspace</span></div>
           <img src="assets/dfs-lineup-studio.png" alt="DFS Command Center's Lineup Studio screen: a five-step workflow, a constrained lineup generator with an infeasible run explained constraint by constraint, and a candidates table with validation states." loading="lazy" width="1280" height="2149">
           <div class="shot-shade"></div>
-          <figcaption class="cover-label">Real screenshot · synthetic data</figcaption>
+          </a>
+          <figcaption class="shot-caption">Real screenshot · synthetic data<span class="phone-only"> · one panel shown, tap for the full screen</span></figcaption>
         </figure>
         <div class="facts facts--one">
           <div><div class="k">Under the hood</div><div class="v"><ul>
@@ -567,14 +594,14 @@
     <!-- BBI -->
     <article class="project fade-up" id="bbi">
       <dl class="record-rail" aria-label="Block-Based Build Instructions at a glance">
-        <div><dt>Status</dt><dd><span class="pill pill--dev">In development</span></dd></div>
+        <div class="status"><dt>Status</dt><dd><span class="pill pill--dev">In development</span></dd></div>
         <div><dt>Latest entry</dt><dd><a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 9, 2026</span></a></dd></div>
         <div><dt>Repository</dt><dd>Private · <span class="data">120+</span> merged PRs</dd></div>
         <div><dt>Deployed</dt><dd>Not publicly yet. Demoed live</dd></div>
         <div class="wide"><dt>Stack</dt><dd class="data">.NET 10 modular monolith, EF Core, PostgreSQL, Redis, S3-compatible storage · React 19, TypeScript, Vite, Tailwind, Three.js</dd></div>
       </dl>
       <div class="project-text">
-        <h3>Block-Based Build Instructions</h3>
+        <h3>Block-Based Build Instructions <span class="pill pill--dev status-inline">In development</span></h3>
         <p class="kicker">Describe a structure in plain language. Get a locked design, a deterministic voxel model, a bill of materials, and step-by-step instructions you can follow in the browser.</p>
         <div class="project-body">
           <p>BBI is an AI-assisted design and construction tool for block-based games, with Minecraft first. The language model runs the design workshop and never emits geometry: a procedural generator builds the canonical <strong>voxel model</strong> from the locked specification, and everything downstream (validation, materials, instruction book) derives from that model.</p>
