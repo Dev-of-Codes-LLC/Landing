@@ -95,7 +95,14 @@ function stats(site) {
     [count(site, "routine"), plural(count(site, "routine"), "Scheduled routine", "Scheduled routines")],
     [count(site, "pattern"), "Patterns, written up"],
   ];
-  return rows.map(([n, k]) => `    <div class="tk-stat"><div class="n">${n}</div><div class="k">${esc(k)}</div></div>`).join("\n");
+  const cells = rows.map(([n, k]) => `    <div class="tk-stat"><div class="n">${n}</div><div class="k">${esc(k)}</div></div>`);
+  // The page's own rule: every fact has a date. The counts carry the date the
+  // catalog was last updated, and link to the file they were read from.
+  if (site.updated) {
+    const catalog = `${site.repo}/blob/${site.branch}/docs/site.json`;
+    cells.push(`    <p class="tk-checked">Checked ${esc(site.updated)}: counts read from the toolkit's <a href="${esc(catalog)}" rel="noopener">catalog</a></p>`);
+  }
+  return cells.join("\n");
 }
 
 function rules(site) {

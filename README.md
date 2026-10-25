@@ -1,6 +1,6 @@
 <a href="https://devofcodes.com"><img src=".github/brand/social-landing.png" alt="Landing: source for devofcodes.com" width="100%"></a>
 
-Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC. Plain HTML and CSS, no build step. Backgrounds are rendered live with WebGPU by the MIT [`shaders`](https://github.com/shader-effects-inc/shaders) library, with a CSS fallback under every surface.
+Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC. Plain HTML and CSS, no build step. Backgrounds are rendered live with WebGPU by the MIT [`shaders`](https://github.com/shader-effects-inc/shaders) library, with a CSS fallback under every surface. The code is MIT; the copy and images are © DevOfCodes LLC; third-party pieces keep their own licences. [`NOTICE.md`](NOTICE.md) says which is which.
 
 ## Layout
 
@@ -9,6 +9,8 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 | `index.html` | Home: intro, projects, work with me, contact |
 | `about.html`, `changelog.html`, `open-editor.html` | About, the log, the Open Editor research plan |
 | `privacy.html`, `terms.html` | Legal pages |
+| `.well-known/security.txt` | Where to report a security problem ([RFC 9116](https://www.rfc-editor.org/rfc/rfc9116)). `Expires` is a year out: renew it before it lapses |
+| `LICENSE.md`, `NOTICE.md` | MIT for the code, and what is not under it |
 | `assets/site.css`, `assets/site.js` | Shared tokens, nav, reveals, contact form |
 | `assets/shaders.js` | WebGPU presets, mounted lazily |
 | `.github/workflows/deploy.yml` | Deploy to S3 and CloudFront |
@@ -21,7 +23,7 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 npx serve -l tcp://127.0.0.1:4173 -l "tcp://[::1]:4173" -c .claude/serve.json .
 ```
 
-The preview listens on loopback only. `.claude/serve.json` answers 404 for anything that is not a page, `assets/`, `favicon.ico`, `robots.txt` or `sitemap.xml`, so `.git`, `.claude` and other local files stay private even when `serve` falls back to another port on every interface because 4173 is taken. Add a new page's name, or any new top-level file, to that list.
+The preview listens on loopback only. `.claude/serve.json` answers 404 for anything that is not a page, `assets/`, `.well-known/`, `favicon.ico`, `robots.txt` or `sitemap.xml`, so `.git`, `.claude` and other local files stay private even when `serve` falls back to another port on every interface because 4173 is taken. Add a new page's name, or any new top-level file, to that list.
 
 ## Deploy
 

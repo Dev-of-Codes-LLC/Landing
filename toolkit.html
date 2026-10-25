@@ -64,6 +64,8 @@
   .tk-stat:first-child { border-left: none; padding-left: 0; }
   .tk-stat .n { font-family: var(--font-display); font-weight: 700; font-size: 2.1rem; line-height: 1; }
   .tk-stat .k { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+  .tk-checked { grid-column: 1 / -1; margin: 0; padding: 0 0 1.2rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+  .tk-checked a { color: inherit; border-bottom: 1px solid var(--border); }
 
   section.tk { padding: 6rem 0 0; }
 
@@ -217,6 +219,9 @@
         <div class="term-gap"></div>
         <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install devofcodes-repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
         <div class="term-out">✓ ticket-writer · status-digest · org-map · backlog-planner</div>
+        <div class="term-gap"></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd4">/plugin install devofcodes-own-it@agent-toolkit</code><button class="term-copy" data-copy="cmd4">Copy</button></div>
+        <div class="term-out">✓ after-action</div>
         <!-- /toolkit:install -->
       </div>
     </aside>
@@ -226,10 +231,11 @@
 <section class="tk-strip" aria-label="At a glance">
   <div class="container">
     <!-- toolkit:stats -->
-    <div class="tk-stat"><div class="n">6</div><div class="k">Skills</div></div>
+    <div class="tk-stat"><div class="n">7</div><div class="k">Skills</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Read-only agent</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Scheduled routine</div></div>
     <div class="tk-stat"><div class="n">6</div><div class="k">Patterns, written up</div></div>
+    <p class="tk-checked">Checked 2026-10-24: counts read from the toolkit's <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/blob/main/docs/site.json" rel="noopener">catalog</a></p>
     <!-- /toolkit:stats -->
   </div>
 </section>
@@ -264,8 +270,8 @@
       </div>
       <div class="chips" role="group" aria-label="Filter by kind">
         <!-- toolkit:chips -->
-        <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">14</span></button>
-        <button class="chip" data-filter="skill" aria-pressed="false">Skills<span class="c">6</span></button>
+        <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">15</span></button>
+        <button class="chip" data-filter="skill" aria-pressed="false">Skills<span class="c">7</span></button>
         <button class="chip" data-filter="agent" aria-pressed="false">Agents<span class="c">1</span></button>
         <button class="chip" data-filter="routine" aria-pressed="false">Routines<span class="c">1</span></button>
         <button class="chip" data-filter="pattern" aria-pressed="false">Patterns<span class="c">6</span></button>
@@ -322,6 +328,15 @@
         <p class="what">Answers org-level questions from one page that maps every repo, account and rule, with the command that shows each one's live state. Builds that page from a template. Ships with a fictional example org.</p>
         <p class="refuses"><b>Won't</b>state a fact as current without reading it live, or edit the map without asking.</p>
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/skills/org-map" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-own-it</span></div>
+        <h3>after-action</h3>
+        <p class="what">Reviews a failed release, UAT round, deploy or deadline in the voice of a blunt SEAL task-unit commander. It reads the evidence itself, turns every excuse into something the team controls, and gives exactly three fixes, the first one first. Inspired by Extreme Ownership.</p>
+        <div class="featured-extra"><span class="tag">Fixed debrief format</span><span class="tag">Evals included</span></div>
+        <p class="refuses"><b>Won't</b>edit code or file anything during the review, name or blame a person, or state a cause it could not trace to evidence.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-own-it/skills/after-action" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="agent">
@@ -432,7 +447,7 @@
         </ul>
       </div>
     </div>
-    <p class="credits fade-up">I also lean on skills I didn't write, and they stay with their authors: Anthropic's <a href="https://github.com/anthropics/skills" rel="noopener">skills</a>, Vercel's web interface guidelines, and the AWS plugin. They are not in this repo.</p>
+    <p class="credits fade-up">I also lean on skills I didn't write, and they stay with their authors: Anthropic's <a href="https://github.com/anthropics/skills" rel="noopener">skills</a>, Vercel's <a href="https://github.com/vercel-labs/web-interface-guidelines" rel="noopener">web interface guidelines</a>, and the <a href="https://github.com/aws/agent-toolkit-for-aws" rel="noopener">AWS plugin</a>. They are not in this repo.</p>
   </div>
 </section>
 </main>
