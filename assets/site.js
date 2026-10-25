@@ -47,9 +47,20 @@
     }
   };
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('is-open')) {
+    if (!mobileNav || !mobileNav.classList.contains('is-open')) return;
+    if (e.key === 'Escape') {
       toggleMobileNav();
       if (hamburger) hamburger.focus();
+      return;
+    }
+    /* The menu is a modal dialog: Tab and Shift+Tab wrap inside it instead of reaching
+       the page behind the overlay. */
+    if (e.key === 'Tab') {
+      var items = mobileNav.querySelectorAll('button, a[href]');
+      var first = items[0], last = items[items.length - 1];
+      if (!mobileNav.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
   /* Runs after the button's inline onclick has closed the menu. */

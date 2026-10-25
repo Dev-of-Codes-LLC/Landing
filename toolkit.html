@@ -38,18 +38,18 @@
   .tk-lede strong { color: var(--text-primary); font-weight: 500; }
   .tk-ctas { margin-top: 2rem; display: flex; gap: 0.9rem; flex-wrap: wrap; }
   .tk-ctas svg { width: 16px; height: 16px; fill: currentColor; }
-  .tk-note { margin-top: 1.4rem; font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); }
+  .tk-note { margin-top: 1.4rem; font-size: 0.9rem; color: var(--text-secondary); }
 
   /* terminal */
   .term { border: 1px solid var(--border-bright); border-radius: var(--radius); background: rgba(14,17,23,0.85); box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8); overflow: hidden; min-width: 0; }
   .term-bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
   .term-body { padding: 1.1rem 1.2rem 1.3rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.9; }
   .term-line { display: flex; gap: 0.6rem; align-items: baseline; min-width: 0; }
-  .term-line code { color: var(--text-primary); overflow-wrap: anywhere; }
+  .term-line code { flex: 1; min-width: 0; color: var(--text-primary); white-space: nowrap; overflow-x: auto; scrollbar-width: thin; }
   .term-line .p { color: var(--text-muted); flex: none; }
   .term-out { color: var(--text-muted); padding-left: 1.2rem; }
   .term-out b { color: var(--accent-green); font-weight: 500; }
-  .term-copy { margin-left: auto; flex: none; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); background: transparent; border: 1px solid var(--border-bright); border-radius: 4px; padding: 0.2rem 0.55rem; cursor: pointer; transition: color 160ms, border-color 160ms; }
+  .term-copy { margin-left: auto; flex: none; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); background: transparent; border: 1px solid var(--border-bright); border-radius: 4px; padding: 0.2rem 0.55rem; min-height: 24px; cursor: pointer; transition: color 160ms, border-color 160ms; }
   .term-copy:hover { color: var(--accent-amber); border-color: var(--accent-amber); }
   .term-copy.done { color: var(--accent-green); border-color: rgba(16,185,129,0.5); }
   .term-gap { height: 0.6rem; }
@@ -144,6 +144,10 @@
     .loop-step:not(:last-child)::after { content: "↓"; right: auto; left: 1rem; top: auto; bottom: -1.45rem; }
     .install-grid { grid-template-columns: 1fr; }
   }
+  @media (max-width: 480px) {
+    /* a phone's first screen: the lede's first sentence and one button, then the install block */
+    .tk-lede .lede-more, .tk-ctas .btn-ghost { display: none; }
+  }
   @media (max-width: 640px) {
     .tk-hero { padding-top: 7.5rem; }
     .rules { grid-template-columns: 1fr; }
@@ -193,8 +197,8 @@
   <div class="container">
     <div>
       <div class="eyebrow">Open source · MIT</div>
-      <h1 class="tk-title">The AI toolkit I actually run on.</h1>
-      <p class="tk-lede">These are the skills, agents and routines that plan, ship and document the work at DevOfCodes, with my own names and accounts taken out. They are written for Claude Code. <strong>Each skill and agent says what it will not do</strong>, because that is the part that took the longest to get right.</p>
+      <h1 class="tk-title">The AI toolkit I run on.</h1>
+      <p class="tk-lede">These are the skills, agents and routines that plan, ship and document the work at DevOfCodes, with my own names and accounts taken out.<span class="lede-more"> They are written for Claude Code. <strong>Each skill and agent says what it will not do</strong>, because that is the part that took the longest to get right.</span></p>
       <div class="tk-ctas">
         <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit" class="btn btn-amber" rel="noopener">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -260,6 +264,7 @@
       <div>
         <h2 class="section-headline">What's in the box.</h2>
       </div>
+      <p class="visually-hidden" id="filterStatus" aria-live="polite"></p>
       <div class="chips" role="group" aria-label="Filter by kind">
         <!-- toolkit:chips -->
         <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">15</span></button>
@@ -483,6 +488,14 @@
         card.classList.toggle('featured', show && f === 'all' && card === cards[0]);
       });
       if (patterns) { patterns.hidden = !(f === 'all' || f === 'pattern'); patterns.classList.add('is-visible'); }
+      /* Say what the filter left, for screen readers: "Showing 7 skills" */
+      var status = document.getElementById('filterStatus');
+      if (status) {
+        var nouns = { skill: ['skill', 'skills'], agent: ['agent', 'agents'], routine: ['routine', 'routines'], pattern: ['pattern', 'patterns'] };
+        var rows = document.querySelectorAll('#cards .pattern').length;
+        var shown = [].filter.call(cards, function (c) { return !c.hidden; }).length + (f === 'all' || f === 'pattern' ? rows : 0);
+        status.textContent = f === 'all' ? 'Showing all ' + shown + ' items' : 'Showing ' + shown + ' ' + nouns[f][shown === 1 ? 0 : 1];
+      }
     });
   });
 
