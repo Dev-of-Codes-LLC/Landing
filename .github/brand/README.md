@@ -7,6 +7,8 @@ Images and copy that carry the devofcodes.com design onto GitHub. Same tokens as
 | `avatar.png` (1024×1024) | Organization avatar | Org settings → Profile → Profile picture → Upload |
 | `org-profile/` | Images for the org profile | Loaded by absolute URL from this repo's `main` branch. Keep the file names and paths, or the profile's images break. |
 | `social-landing.png` (1280×640) | Social preview of this repository | Repository settings → General → Social preview → Edit → Upload |
+| `social-agent-toolkit.png` (1280×640) | Social preview of the `agent-toolkit` repository | Same path, in that repository's settings |
+| `social-github.png` (1280×640) | Social preview of the `.github` repository, the card shown when someone links the org profile | Same path, in that repository's settings |
 | `assets/og.png` (1200×630) | Link previews of devofcodes.com (Google, LinkedIn, X, Slack, iMessage) | Already referenced by `og:image` and `twitter:image` on every page |
 | `workspace-logo.png` (320×132) | Google Workspace logo in the Gmail, Drive and Calendar header | Admin console → Account → Account settings → Personalization → Custom logo |
 | `gmail-signature.html` | Gmail signature | Open it in a browser, copy the signature block, paste into Gmail → Settings → See all settings → General → Signature |
