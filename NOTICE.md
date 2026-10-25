@@ -13,6 +13,6 @@ The written copy on every page, the images under `assets/` and `.github/brand/`,
 ## Third-party pieces: their own licences
 
 - The live backgrounds use the [`shaders`](https://github.com/shader-effects-inc/shaders) library (MIT). It is loaded from a CDN at runtime by `assets/shaders.js` and is not vendored here.
-- `.claude/skills/transitions-dev/` and `.claude/skills/transitions-polish/` are the [transitions.dev](https://transitions.dev) agent skills by Jakub Antalik, copied at commit `a0c6e7b`. Each sits under its own `LICENSE.txt`, which allows using the transitions in your own site and forbids republishing the collection as a pack of its own. The deploy never uploads `.claude/`.
+- The motion tokens and the transitions in `assets/site.css` and `index.html` (modal, error shake, success check, texts reveal) come from the [transitions.dev](https://transitions.dev) agent skills by Jakub Antalik, at commit `a0c6e7b`. Each is marked with a `transitions.dev` comment. Their licence allows using the transitions in your own site and forbids republishing the collection, so the skills themselves are not in this repo. The README says how to install them.
 - The fonts are served by Google Fonts under their own licences.
 - The projects described on the site belong to their respective owners, as each page says.

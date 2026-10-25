@@ -24,7 +24,7 @@
   --radius: 10px;
   --container: 1180px;
 
-  /* Motion tokens, from the transitions.dev skill (.claude/skills/transitions-dev/_root.css).
+  /* Motion tokens, from the transitions.dev skill's _root.css (README, Agent skills).
      Pick a token by what the motion does, not by the nearest number. */
   --duration-stagger: 40ms;    /* per-item stagger offset */
   --duration-micro: 80ms;      /* intent delay, shake segment, large stagger */
