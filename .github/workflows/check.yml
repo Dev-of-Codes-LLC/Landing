@@ -1,0 +1,24 @@
+# Checks every pull request before it can land: the pages' CSS is balanced, and
+# the home page's log entries match changelog.html. No secrets, no deploy; the
+# repository is public, so the minutes are free.
+name: Check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # An unclosed block once left the lower home page unstyled above 480px (Landing#55).
+      - name: CSS braces are balanced
+        run: node .github/scripts/check-css.mjs
+
+      - name: Home page log entries match changelog.html
+        run: node .github/scripts/build-log.mjs --check
