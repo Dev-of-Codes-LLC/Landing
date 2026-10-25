@@ -33,8 +33,9 @@
   .entry h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
   .entry p { color: var(--text-secondary); }
   .entry ul { margin-top: 0.8rem; list-style: none; display: grid; gap: 0.35rem; }
-  .entry li { display: grid; grid-template-columns: 1.1rem 1fr; gap: 0.4rem; color: var(--text-secondary); font-size: 0.95rem; }
-  .entry li::before { content: "–"; color: var(--text-muted); }
+  /* block, not grid: inline code and links inside an item would each become a grid cell */
+  .entry li { position: relative; padding-left: 1.5rem; color: var(--text-secondary); font-size: 0.95rem; }
+  .entry li::before { content: "–"; position: absolute; left: 0; color: var(--text-muted); }
   .entry a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
   @media (max-width: 700px) { .entry { grid-template-columns: 1fr; gap: 0.6rem; } }
 </style>
@@ -78,7 +79,7 @@
       <p class="page-meta">Across the site and the projects on it. Newest first. Updated when something worth noting lands.</p>
     </header>
 
-    <!-- ENTRIES — add new ones at the top, each with a unique id: it is the entry's link and must never change.
+    <!-- ENTRIES — add new ones at the top, each with its day (Mon D, YYYY, Pacific) and a unique id: it is the entry's link and must never change.
          The home page lists the newest three, and links each project's newest entry by its area (the line
          under the date: DFS Command Center, Toolkit, BBI, Platform, Open Editor, or Site); keep those names.
          .github/scripts/build-log.mjs copies them there at deploy
@@ -87,7 +88,7 @@
     <div class="log">
 
       <article class="entry" id="home-status-first">
-        <div class="entry-when"><b>Oct 2026</b>Site</div>
+        <div class="entry-when"><b>Oct 24, 2026</b>Site</div>
         <div>
           <h2>The home page leads with where each project stands <span class="pill pill--muted">Site</span></h2>
           <p>The home page opens with "Work you can inspect." and a plain status board for every project, with the newest log entries under it. Projects are ordered by how real they are: DFS Command Center and BBI in full, the platform and the Open Editor plan as one row each.</p>
@@ -100,7 +101,7 @@
       </article>
 
       <article class="entry" id="toolkit-public">
-        <div class="entry-when"><b>Oct 2026</b>Toolkit</div>
+        <div class="entry-when"><b>Oct 17, 2026</b>Toolkit</div>
         <div>
           <h2>The AI toolkit is public <span class="pill pill--use">In daily use</span></h2>
           <p>The Claude Code skills and agents that plan, ship and document the work here are now an open-source repo under the MIT licence, with my own names and accounts taken out. Each one says what it will not do. <a href="toolkit.html">See the toolkit page.</a></p>
@@ -114,7 +115,7 @@
       </article>
 
       <article class="entry" id="ai-platforms-offer">
-        <div class="entry-when"><b>Oct 2026</b>Site</div>
+        <div class="entry-when"><b>Oct 17, 2026</b>Site</div>
         <div>
           <h2>New offer: AI platforms and integrations <span class="pill pill--muted">Site</span></h2>
           <p>Work with me now includes connecting model APIs to your own data and systems, with structured outputs, permission boundaries, evaluation sets and cost limits written as code, or setting up your team's AI coding tools. The site's motion also moved onto the transitions.dev timing tokens.</p>
@@ -122,7 +123,7 @@
       </article>
 
       <article class="entry" id="platform-ci-repaired">
-        <div class="entry-when"><b>Oct 2026</b>Platform</div>
+        <div class="entry-when"><b>Oct 11, 2026</b>Platform</div>
         <div>
           <h2>CI repaired across the platform repos <span class="pill pill--proto">Prototype</span></h2>
           <p>Pull request checks build and test again on Identity, Control Plane, Gateway, Audit, Falcon and the end-to-end suite. Every GitHub Action is pinned to a commit SHA, and Dependabot keeps those pins and the dependencies current.</p>
@@ -130,7 +131,7 @@
       </article>
 
       <article class="entry" id="contact-form-own-function">
-        <div class="entry-when"><b>Oct 2026</b>Site</div>
+        <div class="entry-when"><b>Oct 10, 2026</b>Site</div>
         <div>
           <h2>Contact form moves off Formspree <span class="pill pill--muted">Site</span></h2>
           <p>Submissions now go to a small function in the site's own AWS account, which emails them to my inbox from the site's domain. No third-party form service, a hidden-field and timing check against bots, and the function only accepts requests the site's CDN has signed.</p>
@@ -138,7 +139,7 @@
       </article>
 
       <article class="entry" id="site-rebuilt">
-        <div class="entry-when"><b>Oct 2026</b>Site</div>
+        <div class="entry-when"><b>Oct 10, 2026</b>Site</div>
         <div>
           <h2>devofcodes.com rebuilt as a one-person company site <span class="pill pill--muted">Site</span></h2>
           <p>The previous homepage described a product with founding customers and a pricing page. Neither existed. The site now says what's true: one developer, four projects with honest statuses, and a clear way to hire me. Backgrounds are rendered live with WebGPU using the open-source <a href="https://github.com/shader-effects-inc/shaders" rel="noopener">shaders</a> library, with CSS fallbacks everywhere.</p>
@@ -146,7 +147,7 @@
       </article>
 
       <article class="entry" id="open-editor-plan">
-        <div class="entry-when"><b>Oct 2026</b>Open Editor</div>
+        <div class="entry-when"><b>Oct 10, 2026</b>Open Editor</div>
         <div>
           <h2>Open Editor Platform research plan <span class="pill pill--plan">Plan</span></h2>
           <p>A research and implementation plan for a fully open-source editor SDK serving developers and book authors equally. Engine survey, architecture contracts, release gates and a twelve-month delivery plan, with sources. <a href="open-editor.html">Read it here.</a></p>
@@ -154,7 +155,7 @@
       </article>
 
       <article class="entry" id="bbi-change-marking">
-        <div class="entry-when"><b>Oct 2026</b>BBI</div>
+        <div class="entry-when"><b>Oct 9, 2026</b>BBI</div>
         <div>
           <h2>Instruction book change marking; phase 5 under way <span class="pill pill--dev">In development</span></h2>
           <p>The instruction book now marks what changed between revisions. Phases 1 to 4 (design studio, voxel engine, build intelligence, instruction factory) are delivered; phase 5, the revision engine, is in progress.</p>
@@ -167,7 +168,7 @@
       </article>
 
       <article class="entry" id="dfs-results-radar">
-        <div class="entry-when"><b>Sep–Oct 2026</b>DFS Command Center</div>
+        <div class="entry-when"><b>Sep 30, 2026</b>DFS Command Center</div>
         <div>
           <h2>Results, Slate Radar, optimization, routines <span class="pill pill--use">In daily use</span></h2>
           <p>The blueprint's 27 units are complete, plus the v2 data track and the first v4 operations units. Results now import from both platforms' account history and reconcile against the ledger.</p>
@@ -181,7 +182,7 @@
       </article>
 
       <article class="entry" id="platform-end-to-end">
-        <div class="entry-when"><b>Mar 2026</b>Platform</div>
+        <div class="entry-when"><b>Mar 1, 2026</b>Platform</div>
         <div>
           <h2>Platform prototype runs end to end <span class="pill pill--proto">Prototype</span></h2>
           <p>Identity, Control Plane, Gateway, Audit and Falcon come up from a single compose file. Multi-tenant isolation with PostgreSQL row-level security, MFA and step-up authentication, policy-driven rate limits, an append-only audit log, and observability with Prometheus and Grafana. Falcon works locally and has no users.</p>
