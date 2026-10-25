@@ -86,13 +86,13 @@
    HERO
    ═══════════════════════════════════════════ */
 .hero {
+  /* as tall as its content, not the viewport: the board and the work are the first screen,
+     not a band of shader */
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
   display: flex;
   /* top, not centre: opening a board row then only grows the board downward */
   align-items: flex-start;
-  padding: 8rem 0 5rem;
+  padding: 6.5rem 0 3.5rem;
 }
 .hero-shader {
   position: absolute; inset: 0; z-index: 0;
@@ -101,15 +101,10 @@
 }
 .hero-shader .shader-fallback {
   background:
-    radial-gradient(ellipse 70% 60% at 78% 32%, rgba(0, 200, 255, 0.22), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 85%, rgba(245, 158, 11, 0.16), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 78% 32%, rgba(0, 200, 255, 0.11), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 85%, rgba(245, 158, 11, 0.07), transparent 60%),
     radial-gradient(ellipse 60% 70% at 20% 70%, rgba(13, 52, 70, 0.7), transparent 65%),
     var(--bg-base);
-}
-.hero-shader .shader-fallback::after {
-  content: ""; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(191, 234, 247, 0.25) 1px, transparent 1.4px);
-  background-size: 34px 34px; opacity: 0.35;
 }
 .hero-shader::after {
   /* keeps the left column readable whatever the GPU paints */
@@ -118,7 +113,7 @@
 }
 .hero .container {
   position: relative; z-index: 3;
-  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 3rem; align-items: start;
 }
 .hero-text { max-width: 640px; padding-top: 1.5rem; }
@@ -131,8 +126,9 @@
 .hero-headline {
   font-family: var(--font-display); font-weight: 600;
   /* Literata is narrow: at these sizes the line balances onto two lines beside the board,
-     or sits on one where the column is wide enough, never with "can" on its own */
-  font-size: clamp(2.4rem, 6vw, 5rem); text-wrap: balance;
+     or sits on one where the column is wide enough, never with "can" on its own. 4rem keeps
+     the board's type in proportion. */
+  font-size: clamp(2.4rem, 5vw, 4rem); text-wrap: balance;
   letter-spacing: -0.02em; line-height: 1.08;
   margin-bottom: 1.6rem; color: var(--text-primary);
 }
@@ -164,7 +160,7 @@
 
 /* Status board: every project and the state it is in, newest status from the log */
 .ledger {
-  justify-self: end; width: 100%; max-width: 460px;
+  justify-self: end; width: 100%; max-width: 560px;
   border: 1px solid var(--border-bright);
   border-radius: 10px;
   background: rgba(14, 17, 23, 0.78);
@@ -173,56 +169,47 @@
   padding: 1.1rem 1.2rem 1rem;
 }
 .ledger-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; }
-.ledger-title { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; color: var(--text-primary); }
+.ledger-title { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--text-primary); }
 .ledger-log { font-family: var(--font-mono); font-size: 0.74rem; color: var(--accent-cyan); white-space: nowrap; }
 .ledger-log:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ledger-list { list-style: none; }
-.ledger-row {
-  border-top: 1px solid var(--border);
-  font-size: 0.92rem; line-height: 1.45;
-  opacity: 0; transform: translateX(calc(var(--distance-base) * -1));
-}
-.ledger-row.anim-in {
-  opacity: 1; transform: none;
-  transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
-}
-@media (prefers-reduced-motion: reduce) {
-  .ledger-row, .ledger-row.anim-in { opacity: 1; transform: none; transition: none; }
-}
+/* No entrance animation: the board is the proof, so it paints with the headline */
+.ledger-row { border-top: 1px solid var(--border); line-height: 1.45; }
 /* Each row opens in place: what is true now, the newest log entry, and the way to the record */
+/* The whole row answers hover and focus, and the chevron sits next to the title */
 .ledger-row summary {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto 0.8rem; gap: 0.75rem; align-items: center;
-  padding: 0.6rem 0; cursor: pointer; list-style: none;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.75rem; align-items: center;
+  padding: 0.7rem 0.6rem; margin: 0 -0.6rem; border-radius: 6px; cursor: pointer; list-style: none;
+  transition: background var(--duration-quick);
 }
 .ledger-row summary::-webkit-details-marker { display: none; }
-.ledger-row summary::after {
-  content: "▸"; font-size: 0.75rem; color: var(--text-muted); justify-self: end;
+.ledger-row summary:hover, .ledger-row summary:focus-visible { background: rgba(255,255,255,0.05); }
+.ledger-row .name { position: relative; padding-left: 1.2rem; color: var(--text-primary); font-size: 1.15rem; font-weight: 500; }
+.ledger-row .name::before {
+  content: "▸"; position: absolute; left: 0; top: 0.05em; font-size: 0.8em; color: var(--text-secondary);
   transition: transform var(--duration-quick) var(--ease-smooth-out), color var(--duration-quick);
 }
-.ledger-row summary:hover::after { color: var(--text-primary); }
-.ledger-row details[open] > summary::after { transform: rotate(90deg); }
-@media (prefers-reduced-motion: reduce) { .ledger-row summary::after { transition: none; } }
-.ledger-row .name { color: var(--text-primary); font-weight: 500; }
-.ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.82rem; font-weight: 400; }
-.ledger-row .pill { font-size: 0.7rem; padding: 0.22rem 0.55rem; white-space: nowrap; }
-.ledger-more { display: grid; gap: 0.3rem; padding: 0 1.55rem 0.8rem 0; font-size: 0.86rem; color: var(--text-secondary); }
+.ledger-row summary:hover .name::before, .ledger-row summary:focus-visible .name::before { color: var(--text-primary); }
+.ledger-row details[open] > summary .name::before { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .ledger-row summary, .ledger-row .name::before { transition: none; } }
+.ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.95rem; font-weight: 400; }
+.ledger-row .pill { font-size: 0.75rem; padding: 0.25rem 0.6rem; white-space: nowrap; }
+.ledger-more { display: grid; gap: 0.3rem; padding: 0 0 0.9rem 1.2rem; font-size: 0.95rem; color: var(--text-secondary); }
 .ledger-more .go { color: var(--accent-cyan); justify-self: start; }
 .ledger-more .go:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 480px) {
   /* on a phone the pill moves under the name, so names and descriptions get the full width */
-  .ledger-row summary { grid-template-columns: minmax(0, 1fr) 0.8rem; row-gap: 0.4rem; }
-  .ledger-row summary .pill { grid-row: 2; grid-column: 1; justify-self: start; }
-  .ledger-row summary::after { grid-row: 1; grid-column: 2; }
-  .ledger-more { padding-right: 0; }
+  .ledger-row summary { grid-template-columns: minmax(0, 1fr); row-gap: 0.4rem; }
+  .ledger-row summary .pill { justify-self: start; margin-left: 1.2rem; }
 }
 /* Newest log entries, copied from changelog.html at deploy by .github/scripts/build-log.mjs */
 .ledger-log-latest { padding: 0.8rem 0 0.9rem; border-top: 1px solid var(--border); }
 .ledger-sub { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.45rem; }
 .ledger-latest { list-style: none; display: grid; gap: 0.5rem; }
-.ledger-latest li { display: grid; gap: 0.05rem; font-size: 0.88rem; line-height: 1.4; }
+.ledger-latest li { display: grid; gap: 0.05rem; font-size: 0.95rem; line-height: 1.4; }
 .ledger-latest a { color: var(--text-primary); }
 .ledger-latest a:hover { color: var(--accent-cyan); }
-.ledger-latest .when { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); }
+.ledger-latest .when { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
 .ledger-foot { padding-top: 0.7rem; border-top: 1px solid var(--border); font-family: var(--font-mono); color: var(--text-muted); font-size: 0.72rem; }
 
 @media (max-width: 960px) {
@@ -302,7 +289,6 @@
   font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--text-secondary); background: rgba(8,10,15,0.65); padding: 0.3rem 0.55rem; border-radius: 4px; border: 1px solid var(--border);
 }
-.shader-surface.shader-ready .shader-fallback::after { opacity: 0; transition: opacity 900ms; }
 
 /* Screenshot cover (DFS) */
 .cover--shot { background: #0B0E14; }
@@ -455,46 +441,46 @@
       </div>
     </div>
 
-    <aside class="ledger" aria-labelledby="ledgerTitle" data-stage="900">
+    <aside class="ledger" aria-labelledby="ledgerTitle">
       <div class="ledger-head">
         <h2 class="ledger-title" id="ledgerTitle">Where each project stands</h2>
         <a href="changelog.html" class="ledger-log">The log →</a>
       </div>
       <ul class="ledger-list">
-        <li class="ledger-row" data-stage="1300"><details>
-          <summary><span class="name">DFS Command Center<span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="pill pill--use">In daily use</span></summary>
+        <li class="ledger-row"><details>
+          <summary aria-label="DFS Command Center, in daily use" aria-describedby="board-dfs-desc"><span class="name">DFS Command Center<span class="desc" id="board-dfs-desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="pill pill--use">In daily use</span></summary>
           <div class="ledger-more">
             <p>Used every slate. Personal data stays personal, so there's no public instance.</p>
             <p>Latest: <a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep 30, 2026</span></a></p>
             <a class="go" href="#dfs">The record ↓</a>
           </div>
         </details></li>
-        <li class="ledger-row" data-stage="1370"><details>
-          <summary><span class="name">AI toolkit<span class="desc">The Claude Code skills and agents I work with. Public, MIT</span></span><span class="pill pill--use">In daily use</span></summary>
+        <li class="ledger-row"><details>
+          <summary aria-label="AI toolkit, in daily use" aria-describedby="board-toolkit-desc"><span class="name">AI toolkit<span class="desc" id="board-toolkit-desc">The Claude Code skills and agents I work with. Public, MIT</span></span><span class="pill pill--use">In daily use</span></summary>
           <div class="ledger-more">
             <p>Public on GitHub under the MIT licence. Each skill and agent says what it will not do.</p>
             <p>Latest: <a class="log-link" data-log-area="Toolkit" href="changelog.html#toolkit-public">The AI toolkit is public<span class="when">Oct 17, 2026</span></a></p>
             <a class="go" href="toolkit.html">The toolkit page →</a>
           </div>
         </details></li>
-        <li class="ledger-row" data-stage="1440"><details>
-          <summary><span class="name">Block-Based Build Instructions<span class="desc">AI-assisted design and build instructions for Minecraft</span></span><span class="pill pill--dev">In development</span></summary>
+        <li class="ledger-row"><details>
+          <summary aria-label="Block-Based Build Instructions, in development" aria-describedby="board-bbi-desc"><span class="name">Block-Based Build Instructions<span class="desc" id="board-bbi-desc">AI-assisted design and build instructions for Minecraft</span></span><span class="pill pill--dev">In development</span></summary>
           <div class="ledger-more">
             <p>Not deployed publicly yet. Phase 5, the revision engine, is in progress.</p>
             <p>Latest: <a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 9, 2026</span></a></p>
             <a class="go" href="#bbi">The record ↓</a>
           </div>
         </details></li>
-        <li class="ledger-row" data-stage="1510"><details>
-          <summary><span class="name">The DevOfCodes platform<span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="pill pill--proto">Prototype</span></summary>
+        <li class="ledger-row"><details>
+          <summary aria-label="The DevOfCodes platform, prototype" aria-describedby="board-platform-desc"><span class="name">The DevOfCodes platform<span class="desc" id="board-platform-desc">Multi-tenant foundation, Falcon on top</span></span><span class="pill pill--proto">Prototype</span></summary>
           <div class="ledger-more">
             <p>Runs locally. No users, and not for sale.</p>
             <p>Latest: <a class="log-link" data-log-area="Platform" href="changelog.html#platform-ci-repaired">CI repaired across the platform repos<span class="when">Oct 11, 2026</span></a></p>
             <a class="go" href="#platform">The record ↓</a>
           </div>
         </details></li>
-        <li class="ledger-row" data-stage="1580"><details>
-          <summary><span class="name">Open Editor Platform<span class="desc">A plan for an open-source editor SDK</span></span><span class="pill pill--plan">Research plan</span></summary>
+        <li class="ledger-row"><details>
+          <summary aria-label="Open Editor Platform, research plan" aria-describedby="board-editor-desc"><span class="name">Open Editor Platform<span class="desc" id="board-editor-desc">A plan for an open-source editor SDK</span></span><span class="pill pill--plan">Research plan</span></summary>
           <div class="ledger-more">
             <p>About 3,000 words with sources. Not started; sized for a team of eight to ten.</p>
             <p>Latest: <a class="log-link" data-log-area="Open Editor" href="changelog.html#open-editor-plan">Open Editor Platform research plan<span class="when">Oct 10, 2026</span></a></p>
@@ -502,7 +488,7 @@
           </div>
         </details></li>
       </ul>
-      <div class="ledger-log-latest" data-stage="1650">
+      <div class="ledger-log-latest">
         <h3 class="ledger-sub">Latest in the log</h3>
         <!-- log:latest -->
         <ol class="ledger-latest">
@@ -512,7 +498,7 @@
         </ol>
         <!-- /log:latest -->
       </div>
-      <div class="ledger-foot" data-stage="1700">Updated <!--deploy-date-->Oct 24, 2026<!--/deploy-date--></div>
+      <div class="ledger-foot">Updated <!--deploy-date-->Oct 24, 2026<!--/deploy-date--></div>
     </aside>
   </div>
 </section>

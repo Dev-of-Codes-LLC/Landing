@@ -64,8 +64,6 @@ html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 5.5rem; }
 
 body {
   background-color: var(--bg-base);
-  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
-  background-size: 32px 32px;
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 1.15rem;
