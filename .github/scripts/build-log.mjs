@@ -1,11 +1,16 @@
 #!/usr/bin/env node
-// Copies the newest log entries from changelog.html onto the home page, so the
-// two cannot disagree. Node 18+, no dependencies.
+// Copies log entries from changelog.html onto the home page, so the two cannot
+// disagree. Node 18+, no dependencies.
 //
 //   node .github/scripts/build-log.mjs [--log changelog.html] [--page index.html] [--count 3] [--check]
 //
-// It rewrites only what sits between <!-- log:latest --> and <!-- /log:latest -->
-// in the page: one list item per entry, linked to changelog.html#<id>.
+// It rewrites two things in the page, and nothing else:
+//   - what sits between <!-- log:latest --> and <!-- /log:latest -->: the newest
+//     entries, one list item each, linked to changelog.html#<id>;
+//   - every <a class="log-link" data-log-area="AREA">: the newest entry whose
+//     area (the line under the date in .entry-when, such as "BBI") is AREA, as a
+//     link with its title and date. The project records and the status board use
+//     these for "Last change". An area with no entry stops the run.
 //
 // Every entry needs a unique id. The id is the entry's link, so it must never
 // change. An entry without one stops the run (and the deploy) with its title.
@@ -49,6 +54,15 @@ function entries(log) {
   return found;
 }
 
+// The newest entry per area: the log is newest first, so the first match wins.
+function areaLinks(page, list) {
+  return page.replace(/<a class="log-link" data-log-area="([^"]+)"[^>]*>[\s\S]*?<\/a>/g, (_, area) => {
+    const e = list.find((x) => x.area === area);
+    if (!e) giveUp(`${pagePath} links the newest "${area}" entry, but ${logPath} has no entry with that area.`);
+    return `<a class="log-link" data-log-area="${area}" href="changelog.html#${e.id}">${e.title}<span class="when">${e.when}</span></a>`;
+  });
+}
+
 function latest(list, indent) {
   const items = list.slice(0, count).map(
     (e) =>
@@ -69,7 +83,7 @@ function fill(page, body) {
 function main() {
   const list = entries(readFileSync(logPath, "utf8"));
   const before = readFileSync(pagePath, "utf8");
-  const page = fill(before, (indent) => latest(list, indent));
+  const page = areaLinks(fill(before, (indent) => latest(list, indent)), list);
 
   if (check) {
     if (page !== before) {

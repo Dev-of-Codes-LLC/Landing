@@ -90,8 +90,9 @@
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
-  align-items: center;
-  padding: 7rem 0 5rem;
+  /* top, not centre: opening a board row then only grows the board downward */
+  align-items: flex-start;
+  padding: 8rem 0 5rem;
 }
 .hero-shader {
   position: absolute; inset: 0; z-index: 0;
@@ -118,9 +119,9 @@
 .hero .container {
   position: relative; z-index: 3;
   display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: 3rem; align-items: center;
+  gap: 3rem; align-items: start;
 }
-.hero-text { max-width: 640px; }
+.hero-text { max-width: 640px; padding-top: 1.5rem; }
 .hero-eyebrow {
   font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--text-secondary); margin-bottom: 1.4rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;
@@ -177,8 +178,7 @@
 .ledger-log:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ledger-list { list-style: none; }
 .ledger-row {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.9rem; align-items: center;
-  padding: 0.6rem 0; border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border);
   font-size: 0.92rem; line-height: 1.45;
   opacity: 0; transform: translateX(calc(var(--distance-base) * -1));
 }
@@ -189,10 +189,32 @@
 @media (prefers-reduced-motion: reduce) {
   .ledger-row, .ledger-row.anim-in { opacity: 1; transform: none; transition: none; }
 }
-.ledger-row a { color: var(--text-primary); font-weight: 500; }
-.ledger-row a:hover { color: var(--accent-cyan); }
-.ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.82rem; }
+/* Each row opens in place: what is true now, the newest log entry, and the way to the record */
+.ledger-row summary {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto 0.8rem; gap: 0.75rem; align-items: center;
+  padding: 0.6rem 0; cursor: pointer; list-style: none;
+}
+.ledger-row summary::-webkit-details-marker { display: none; }
+.ledger-row summary::after {
+  content: "▸"; font-size: 0.75rem; color: var(--text-muted); justify-self: end;
+  transition: transform var(--duration-quick) var(--ease-smooth-out), color var(--duration-quick);
+}
+.ledger-row summary:hover::after { color: var(--text-primary); }
+.ledger-row details[open] > summary::after { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .ledger-row summary::after { transition: none; } }
+.ledger-row .name { color: var(--text-primary); font-weight: 500; }
+.ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.82rem; font-weight: 400; }
 .ledger-row .pill { font-size: 0.64rem; padding: 0.22rem 0.55rem; white-space: nowrap; }
+.ledger-more { display: grid; gap: 0.3rem; padding: 0 1.55rem 0.8rem 0; font-size: 0.86rem; color: var(--text-secondary); }
+.ledger-more .go { color: var(--accent-cyan); justify-self: start; }
+.ledger-more .go:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 480px) {
+  /* on a phone the pill moves under the name, so names and descriptions get the full width */
+  .ledger-row summary { grid-template-columns: minmax(0, 1fr) 0.8rem; row-gap: 0.4rem; }
+  .ledger-row summary .pill { grid-row: 2; grid-column: 1; justify-self: start; }
+  .ledger-row summary::after { grid-row: 1; grid-column: 2; }
+  .ledger-more { padding-right: 0; }
+}
 /* Newest log entries, copied from changelog.html at deploy by .github/scripts/build-log.mjs */
 .ledger-log-latest { padding: 0.8rem 0 0.9rem; border-top: 1px solid var(--border); }
 .ledger-sub { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.45rem; }
@@ -237,22 +259,29 @@
 .work-header .legend span::before { content: "●"; margin-right: 0.5rem; }
 .legend .use::before { color: var(--accent-green); } .legend .dev::before { color: var(--status-dev); } .legend .proto::before { color: var(--text-secondary); } .legend .plan::before { content: "○"; color: var(--text-secondary); }
 
+/* Each project is a dated record: its metadata in a narrow rail, its story in one reading column */
 .project {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3.5rem; align-items: center;
+  display: grid; grid-template-columns: 13rem minmax(0, 65ch); gap: 3rem; align-items: start;
   padding: 3.5rem 0; border-top: 1px solid var(--border);
 }
 .project:last-of-type { border-bottom: 1px solid var(--border); }
-.project:nth-of-type(even) .project-cover { order: 2; }
-/* A project with nothing real to show yet gets no cover, only its record */
-.project--text { grid-template-columns: minmax(0, 1fr); }
-.project--text .project-text { max-width: 760px; }
-.project-index { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.record-rail { position: sticky; top: 6rem; display: grid; gap: 1rem; }
+.record-rail dt { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+.record-rail dd { font-size: 0.88rem; line-height: 1.5; color: var(--text-secondary); }
+.record-rail .data { font-family: var(--font-mono); font-size: 0.74rem; }
+/* "Last change": the newest log entry for the project, filled in by .github/scripts/build-log.mjs */
+.log-link { color: var(--accent-cyan); }
+.log-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.log-link .when { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+.record-rail .log-link .when { display: block; margin-top: 0.1rem; }
+.bench-meta .log-link .when::before, .ledger-more .log-link .when::before { content: " · "; }
 .project h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.6rem, 2.6vw, 2.2rem); letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 0.4rem; }
 .project .kicker { font-family: var(--font-body); font-style: italic; color: var(--text-secondary); margin-bottom: 1.2rem; }
 .project-body { color: var(--text-secondary); }
 .project-body p + p { margin-top: 0.9rem; }
 .project-body strong { color: var(--text-primary); font-weight: 500; }
 .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; margin: 1.5rem 0; }
+.facts--one { grid-template-columns: 1fr; }
 .facts div { border-top: 1px solid var(--border); padding-top: 0.6rem; }
 .facts .k { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
 .facts .v { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55; }
@@ -265,9 +294,8 @@
 .project-links .note { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
 
 .project-cover {
-  position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden;
+  position: relative; aspect-ratio: 16 / 10; margin: 1.6rem 0 0.4rem; border-radius: var(--radius); overflow: hidden;
   border: 1px solid var(--border-bright); background: var(--bg-surface);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.45);
 }
 .project-cover .cover-label {
   position: absolute; left: 0.9rem; bottom: 0.8rem; z-index: 5;
@@ -301,10 +329,14 @@
 .bench-row p { color: var(--text-secondary); font-size: 0.98rem; max-width: 68ch; }
 .bench-row p strong { color: var(--text-primary); font-weight: 500; }
 .bench-row .bench-meta { margin-top: 0.45rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
+.bench-row .bench-meta + .bench-meta { margin-top: 0.15rem; }
+.bench-meta .log-link { font-family: var(--font-body); font-size: 0.88rem; }
 
 @media (max-width: 900px) {
-  .project { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 0; }
-  .project:nth-of-type(even) .project-cover { order: 0; }
+  /* the rail becomes a two-column fact sheet above the story */
+  .project { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; padding: 3rem 0; }
+  .record-rail { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  .record-rail .wide { grid-column: 1 / -1; }
   .work-header { grid-template-columns: 1fr; }
   .facts { grid-template-columns: 1fr; }
   .bench-row { grid-template-columns: 1fr; }
@@ -427,11 +459,46 @@
         <a href="changelog.html" class="ledger-log">The log →</a>
       </div>
       <ul class="ledger-list">
-        <li class="ledger-row" data-stage="1300"><span><a href="#dfs">DFS Command Center</a><span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="pill pill--use">In daily use</span></li>
-        <li class="ledger-row" data-stage="1370"><span><a href="toolkit.html">AI toolkit</a><span class="desc">The Claude Code skills and agents I work with. Public, MIT</span></span><span class="pill pill--use">In daily use</span></li>
-        <li class="ledger-row" data-stage="1440"><span><a href="#bbi">Block-Based Build Instructions</a><span class="desc">AI-assisted design and build instructions for Minecraft</span></span><span class="pill pill--dev">In development</span></li>
-        <li class="ledger-row" data-stage="1510"><span><a href="#platform">The DevOfCodes platform</a><span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="pill pill--proto">Prototype</span></li>
-        <li class="ledger-row" data-stage="1580"><span><a href="#editor">Open Editor Platform</a><span class="desc">A plan for an open-source editor SDK</span></span><span class="pill pill--plan">Research plan</span></li>
+        <li class="ledger-row" data-stage="1300"><details>
+          <summary><span class="name">DFS Command Center<span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="pill pill--use">In daily use</span></summary>
+          <div class="ledger-more">
+            <p>Used every slate. Personal data stays personal, so there's no public instance.</p>
+            <p>Latest: <a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep–Oct 2026</span></a></p>
+            <a class="go" href="#dfs">The record ↓</a>
+          </div>
+        </details></li>
+        <li class="ledger-row" data-stage="1370"><details>
+          <summary><span class="name">AI toolkit<span class="desc">The Claude Code skills and agents I work with. Public, MIT</span></span><span class="pill pill--use">In daily use</span></summary>
+          <div class="ledger-more">
+            <p>Public on GitHub under the MIT licence. Each skill and agent says what it will not do.</p>
+            <p>Latest: <a class="log-link" data-log-area="Toolkit" href="changelog.html#toolkit-public">The AI toolkit is public<span class="when">Oct 2026</span></a></p>
+            <a class="go" href="toolkit.html">The toolkit page →</a>
+          </div>
+        </details></li>
+        <li class="ledger-row" data-stage="1440"><details>
+          <summary><span class="name">Block-Based Build Instructions<span class="desc">AI-assisted design and build instructions for Minecraft</span></span><span class="pill pill--dev">In development</span></summary>
+          <div class="ledger-more">
+            <p>Not deployed publicly yet. Phase 5, the revision engine, is in progress.</p>
+            <p>Latest: <a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 2026</span></a></p>
+            <a class="go" href="#bbi">The record ↓</a>
+          </div>
+        </details></li>
+        <li class="ledger-row" data-stage="1510"><details>
+          <summary><span class="name">The DevOfCodes platform<span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="pill pill--proto">Prototype</span></summary>
+          <div class="ledger-more">
+            <p>Runs locally. No users, and not for sale.</p>
+            <p>Latest: <a class="log-link" data-log-area="Platform" href="changelog.html#platform-ci-repaired">CI repaired across the platform repos<span class="when">Oct 2026</span></a></p>
+            <a class="go" href="#platform">The record ↓</a>
+          </div>
+        </details></li>
+        <li class="ledger-row" data-stage="1580"><details>
+          <summary><span class="name">Open Editor Platform<span class="desc">A plan for an open-source editor SDK</span></span><span class="pill pill--plan">Research plan</span></summary>
+          <div class="ledger-more">
+            <p>About 3,000 words with sources. Not started; sized for a team of eight to ten.</p>
+            <p>Latest: <a class="log-link" data-log-area="Open Editor" href="changelog.html#open-editor-plan">Open Editor Platform research plan<span class="when">Oct 2026</span></a></p>
+            <a class="go" href="open-editor.html">Read the plan →</a>
+          </div>
+        </details></li>
       </ul>
       <div class="ledger-log-latest" data-stage="1650">
         <h3 class="ledger-sub">Latest in the log</h3>
@@ -473,28 +540,33 @@
 
     <!-- DFS: in daily use, so it leads -->
     <article class="project fade-up" id="dfs">
-      <div class="project-cover cover--shot">
-        <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>dfs command center · lineup studio · synthetic workspace</span></div>
-        <img src="assets/dfs-lineup-studio.png" alt="DFS Command Center's Lineup Studio screen: a five-step workflow, a constrained lineup generator with an infeasible run explained constraint by constraint, and a candidates table with validation states." loading="lazy" width="1280" height="2149">
-        <div class="shot-shade"></div>
-        <span class="cover-label">Real screenshot · synthetic data</span>
-      </div>
+      <dl class="record-rail" aria-label="DFS Command Center at a glance">
+        <div><dt>Status</dt><dd><span class="pill pill--use">In daily use</span></dd></div>
+        <div><dt>Last change</dt><dd><a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep–Oct 2026</span></a></dd></div>
+        <div><dt>Repository</dt><dd>Private</dd></div>
+        <div><dt>Deployed</dt><dd>No public instance. A personal tool</dd></div>
+        <div class="wide"><dt>Stack</dt><dd class="data">Python 3.12, FastAPI, SQLAlchemy, Celery, Polars, SciPy · React 19, TanStack Query, Tailwind 4 · Docker Compose, Prometheus</dd></div>
+      </dl>
       <div class="project-text">
-        <div class="project-index"><span class="pill pill--use">In daily use</span><span>Personal tool · private repository</span></div>
         <h3>DFS Command Center</h3>
         <p class="kicker">A research and portfolio workbench for daily fantasy sports on DraftKings and FanDuel. It consolidates provider exports, public sports data, projections, lineup construction, contest evaluation and results into one audited record.</p>
         <div class="project-body">
           <p>I built it for myself, which means it gets used every slate. It imports the platforms' real export files (parsers verified against the actual downloads), ingests schedules, rosters, game logs and injury reports from public sources behind a licensing gate, generates lineups under constraints, and reconciles what was actually entered against what the plan said.</p>
           <p><strong>What it refuses to do:</strong> it never enters a contest or moves money, nothing in it says "profitable", and a feature that isn't ready shows an explicit unavailable state instead of a placeholder that looks real.</p>
         </div>
-        <div class="facts">
+        <figure class="project-cover cover--shot">
+          <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>dfs command center · lineup studio · synthetic workspace</span></div>
+          <img src="assets/dfs-lineup-studio.png" alt="DFS Command Center's Lineup Studio screen: a five-step workflow, a constrained lineup generator with an infeasible run explained constraint by constraint, and a candidates table with validation states." loading="lazy" width="1280" height="2149">
+          <div class="shot-shade"></div>
+          <figcaption class="cover-label">Real screenshot · synthetic data</figcaption>
+        </figure>
+        <div class="facts facts--one">
           <div><div class="k">Under the hood</div><div class="v"><ul>
             <li>Constraint solving with OR-Tools CP-SAT, portfolio optimization with HiGHS</li>
             <li>Monte Carlo contest evaluation with uncertainty reported apart</li>
             <li>Bitemporal rosters, append-only game logs, a reviewed identity queue</li>
             <li>Fourteen export gates, every input fingerprinted and re-checked</li>
           </ul></div></div>
-          <div><div class="k">Stack</div><div class="v">Python 3.12, FastAPI, SQLAlchemy, Celery, Polars, SciPy · React 19, TanStack Query, Tailwind 4 · Docker Compose, Prometheus</div></div>
         </div>
         <div class="project-links">
           <a href="#contact" class="btn btn-ghost" data-prefill-kind="trial" data-prefill-message="I'd like a personal access trial of DFS Command Center. The sports and platforms I play:">Ask for a personal trial →</a>
@@ -504,9 +576,15 @@
     </article>
 
     <!-- BBI -->
-    <article class="project project--text fade-up" id="bbi">
+    <article class="project fade-up" id="bbi">
+      <dl class="record-rail" aria-label="Block-Based Build Instructions at a glance">
+        <div><dt>Status</dt><dd><span class="pill pill--dev">In development</span></dd></div>
+        <div><dt>Last change</dt><dd><a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 2026</span></a></dd></div>
+        <div><dt>Repository</dt><dd>Private · <span class="data">120+</span> merged PRs</dd></div>
+        <div><dt>Deployed</dt><dd>Not publicly yet. Demoed live</dd></div>
+        <div class="wide"><dt>Stack</dt><dd class="data">.NET 10 modular monolith, EF Core, PostgreSQL, Redis, S3-compatible storage · React 19, TypeScript, Vite, Tailwind, Three.js</dd></div>
+      </dl>
       <div class="project-text">
-        <div class="project-index"><span class="pill pill--dev">In development</span><span>Private repository · 120+ merged PRs</span></div>
         <h3>Block-Based Build Instructions</h3>
         <p class="kicker">Describe a structure in plain language. Get a locked design, a deterministic voxel model, a bill of materials, and step-by-step instructions you can follow in the browser.</p>
         <div class="project-body">
@@ -524,7 +602,6 @@
             <li class="todo">Identity provider and first shared deployment</li>
             <li class="todo">Exports and renders for sharing a build</li>
           </ul></div></div>
-          <div><div class="k">Stack</div><div class="v">.NET 10 modular monolith, EF Core, PostgreSQL, Redis, S3-compatible storage · React 19, TypeScript, Vite, Tailwind, Three.js</div></div>
           <div><div class="k">Process</div><div class="v">Five-phase roadmap, one issue per deliverable, architecture decision records, a feature guide page for every shipped feature.</div></div>
         </div>
         <div class="project-links">
@@ -544,6 +621,7 @@
           <h4>The DevOfCodes platform, and Falcon <span class="pill pill--proto">Prototype</span></h4>
           <p>A multi-tenant foundation I built to learn what security-first costs to get right: <strong>Identity</strong> (OpenID Connect, MFA, step-up auth), a <strong>Control Plane</strong>, a <strong>Gateway</strong> that enforces policy at the edge, an append-only <strong>Audit</strong> store, and Falcon, a task manager for engineering teams, on PostgreSQL row-level security per tenant. I keep it as the base for the next product.</p>
           <p class="bench-meta">Runs locally · no users · not for sale · .NET 10, NestJS 11, PostgreSQL, RabbitMQ</p>
+          <p class="bench-meta">Last change: <a class="log-link" data-log-area="Platform" href="changelog.html#platform-ci-repaired">CI repaired across the platform repos<span class="when">Oct 2026</span></a></p>
         </div>
         <a href="#contact" class="btn btn-ghost" data-prefill-kind="new-app" data-prefill-message="I'm interested in something like the DevOfCodes platform: a multi-tenant foundation with identity, policy and an audit trail. Here's what I have in mind:">Need something like this? →</a>
       </article>
@@ -553,6 +631,7 @@
           <h4>Open Editor Platform <span class="pill pill--plan">Research plan</span></h4>
           <p>A plan for an open-source editor SDK that gives software developers and book authors equal standing, built on CodeMirror 6, ProseMirror and Yjs. <strong>Honest note:</strong> the plan is sized for a team of eight to ten. I'm working out what a one-person first slice looks like.</p>
           <p class="bench-meta">Written October 2026 · not started · about 3,000 words with sources</p>
+          <p class="bench-meta">Last change: <a class="log-link" data-log-area="Open Editor" href="changelog.html#open-editor-plan">Open Editor Platform research plan<span class="when">Oct 2026</span></a></p>
         </div>
         <a href="open-editor.html" class="btn btn-ghost">Read the plan →</a>
       </article>
