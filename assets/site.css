@@ -59,8 +59,11 @@
 /* Phones let you pan into anything wider than the screen even with overflow-x on the viewport,
    so body clips itself; clip (not hidden) on html stops body becoming a scroll container. */
 /* scroll-padding-top: focus and anchor scrolls stop below the fixed nav (WCAG 2.4.11) */
-html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 5.5rem; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { overflow-x: clip; scroll-padding-top: 5.5rem; }
+/* Smooth scrolling starts once the page and its fonts have loaded (site.js adds .smooth-scroll).
+   A smooth scroll to the address's #fragment keeps the target it set out for while the fonts
+   swap in and the text above grows, so it stopped up to 500px short. */
+@media (prefers-reduced-motion: no-preference) { html.smooth-scroll { scroll-behavior: smooth; } }
 
 body {
   background-color: var(--bg-base);

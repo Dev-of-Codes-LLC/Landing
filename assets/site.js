@@ -12,6 +12,15 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* Smooth scrolling waits for the page and its fonts, so the scroll to a #fragment on
+     arrival is instant and stays on target (see html.smooth-scroll in site.css). */
+  function smoothScrollOn() {
+    var fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+    fontsReady.then(function () { document.documentElement.classList.add('smooth-scroll'); });
+  }
+  if (document.readyState === 'complete') smoothScrollOn();
+  else window.addEventListener('load', smoothScrollOn);
+
   /* Motion tokens are read from CSS, so the timers match the stylesheet. */
   function tokenMs(name, fallback) {
     var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
