@@ -8,7 +8,8 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 const saveData = navigator.connection && navigator.connection.saveData;
 
 const PRESETS = {
-  /* Hero: a slow mesh in the site palette, grain, a twinkling dot grid, cursor paint. */
+  /* Hero: a slow, low-contrast mesh in the site palette, grain and cursor paint. It reads as light,
+     not as a pattern: no dot grid, and the brightest stops are dimmed. */
   hero: {
     components: [
       {
@@ -19,16 +20,15 @@ const PRESETS = {
             { color: '#0A1522', position: 0.3 },
             { color: '#0D3446', position: 0.58 },
             { color: '#0A7A9C', position: 0.8 },
-            { color: '#00C8FF', position: 0.93 },
-            { color: '#F59E0B', position: 1 }
+            { color: '#11617A', position: 0.93 },
+            { color: '#6E4A14', position: 1 }
           ],
           colorSpace: 'oklab', count: 6, smoothness: 2.8, variation: 0.35,
           swirl: 0.18, drift: 0.4, speed: 0.22, seed: 11
         }
       },
       { type: 'SimplexNoise', props: { colorA: '#ffffff', colorB: '#000000', scale: -0.8, speed: 0.25, opacity: 0.09, blendMode: 'softLight' } },
-      { type: 'DotGrid', props: { color: '#BFEAF7', density: 26, dotSize: 0.07, twinkle: 0.45, opacity: 0.32 } },
-      { type: 'CursorTrail', props: { colorA: '#00C8FF', colorB: '#F59E0B', radius: 0.6, length: 0.7, shrink: 1, softness: 0.7, opacity: 0.35, blendMode: 'screen' } },
+      { type: 'CursorTrail', props: { colorA: '#00C8FF', colorB: '#F59E0B', radius: 0.6, length: 0.7, shrink: 1, softness: 0.7, opacity: 0.2, blendMode: 'screen' } },
       { type: 'Vignette', props: { color: '#080A0F', center: { x: 0.5, y: 0.45 }, radius: 0.55, falloff: 1.0, intensity: 0.95 } }
     ]
   }
