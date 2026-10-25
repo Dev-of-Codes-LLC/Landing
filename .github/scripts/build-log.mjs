@@ -10,7 +10,7 @@
 //   - every <a class="log-link" data-log-area="AREA">: the newest entry whose
 //     area (the line under the date in .entry-when, such as "BBI") is AREA, as a
 //     link with its title and date. The project records and the status board use
-//     these for "Last change". An area with no entry stops the run.
+//     these for "Latest entry". An area with no entry stops the run.
 //
 // Every entry needs a unique id. The id is the entry's link, so it must never
 // change. An entry without one stops the run (and the deploy) with its title.

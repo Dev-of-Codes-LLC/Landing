@@ -204,7 +204,7 @@
 @media (prefers-reduced-motion: reduce) { .ledger-row summary::after { transition: none; } }
 .ledger-row .name { color: var(--text-primary); font-weight: 500; }
 .ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.82rem; font-weight: 400; }
-.ledger-row .pill { font-size: 0.64rem; padding: 0.22rem 0.55rem; white-space: nowrap; }
+.ledger-row .pill { font-size: 0.7rem; padding: 0.22rem 0.55rem; white-space: nowrap; }
 .ledger-more { display: grid; gap: 0.3rem; padding: 0 1.55rem 0.8rem 0; font-size: 0.86rem; color: var(--text-secondary); }
 .ledger-more .go { color: var(--accent-cyan); justify-self: start; }
 .ledger-more .go:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -269,7 +269,7 @@
 .record-rail dt { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
 .record-rail dd { font-size: 0.88rem; line-height: 1.5; color: var(--text-secondary); }
 .record-rail .data { font-family: var(--font-mono); font-size: 0.74rem; }
-/* "Last change": the newest log entry for the project, filled in by .github/scripts/build-log.mjs */
+/* "Latest entry": the newest log entry for the project, filled in by .github/scripts/build-log.mjs */
 .log-link { color: var(--accent-cyan); }
 .log-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .log-link .when { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
@@ -351,6 +351,7 @@
 .offers { counter-reset: offer; display: grid; gap: 0; border-top: 1px solid var(--border); }
 .offer { counter-increment: offer; display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.6rem 0; border-bottom: 1px solid var(--border); }
 .offer::before { content: counter(offer, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); padding-top: 0.35rem; }
+@media (max-width: 480px) { .offer { grid-template-columns: 1fr; gap: 0.2rem; } .offer::before { padding-top: 0; } }
 .offer h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; margin-bottom: 0.4rem; }
 .offer p { color: var(--text-secondary); font-size: 0.98rem; }
 .offer .evidence { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.04em; }
@@ -360,8 +361,9 @@
 .how { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; position: sticky; top: 6rem; }
 .how h4 { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
 .how ul { list-style: none; display: grid; gap: 0.7rem; }
-.how li { display: grid; grid-template-columns: 1.1rem 1fr; gap: 0.6rem; color: var(--text-secondary); font-size: 0.95rem; }
-.how li::before { content: "→"; color: var(--text-muted); font-family: var(--font-mono); }
+/* block, not grid: an inline element in an item would become its own grid cell */
+.how li { position: relative; padding-left: 1.7rem; color: var(--text-secondary); font-size: 0.95rem; }
+.how li::before { content: "→"; position: absolute; left: 0; color: var(--text-muted); font-family: var(--font-mono); }
 .how .fit { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.92rem; color: var(--text-secondary); }
 .how .fit b { color: var(--text-primary); font-weight: 500; }
 .how .btn { margin-top: 1.4rem; width: 100%; justify-content: center; }
@@ -463,7 +465,7 @@
           <summary><span class="name">DFS Command Center<span class="desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="pill pill--use">In daily use</span></summary>
           <div class="ledger-more">
             <p>Used every slate. Personal data stays personal, so there's no public instance.</p>
-            <p>Latest: <a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep–Oct 2026</span></a></p>
+            <p>Latest: <a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep 30, 2026</span></a></p>
             <a class="go" href="#dfs">The record ↓</a>
           </div>
         </details></li>
@@ -471,7 +473,7 @@
           <summary><span class="name">AI toolkit<span class="desc">The Claude Code skills and agents I work with. Public, MIT</span></span><span class="pill pill--use">In daily use</span></summary>
           <div class="ledger-more">
             <p>Public on GitHub under the MIT licence. Each skill and agent says what it will not do.</p>
-            <p>Latest: <a class="log-link" data-log-area="Toolkit" href="changelog.html#toolkit-public">The AI toolkit is public<span class="when">Oct 2026</span></a></p>
+            <p>Latest: <a class="log-link" data-log-area="Toolkit" href="changelog.html#toolkit-public">The AI toolkit is public<span class="when">Oct 17, 2026</span></a></p>
             <a class="go" href="toolkit.html">The toolkit page →</a>
           </div>
         </details></li>
@@ -479,7 +481,7 @@
           <summary><span class="name">Block-Based Build Instructions<span class="desc">AI-assisted design and build instructions for Minecraft</span></span><span class="pill pill--dev">In development</span></summary>
           <div class="ledger-more">
             <p>Not deployed publicly yet. Phase 5, the revision engine, is in progress.</p>
-            <p>Latest: <a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 2026</span></a></p>
+            <p>Latest: <a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 9, 2026</span></a></p>
             <a class="go" href="#bbi">The record ↓</a>
           </div>
         </details></li>
@@ -487,7 +489,7 @@
           <summary><span class="name">The DevOfCodes platform<span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="pill pill--proto">Prototype</span></summary>
           <div class="ledger-more">
             <p>Runs locally. No users, and not for sale.</p>
-            <p>Latest: <a class="log-link" data-log-area="Platform" href="changelog.html#platform-ci-repaired">CI repaired across the platform repos<span class="when">Oct 2026</span></a></p>
+            <p>Latest: <a class="log-link" data-log-area="Platform" href="changelog.html#platform-ci-repaired">CI repaired across the platform repos<span class="when">Oct 11, 2026</span></a></p>
             <a class="go" href="#platform">The record ↓</a>
           </div>
         </details></li>
@@ -495,7 +497,7 @@
           <summary><span class="name">Open Editor Platform<span class="desc">A plan for an open-source editor SDK</span></span><span class="pill pill--plan">Research plan</span></summary>
           <div class="ledger-more">
             <p>About 3,000 words with sources. Not started; sized for a team of eight to ten.</p>
-            <p>Latest: <a class="log-link" data-log-area="Open Editor" href="changelog.html#open-editor-plan">Open Editor Platform research plan<span class="when">Oct 2026</span></a></p>
+            <p>Latest: <a class="log-link" data-log-area="Open Editor" href="changelog.html#open-editor-plan">Open Editor Platform research plan<span class="when">Oct 10, 2026</span></a></p>
             <a class="go" href="open-editor.html">Read the plan →</a>
           </div>
         </details></li>
@@ -504,9 +506,9 @@
         <h3 class="ledger-sub">Latest in the log</h3>
         <!-- log:latest -->
         <ol class="ledger-latest">
-          <li><a href="changelog.html#home-status-first">The home page leads with where each project stands</a><span class="when">Oct 2026 · Site</span></li>
-          <li><a href="changelog.html#toolkit-public">The AI toolkit is public</a><span class="when">Oct 2026 · Toolkit</span></li>
-          <li><a href="changelog.html#ai-platforms-offer">New offer: AI platforms and integrations</a><span class="when">Oct 2026 · Site</span></li>
+          <li><a href="changelog.html#home-status-first">The home page leads with where each project stands</a><span class="when">Oct 24, 2026 · Site</span></li>
+          <li><a href="changelog.html#toolkit-public">The AI toolkit is public</a><span class="when">Oct 17, 2026 · Toolkit</span></li>
+          <li><a href="changelog.html#ai-platforms-offer">New offer: AI platforms and integrations</a><span class="when">Oct 17, 2026 · Site</span></li>
         </ol>
         <!-- /log:latest -->
       </div>
@@ -542,7 +544,7 @@
     <article class="project fade-up" id="dfs">
       <dl class="record-rail" aria-label="DFS Command Center at a glance">
         <div><dt>Status</dt><dd><span class="pill pill--use">In daily use</span></dd></div>
-        <div><dt>Last change</dt><dd><a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep–Oct 2026</span></a></dd></div>
+        <div><dt>Latest entry</dt><dd><a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep 30, 2026</span></a></dd></div>
         <div><dt>Repository</dt><dd>Private</dd></div>
         <div><dt>Deployed</dt><dd>No public instance. A personal tool</dd></div>
         <div class="wide"><dt>Stack</dt><dd class="data">Python 3.12, FastAPI, SQLAlchemy, Celery, Polars, SciPy · React 19, TanStack Query, Tailwind 4 · Docker Compose, Prometheus</dd></div>
@@ -579,7 +581,7 @@
     <article class="project fade-up" id="bbi">
       <dl class="record-rail" aria-label="Block-Based Build Instructions at a glance">
         <div><dt>Status</dt><dd><span class="pill pill--dev">In development</span></dd></div>
-        <div><dt>Last change</dt><dd><a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 2026</span></a></dd></div>
+        <div><dt>Latest entry</dt><dd><a class="log-link" data-log-area="BBI" href="changelog.html#bbi-change-marking">Instruction book change marking; phase 5 under way<span class="when">Oct 9, 2026</span></a></dd></div>
         <div><dt>Repository</dt><dd>Private · <span class="data">120+</span> merged PRs</dd></div>
         <div><dt>Deployed</dt><dd>Not publicly yet. Demoed live</dd></div>
         <div class="wide"><dt>Stack</dt><dd class="data">.NET 10 modular monolith, EF Core, PostgreSQL, Redis, S3-compatible storage · React 19, TypeScript, Vite, Tailwind, Three.js</dd></div>
@@ -621,7 +623,7 @@
           <h4>The DevOfCodes platform, and Falcon <span class="pill pill--proto">Prototype</span></h4>
           <p>A multi-tenant foundation I built to learn what security-first costs to get right: <strong>Identity</strong> (OpenID Connect, MFA, step-up auth), a <strong>Control Plane</strong>, a <strong>Gateway</strong> that enforces policy at the edge, an append-only <strong>Audit</strong> store, and Falcon, a task manager for engineering teams, on PostgreSQL row-level security per tenant. I keep it as the base for the next product.</p>
           <p class="bench-meta">Runs locally · no users · not for sale · .NET 10, NestJS 11, PostgreSQL, RabbitMQ</p>
-          <p class="bench-meta">Last change: <a class="log-link" data-log-area="Platform" href="changelog.html#platform-ci-repaired">CI repaired across the platform repos<span class="when">Oct 2026</span></a></p>
+          <p class="bench-meta">Latest entry: <a class="log-link" data-log-area="Platform" href="changelog.html#platform-ci-repaired">CI repaired across the platform repos<span class="when">Oct 11, 2026</span></a></p>
         </div>
         <a href="#contact" class="btn btn-ghost" data-prefill-kind="new-app" data-prefill-message="I'm interested in something like the DevOfCodes platform: a multi-tenant foundation with identity, policy and an audit trail. Here's what I have in mind:">Need something like this? →</a>
       </article>
@@ -631,7 +633,7 @@
           <h4>Open Editor Platform <span class="pill pill--plan">Research plan</span></h4>
           <p>A plan for an open-source editor SDK that gives software developers and book authors equal standing, built on CodeMirror 6, ProseMirror and Yjs. <strong>Honest note:</strong> the plan is sized for a team of eight to ten. I'm working out what a one-person first slice looks like.</p>
           <p class="bench-meta">Written October 2026 · not started · about 3,000 words with sources</p>
-          <p class="bench-meta">Last change: <a class="log-link" data-log-area="Open Editor" href="changelog.html#open-editor-plan">Open Editor Platform research plan<span class="when">Oct 2026</span></a></p>
+          <p class="bench-meta">Latest entry: <a class="log-link" data-log-area="Open Editor" href="changelog.html#open-editor-plan">Open Editor Platform research plan<span class="when">Oct 10, 2026</span></a></p>
         </div>
         <a href="open-editor.html" class="btn btn-ghost">Read the plan →</a>
       </article>
