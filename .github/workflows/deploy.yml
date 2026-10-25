@@ -61,6 +61,12 @@ jobs:
           sed -i "s#<!--deploy-date-->.*<!--/deploy-date-->#<!--deploy-date-->${today}<!--/deploy-date-->#" index.html
           grep -o '<!--deploy-date-->[^<]*<!--/deploy-date-->' index.html
 
+      # The home page's "Latest in the log" list is the newest three entries of
+      # changelog.html. A log entry without an id stops the deploy, by design:
+      # the id is the entry's link from the home page.
+      - name: Copy the newest log entries onto the home page
+        run: node .github/scripts/build-log.mjs
+
       # The toolkit page's cards, counts, rules and install commands come from
       # Dev-of-Codes-LLC/agent-toolkit's docs/site.json at deploy time. If the
       # catalog cannot be read, the committed cards are kept and the run shows a
