@@ -132,21 +132,9 @@
   letter-spacing: -0.02em; line-height: 1.08;
   margin-bottom: 1.6rem; color: var(--text-primary);
 }
-/* Texts reveal (transitions.dev 18): each word rises --distance-medium out of a
-   --blur-medium blur. The inline script staggers words by --duration-micro. */
-.hero-headline .hw {
-  display: inline-block; opacity: 0;
-  transform: translateY(var(--distance-medium)); filter: blur(var(--blur-medium));
-}
-.hero-headline .hw.anim-in {
-  opacity: 1; transform: translateY(0); filter: blur(0);
-  transition:
-    opacity   var(--duration-very-slow) var(--ease-smooth-out),
-    transform var(--duration-very-slow) var(--ease-smooth-out),
-    filter    var(--duration-very-slow) var(--ease-smooth-out);
-}
 .hero-sub { font-size: 1.2rem; color: var(--text-secondary); max-width: 520px; margin-bottom: 2rem; }
 .hero-sub strong { color: var(--text-primary); font-weight: 500; }
+.hero-sub .sub-phone { display: none; }
 .hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
 [data-stage] { opacity: 0; transform: translateY(var(--distance-medium)); }
 [data-stage].anim-in {
@@ -154,8 +142,7 @@
   transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-stage], [data-stage].anim-in,
-  .hero-headline .hw, .hero-headline .hw.anim-in { opacity: 1; transform: none; filter: none; transition: none; }
+  [data-stage], [data-stage].anim-in { opacity: 1; transform: none; transition: none; }
 }
 
 /* Status board: every project and the state it is in, newest status from the log */
@@ -170,7 +157,7 @@
 }
 .ledger-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; }
 .ledger-title { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--text-primary); }
-.ledger-log { font-family: var(--font-mono); font-size: 0.74rem; color: var(--accent-cyan); white-space: nowrap; }
+.ledger-log { display: inline-block; padding: 0.3rem 0; font-family: var(--font-mono); font-size: 0.74rem; color: var(--accent-cyan); white-space: nowrap; }
 .ledger-log:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ledger-list { list-style: none; }
 /* No entrance animation: the board is the proof, so it paints with the headline */
@@ -207,7 +194,7 @@
 .ledger-sub { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.45rem; }
 .ledger-latest { list-style: none; display: grid; gap: 0.5rem; }
 .ledger-latest li { display: grid; gap: 0.05rem; font-size: 0.95rem; line-height: 1.4; }
-.ledger-latest a { color: var(--text-primary); }
+.ledger-latest a { display: inline-block; padding: 0.15rem 0; color: var(--text-primary); }
 .ledger-latest a:hover { color: var(--accent-cyan); }
 .ledger-latest .when { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
 .ledger-foot { padding-top: 0.7rem; border-top: 1px solid var(--border); font-family: var(--font-mono); color: var(--text-muted); font-size: 0.72rem; }
@@ -242,8 +229,6 @@
    ═══════════════════════════════════════════ */
 .work { padding: 6.5rem 0 3rem; }
 .work-header { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end; margin-bottom: 4rem; }
-.work-header .legend { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); display: grid; gap: 0.35rem; }
-.work-header .legend span::before { content: "●"; margin-right: 0.5rem; }
 .legend .use::before { color: var(--accent-green); } .legend .dev::before { color: var(--status-dev); } .legend .proto::before { color: var(--text-secondary); } .legend .plan::before { content: "○"; color: var(--text-secondary); }
 
 /* Each project is a dated record: its metadata in a narrow rail, its story in one reading column */
@@ -278,7 +263,7 @@
 .facts li::before { content: "–"; position: absolute; left: 0; color: var(--text-muted); }
 .facts li.todo::before { content: "○"; color: var(--text-muted); font-size: 0.7rem; top: 2px; }
 .project-links { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin-top: 0.5rem; }
-.project-links .note { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
+.project-links .note { font-size: 0.88rem; line-height: 1.5; color: var(--text-secondary); }
 
 /* The DFS screenshot: a frame that opens the full image, with its label as a caption under it */
 .project-shot { margin: 1.6rem 0 0.4rem; }
@@ -339,19 +324,20 @@
   /* a phone's first screen: a short eyebrow, one sentence, one button, then the board */
   .hero { padding-top: 5.5rem; }
   .hero-eyebrow .long, .hero-sub .sub-more, .hero-ctas .btn-ghost { display: none; }
+  .hero-sub .sub-phone { display: inline; }
   .hero-eyebrow { margin-bottom: 1rem; }
   .hero-sub { margin-bottom: 1.4rem; }
   .hero-ctas { margin-bottom: 0; }
   .hero .container { gap: 1.8rem; }
   /* one log entry on the board; the log link sits in its header */
   .ledger-latest li + li { display: none; }
-  /* the pills carry the statuses, so the legend goes */
-  .work-header .legend { display: none; }
   .project .kicker-more { display: none; }
   .phone-only { display: inline; }
   /* the screenshot shows one panel at full size: the infeasible run, explained */
   .shot { aspect-ratio: 4 / 3; }
   .shot img { object-fit: none; object-position: -282px -1060px; }
+  /* the panel's lines are wider than any readable phone crop: fade them out rather than cut them */
+  .shot img { -webkit-mask-image: linear-gradient(to right, #000 78%, transparent 100%); mask-image: linear-gradient(to right, #000 78%, transparent 100%); }
 }
 
 /* ═══════════════════════════════════════════
@@ -370,7 +356,7 @@
 .offer .evidence a:hover { color: var(--accent-cyan); }
 
 .how { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; position: sticky; top: 6rem; }
-.how h4 { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+.how h4 { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
 .how ul { list-style: none; display: grid; gap: 0.7rem; }
 /* block, not grid: an inline element in an item would become its own grid cell */
 .how li { position: relative; padding-left: 1.7rem; color: var(--text-secondary); font-size: 0.95rem; }
@@ -404,7 +390,7 @@
 .contact-direct .k { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
 .contact-direct a { font-family: var(--font-mono); font-size: 0.92rem; color: var(--accent-cyan); }
 .contact-inner .btn { width: 100%; justify-content: center; }
-.contact-fine { margin-top: 0.9rem; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); }
+.contact-fine { margin-top: 0.9rem; font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); }
 @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
 </style>
 </head>
@@ -457,10 +443,10 @@
         <span class="sep" aria-hidden="true">/</span><span>San Diego<span class="long">, CA</span></span>
       </div>
       <h1 class="hero-headline" id="heroHeadline">
-        <span class="hw">Work</span> <span class="hw">you</span> <span class="hw">can</span> <span class="hw">inspect.</span>
+        Work you can inspect.
       </h1>
       <p class="hero-sub" data-stage="1100">
-        Dev of Codes LLC is Max Wahlgren, a senior engineer in San Diego. <span class="sub-more">I build my own tools and take a few <strong>fixed-scope contracts</strong>: web apps, data pipelines, and AI wired into systems you already run.</span>
+        Dev of Codes LLC is Max Wahlgren, a senior engineer in San Diego<span class="sub-phone">, taking a few fixed-scope contracts</span>. <span class="sub-more">I build my own tools and take a few <strong>fixed-scope contracts</strong>: web apps, data pipelines, and AI wired into systems you already run.</span>
       </p>
       <div class="hero-ctas" data-stage="1250">
         <a href="#contact" class="btn btn-amber">Discuss a project →</a>
@@ -478,7 +464,7 @@
           <summary aria-label="DFS Command Center, in daily use" aria-describedby="board-dfs-desc"><span class="name">DFS Command Center<span class="desc" id="board-dfs-desc">Research and portfolio workbench for DraftKings and FanDuel</span></span><span class="pill pill--use">In daily use</span></summary>
           <div class="ledger-more">
             <p>Used every slate. Personal data stays personal, so there's no public instance.</p>
-            <p>Latest: <a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep 30, 2026</span></a></p>
+            <p>Latest: <a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization and routines ship<span class="when">Sep 30, 2026</span></a></p>
             <a class="go" href="#dfs">The record ↓</a>
           </div>
         </details></li>
@@ -547,16 +533,13 @@
         <h2 class="section-headline">Projects.</h2>
         <p class="section-sub">No client logos yet.</p>
       </div>
-      <div class="legend fade-up" aria-label="Status legend">
-        <span class="use">In daily use</span><span class="dev">In development</span><span class="proto">Prototype</span><span class="plan">Research plan</span>
-      </div>
     </div>
 
     <!-- DFS: in daily use, so it leads -->
     <article class="project fade-up" id="dfs">
       <dl class="record-rail" aria-label="DFS Command Center at a glance">
         <div class="status"><dt>Status</dt><dd><span class="pill pill--use">In daily use</span></dd></div>
-        <div><dt>Latest entry</dt><dd><a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization, routines<span class="when">Sep 30, 2026</span></a></dd></div>
+        <div><dt>Latest entry</dt><dd><a class="log-link" data-log-area="DFS Command Center" href="changelog.html#dfs-results-radar">Results, Slate Radar, optimization and routines ship<span class="when">Sep 30, 2026</span></a></dd></div>
         <div><dt>Repository</dt><dd>Private</dd></div>
         <div><dt>Deployed</dt><dd>No public instance. A personal tool</dd></div>
         <div class="wide"><dt>Stack</dt><dd class="data">Python 3.12, FastAPI, SQLAlchemy, Celery, Polars, SciPy · React 19, TanStack Query, Tailwind 4 · Docker Compose, Prometheus</dd></div>
@@ -569,7 +552,7 @@
           <p><strong>What it refuses to do:</strong> it never enters a contest or moves money, nothing in it says "profitable", and a feature that isn't ready shows an explicit unavailable state instead of a placeholder that looks real.</p>
         </div>
         <figure class="project-shot">
-          <a class="shot" href="assets/dfs-lineup-studio.png">
+          <a class="shot" href="assets/dfs-lineup-studio.png" target="_blank" rel="noopener">
           <div class="browser-bar" aria-hidden="true"><span>dfs command center · lineup studio · synthetic workspace</span></div>
           <img src="assets/dfs-lineup-studio.png" alt="DFS Command Center's Lineup Studio screen: a five-step workflow, a constrained lineup generator with an infeasible run explained constraint by constraint, and a candidates table with validation states." loading="lazy" width="1280" height="2149">
           <div class="shot-shade"></div>
@@ -820,13 +803,6 @@
 </footer>
 
 <script src="assets/site.js"></script>
-<script>
-  (function () {
-    var words = document.querySelectorAll('#heroHeadline .hw');
-    var step = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-micro')) || 80;
-    words.forEach(function (w, i) { setTimeout(function () { w.classList.add('anim-in'); }, 450 + i * step); });
-  })();
-</script>
 <script type="module" src="assets/shaders.js"></script>
 </body>
 </html>
