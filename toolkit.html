@@ -64,6 +64,8 @@
   .tk-stat:first-child { border-left: none; padding-left: 0; }
   .tk-stat .n { font-family: var(--font-display); font-weight: 700; font-size: 2.1rem; line-height: 1; }
   .tk-stat .k { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+  .tk-checked { grid-column: 1 / -1; margin: 0; padding: 0 0 1.2rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+  .tk-checked a { color: inherit; border-bottom: 1px solid var(--border); }
 
   section.tk { padding: 6rem 0 0; }
 
@@ -212,11 +214,14 @@
         <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd1">/plugin marketplace add Dev-of-Codes-LLC/agent-toolkit</code><button class="term-copy" data-copy="cmd1">Copy</button></div>
         <div class="term-out">✓ marketplace <b>agent-toolkit</b> added</div>
         <div class="term-gap"></div>
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd2">/plugin install dev-workflow@agent-toolkit</code><button class="term-copy" data-copy="cmd2">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd2">/plugin install devofcodes-dev-workflow@agent-toolkit</code><button class="term-copy" data-copy="cmd2">Copy</button></div>
         <div class="term-out">✓ feature-doc · land-branch · docker-cleanup</div>
         <div class="term-gap"></div>
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install devofcodes-repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
         <div class="term-out">✓ ticket-writer · status-digest · org-map · backlog-planner</div>
+        <div class="term-gap"></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd4">/plugin install devofcodes-own-it@agent-toolkit</code><button class="term-copy" data-copy="cmd4">Copy</button></div>
+        <div class="term-out">✓ after-action</div>
         <!-- /toolkit:install -->
       </div>
     </aside>
@@ -226,10 +231,11 @@
 <section class="tk-strip" aria-label="At a glance">
   <div class="container">
     <!-- toolkit:stats -->
-    <div class="tk-stat"><div class="n">6</div><div class="k">Skills</div></div>
+    <div class="tk-stat"><div class="n">7</div><div class="k">Skills</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Read-only agent</div></div>
     <div class="tk-stat"><div class="n">1</div><div class="k">Scheduled routine</div></div>
     <div class="tk-stat"><div class="n">6</div><div class="k">Patterns, written up</div></div>
+    <p class="tk-checked">Checked 2026-10-24: counts read from the toolkit's <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/blob/main/docs/site.json" rel="noopener">catalog</a></p>
     <!-- /toolkit:stats -->
   </div>
 </section>
@@ -264,8 +270,8 @@
       </div>
       <div class="chips" role="group" aria-label="Filter by kind">
         <!-- toolkit:chips -->
-        <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">14</span></button>
-        <button class="chip" data-filter="skill" aria-pressed="false">Skills<span class="c">6</span></button>
+        <button class="chip" data-filter="all" aria-pressed="true">All<span class="c">15</span></button>
+        <button class="chip" data-filter="skill" aria-pressed="false">Skills<span class="c">7</span></button>
         <button class="chip" data-filter="agent" aria-pressed="false">Agents<span class="c">1</span></button>
         <button class="chip" data-filter="routine" aria-pressed="false">Routines<span class="c">1</span></button>
         <button class="chip" data-filter="pattern" aria-pressed="false">Patterns<span class="c">6</span></button>
@@ -276,60 +282,69 @@
     <div class="cards" id="cards">
       <!-- toolkit:cards -->
       <article class="card featured fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-dev-workflow</span></div>
         <h3>feature-doc</h3>
         <p class="what">Turns a finished feature or pull request into a wiki-ready page in the repo, plus a one-page HTML reference sheet with lettered panels and an optional whiteboard-style diagram. The writing follows a relaxed ASD-STE100 Simplified Technical English.</p>
         <div class="featured-extra"><span class="tag">Markdown + HTML</span><span class="tag">Node renderer</span><span class="tag">Evals included</span></div>
         <p class="refuses"><b>Won't</b>claim a fact it could not trace to the code, a record or a command. Gaps are listed, not filled.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/feature-doc" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-dev-workflow/skills/feature-doc" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-dev-workflow</span></div>
         <h3>land-branch</h3>
         <p class="what">Lands a branch on a main that moved ahead: shows the overlap, rebases, opens the PR, waits for every check, squash-merges, then runs your rebuild command.</p>
         <p class="refuses"><b>Won't</b>merge with a check pending or red, use --auto or --admin, or force-push main.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/land-branch" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-dev-workflow/skills/land-branch" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">dev-workflow</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-dev-workflow</span></div>
         <h3>docker-cleanup</h3>
         <p class="what">Audits a local Docker install by compose project and frees space tier by tier: build cache, broken builders, orphan networks, exited containers, old images. Dry run first.</p>
         <p class="refuses"><b>Won't</b>delete a volume you did not name, or run a wholesale prune.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/dev-workflow/skills/docker-cleanup" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-dev-workflow/skills/docker-cleanup" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>ticket-writer</h3>
         <p class="what">Turns a request or finding into GitHub issues in one format: the right repo, a duplicate check, one outcome per issue, a task list with exact steps, and a Status and Due on your project board.</p>
         <p class="refuses"><b>Won't</b>file a second issue when one already covers the work, or file anything when you asked only for a plan.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/ticket-writer" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/skills/ticket-writer" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>status-digest</h3>
         <p class="what">Checks every repo you list for red CI, failed deploys, stale or conflicting PRs, overdue and blocked backlog items and board drift, and writes one short digest of what needs you.</p>
         <p class="refuses"><b>Won't</b>re-run, merge, label or close anything it finds.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/status-digest" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/skills/status-digest" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="skill">
-        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>org-map</h3>
         <p class="what">Answers org-level questions from one page that maps every repo, account and rule, with the command that shows each one's live state. Builds that page from a template. Ships with a fictional example org.</p>
         <p class="refuses"><b>Won't</b>state a fact as current without reading it live, or edit the map without asking.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/skills/org-map" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/skills/org-map" rel="noopener">Source on GitHub →</a>
+      </article>
+
+      <article class="card fade-up" data-kind="skill">
+        <div class="card-top"><span class="kind kind--skill">Skill</span><span class="plugin">devofcodes-own-it</span></div>
+        <h3>after-action</h3>
+        <p class="what">Reviews a failed release, UAT round, deploy or deadline in the voice of a blunt SEAL task-unit commander. It reads the evidence itself, turns every excuse into something the team controls, and gives exactly three fixes, the first one first. Inspired by Extreme Ownership.</p>
+        <div class="featured-extra"><span class="tag">Fixed debrief format</span><span class="tag">Evals included</span></div>
+        <p class="refuses"><b>Won't</b>edit code or file anything during the review, name or blame a person, or state a cause it could not trace to evidence.</p>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-own-it/skills/after-action" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="agent">
-        <div class="card-top"><span class="kind kind--agent">Agent</span><span class="plugin">repo-ops</span></div>
+        <div class="card-top"><span class="kind kind--agent">Agent</span><span class="plugin">devofcodes-repo-ops</span></div>
         <h3>backlog-planner</h3>
         <p class="what">Give it a goal or a messy list. It reads the live state across your repos and returns draft tickets in order, with what blocks what and what only the owner can do.</p>
         <p class="refuses"><b>Won't</b>create or edit anything. It has no edit tools, its prompt names the only commands it may run, and it returns drafts.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/repo-ops/agents/backlog-planner.md" rel="noopener">Source on GitHub →</a>
+        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/plugins/devofcodes-repo-ops/agents/backlog-planner.md" rel="noopener">Source on GitHub →</a>
       </article>
 
       <article class="card fade-up" data-kind="routine">
@@ -432,7 +447,7 @@
         </ul>
       </div>
     </div>
-    <p class="credits fade-up">I also lean on skills I didn't write, and they stay with their authors: Anthropic's <a href="https://github.com/anthropics/skills" rel="noopener">skills</a>, Vercel's web interface guidelines, and the AWS plugin. They are not in this repo.</p>
+    <p class="credits fade-up">I also lean on skills I didn't write, and they stay with their authors: Anthropic's <a href="https://github.com/anthropics/skills" rel="noopener">skills</a>, Vercel's <a href="https://github.com/vercel-labs/web-interface-guidelines" rel="noopener">web interface guidelines</a>, and the <a href="https://github.com/aws/agent-toolkit-for-aws" rel="noopener">AWS plugin</a>. They are not in this repo.</p>
   </div>
 </section>
 </main>
