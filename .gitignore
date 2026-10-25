@@ -1,1 +1,4 @@
 node_modules/
+
+# transitions.dev agent skills: installed per machine, not published (README, Agent skills).
+.claude/skills/transitions-*/
