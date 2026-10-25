@@ -23,6 +23,12 @@
      quicker close transition has run. */
   var mobileNav = document.getElementById('mobileNav');
   var mobileNavTimer = null;
+  var hamburger = document.querySelector('.nav-hamburger');
+  var mobileNavClose = mobileNav && mobileNav.querySelector('.mobile-nav-close');
+  if (hamburger && mobileNav) {
+    hamburger.setAttribute('aria-controls', 'mobileNav');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
   window.toggleMobileNav = function () {
     if (!mobileNav) return;
     clearTimeout(mobileNavTimer);
@@ -31,15 +37,23 @@
       mobileNav.classList.add('is-closing');
       mobileNavTimer = setTimeout(function () { mobileNav.classList.remove('is-closing'); }, tokenMs('--duration-quick', 150));
       document.body.style.overflow = '';
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     } else {
       mobileNav.classList.remove('is-closing');
       mobileNav.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+      if (mobileNavClose) mobileNavClose.focus();
     }
   };
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('is-open')) toggleMobileNav();
+    if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('is-open')) {
+      toggleMobileNav();
+      if (hamburger) hamburger.focus();
+    }
   });
+  /* Runs after the button's inline onclick has closed the menu. */
+  if (mobileNavClose) mobileNavClose.addEventListener('click', function () { if (hamburger) hamburger.focus(); });
 
   /* Scroll reveals */
   var fadeEls = document.querySelectorAll('.fade-up');

@@ -58,7 +58,8 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 /* Phones let you pan into anything wider than the screen even with overflow-x on the viewport,
    so body clips itself; clip (not hidden) on html stops body becoming a scroll container. */
-html { scroll-behavior: smooth; overflow-x: clip; }
+/* scroll-padding-top: focus and anchor scrolls stop below the fixed nav (WCAG 2.4.11) */
+html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 5.5rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -196,11 +197,14 @@ img { max-width: 100%; display: block; }
   .mobile-nav-overlay, .mobile-nav-overlay.is-closing { transition: none !important; }
 }
 .mobile-nav-overlay a {
-  font-family: var(--font-display); font-size: 1.6rem; color: var(--text-secondary); transition: color 200ms;
+  font-family: var(--font-display); font-size: 1.6rem; color: var(--text-primary);
 }
-.mobile-nav-overlay a:hover { color: var(--text-primary); }
+.mobile-nav-overlay a:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+/* every page ends the menu with "Discuss a project →" */
+.mobile-nav-overlay a:last-of-type { color: var(--accent-amber); }
 .mobile-nav-close {
-  position: absolute; top: 1.4rem; right: 1.5rem;
+  position: absolute; top: 0.9rem; right: 1rem; width: 44px; height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-mono); font-size: 1.6rem; color: var(--text-muted);
   background: none; border: none; cursor: pointer;
 }
@@ -221,7 +225,7 @@ img { max-width: 100%; display: block; }
 /* ── Status pills ── */
 .pill {
   display: inline-flex; align-items: center; gap: 0.45rem;
-  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
   padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--border-bright);
   color: var(--text-secondary); background: rgba(8,10,15,0.5);
 }
@@ -265,7 +269,7 @@ img { max-width: 100%; display: block; }
 .form-group label { display: block; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.45rem; }
 .form-group input, .form-group textarea, .form-group select {
   width: 100%; background: var(--bg-base); border: 1px solid var(--border-bright); border-radius: 6px;
-  padding: 0.75rem 0.9rem; color: var(--text-primary); font-family: var(--font-body); font-size: 0.98rem;
+  padding: 0.75rem 0.9rem; color: var(--text-primary); font-family: var(--font-body); font-size: 1rem;
   transition: border-color 200ms, box-shadow 200ms;
 }
 .form-group textarea { resize: vertical; min-height: 120px; }

@@ -204,7 +204,7 @@
 @media (prefers-reduced-motion: reduce) { .ledger-row summary::after { transition: none; } }
 .ledger-row .name { color: var(--text-primary); font-weight: 500; }
 .ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.82rem; font-weight: 400; }
-.ledger-row .pill { font-size: 0.64rem; padding: 0.22rem 0.55rem; white-space: nowrap; }
+.ledger-row .pill { font-size: 0.7rem; padding: 0.22rem 0.55rem; white-space: nowrap; }
 .ledger-more { display: grid; gap: 0.3rem; padding: 0 1.55rem 0.8rem 0; font-size: 0.86rem; color: var(--text-secondary); }
 .ledger-more .go { color: var(--accent-cyan); justify-self: start; }
 .ledger-more .go:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -351,6 +351,7 @@
 .offers { counter-reset: offer; display: grid; gap: 0; border-top: 1px solid var(--border); }
 .offer { counter-increment: offer; display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.6rem 0; border-bottom: 1px solid var(--border); }
 .offer::before { content: counter(offer, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); padding-top: 0.35rem; }
+@media (max-width: 480px) { .offer { grid-template-columns: 1fr; gap: 0.2rem; } .offer::before { padding-top: 0; } }
 .offer h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; margin-bottom: 0.4rem; }
 .offer p { color: var(--text-secondary); font-size: 0.98rem; }
 .offer .evidence { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.04em; }
