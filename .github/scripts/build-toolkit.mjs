@@ -6,10 +6,10 @@
 //
 // It rewrites only what sits between marker comments in the page:
 //   <!-- toolkit:install -->  the install commands and what each one adds
-//   <!-- toolkit:stats -->    the at-a-glance counts
+//   <!-- toolkit:stats -->    the counts, as one sentence with the catalog's date
 //   <!-- toolkit:rules -->    the five rules
 //   <!-- toolkit:chips -->    the filter chips and their counts
-//   <!-- toolkit:cards -->    one card per skill, agent, routine and pattern
+//   <!-- toolkit:cards -->    one card per skill, agent and routine, then the patterns as a list
 // each closed by the same name with a slash: <!-- /toolkit:cards -->.
 //
 // --check      write nothing; exit 1 if the page differs from the catalog.
@@ -87,22 +87,24 @@ function install(site) {
     .join('\n        <div class="term-gap"></div>\n');
 }
 
+// "2026-10-24" -> "Oct 24, 2026", the date format the rest of the site uses
+const day = (iso) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+
 function stats(site) {
-  const plural = (n, one, many) => (n === 1 ? one : many);
-  const rows = [
-    [count(site, "skill"), plural(count(site, "skill"), "Skill", "Skills")],
-    [count(site, "agent"), plural(count(site, "agent"), "Read-only agent", "Read-only agents")],
-    [count(site, "routine"), plural(count(site, "routine"), "Scheduled routine", "Scheduled routines")],
-    [count(site, "pattern"), "Patterns, written up"],
-  ];
-  const cells = rows.map(([n, k]) => `    <div class="tk-stat"><div class="n">${n}</div><div class="k">${esc(k)}</div></div>`);
-  // The page's own rule: every fact has a date. The counts carry the date the
-  // catalog was last updated, and link to the file they were read from.
-  if (site.updated) {
-    const catalog = `${site.repo}/blob/${site.branch}/docs/site.json`;
-    cells.push(`    <p class="tk-checked">Checked ${esc(site.updated)}: counts read from the toolkit's <a href="${esc(catalog)}" rel="noopener">catalog</a></p>`);
-  }
-  return cells.join("\n");
+  // One sentence, not a strip of big numbers: "7 skills, 1 read-only agent, 1 scheduled routine and
+  // 6 written patterns, counted from the catalog on Oct 24, 2026." The page's own rule: every fact
+  // has a date, so the counts carry the catalog's and link to the file they were read from.
+  const nouns = { skill: ["skill", "skills"], agent: ["read-only agent", "read-only agents"],
+    routine: ["scheduled routine", "scheduled routines"], pattern: ["written pattern", "written patterns"] };
+  const parts = KINDS.filter((k) => count(site, k) > 0).map((k) => {
+    const n = count(site, k);
+    return `<b>${n}</b> ${nouns[k][n === 1 ? 0 : 1]}`;
+  });
+  const list = parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts.join("");
+  const catalog = `<a href="${esc(`${site.repo}/blob/${site.branch}/docs/site.json`)}" rel="noopener">catalog</a>`;
+  const when = site.updated ? ` on ${esc(day(site.updated))}` : "";
+  return `    <p class="tk-count">${list}, counted from the ${catalog}${when}.</p>`;
 }
 
 function rules(site) {
@@ -121,9 +123,10 @@ function chips(site) {
 }
 
 function cards(site) {
-  const kindLabel = { skill: "Skill", agent: "Agent", routine: "Routine", pattern: "Pattern" };
-  const linkText = { pattern: "Read it →", routine: "Recipe on GitHub →" };
-  return site.items
+  const kindLabel = { skill: "Skill", agent: "Agent", routine: "Routine" };
+  const linkText = { routine: "Recipe on GitHub →" };
+  const boxed = site.items
+    .filter((it) => it.kind !== "pattern")
     .map((it) => {
       const label = it.kind === "routine" ? it.schedule ?? "routines/" : it.kind === "pattern" ? "patterns/" : it.plugin;
       const lines = [
@@ -137,8 +140,30 @@ function cards(site) {
       lines.push(`        <a class="src" href="${esc(url(site, it.path))}" rel="noopener">${linkText[it.kind] ?? "Source on GitHub →"}</a>`);
       lines.push("      </article>");
       return lines.join("\n");
-    })
-    .join("\n\n");
+    });
+  // Patterns are short prose with nothing to box: a list that spans the grid, one row each.
+  const patterns = site.items.filter((it) => it.kind === "pattern");
+  if (patterns.length) {
+    const rows = patterns.map((it) =>
+      [
+        `          <li class="pattern" data-kind="pattern">`,
+        `            <h4>${esc(it.name)}</h4>`,
+        `            <p>${mono(esc(it.what))} <a class="src" href="${esc(url(site, it.path))}" rel="noopener">Read it →</a></p>`,
+        `          </li>`,
+      ].join("\n"),
+    );
+    boxed.push(
+      [
+        `      <section class="patterns fade-up" aria-labelledby="patterns-title">`,
+        `        <h3 class="patterns-title" id="patterns-title">Patterns, written up</h3>`,
+        `        <ul>`,
+        ...rows,
+        `        </ul>`,
+        `      </section>`,
+      ].join("\n"),
+    );
+  }
+  return boxed.join("\n\n");
 }
 
 function fill(page, name, body) {
