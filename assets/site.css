@@ -274,8 +274,15 @@ img { max-width: 100%; display: block; }
 .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
   outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 0 3px rgba(0,200,255,0.12);
 }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); opacity: 1; }
+/* The kind is optional: until one is picked, the select reads as a placeholder, not a chosen value */
+.form-group select:has(option[value=""]:checked) { color: var(--text-muted); }
+.form-group select option { color: var(--text-primary); background: var(--bg-base); }
 .form-group input.error, .form-group textarea.error { border-color: var(--accent-rose); }
-.form-error { display: none; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-rose); }
+/* Each field says what is wrong right under it; the summary under Send lists the fields */
+.field-error { margin-top: 0.4rem; font-size: 0.92rem; line-height: 1.45; color: var(--accent-rose); }
+.field-error:empty { display: none; }
+.form-error { display: none; margin-top: 0.8rem; font-size: 0.95rem; line-height: 1.5; color: var(--accent-rose); }
 .form-success { display: none; padding: 1.5rem; border: 1px solid rgba(16,185,129,0.35); border-radius: var(--radius); background: rgba(16,185,129,0.06); }
 .form-success h3 { font-family: var(--font-display); font-weight: 600; margin-bottom: 0.4rem; }
 .form-success-check { display: block; width: 40px; height: 40px; margin-bottom: 0.9rem; color: var(--accent-green); }
