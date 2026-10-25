@@ -20,7 +20,10 @@
   --accent-rose:    #F43F5E;
   --status-dev:     #A78BFA;
 
-  --font-display:   'Syne', sans-serif;
+  /* Direction A (Landing#40): Literata for reading and headings, Syne only in the
+     wordmark, JetBrains Mono only for data (statuses, dates, counts, stacks, code). */
+  --font-brand:     'Syne', sans-serif;
+  --font-display:   'Literata', serif;
   --font-body:      'Literata', serif;
   --font-mono:      'JetBrains Mono', monospace;
 
@@ -64,8 +67,8 @@ body {
   background-size: 32px 32px;
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-size: 1.15rem;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -96,9 +99,9 @@ img { max-width: 100%; display: block; }
 
 .section-headline {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: clamp(1.9rem, 3.6vw, 2.9rem);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.015em;
   line-height: 1.15;
   color: var(--text-primary);
   text-wrap: balance;
@@ -125,8 +128,8 @@ img { max-width: 100%; display: block; }
 /* ── Buttons ── */
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
-  padding: 0.8rem 1.4rem; border-radius: 6px; border: 1px solid transparent;
+  font-family: var(--font-body); font-size: 1rem; font-weight: 500;
+  padding: 0.75rem 1.4rem; border-radius: 6px; border: 1px solid transparent;
   cursor: pointer;
   transition: transform var(--duration-quick) var(--ease-smooth-out), opacity var(--duration-quick) ease,
     border-color var(--duration-quick), color var(--duration-quick), background var(--duration-quick);
@@ -153,14 +156,14 @@ img { max-width: 100%; display: block; }
 .nav .container { display: flex; align-items: center; justify-content: space-between; }
 .nav-brand { display: flex; align-items: center; gap: 0.6rem; }
 .nav-brand svg { width: 28px; height: 28px; }
-.nav-brand span { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.02em; }
+.nav-brand span { font-family: var(--font-brand); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.02em; }
 .nav-links { display: flex; align-items: center; gap: 1.6rem; }
-.nav-link { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--text-secondary); transition: color 200ms; }
+.nav-link { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-secondary); transition: color 200ms; }
 .nav-link:hover, .nav-link[aria-current="page"] { color: var(--text-primary); }
 .nav-cta {
   border: 1px solid var(--accent-amber); color: var(--accent-amber);
   padding: 0.45rem 1rem; border-radius: 4px;
-  font-family: var(--font-mono); font-size: 0.78rem; background: transparent;
+  font-family: var(--font-body); font-size: 0.95rem; font-weight: 500; background: transparent;
   transition: background 200ms, color 200ms;
 }
 .nav-cta:hover { background: var(--accent-amber); color: var(--bg-base); }
@@ -272,7 +275,7 @@ img { max-width: 100%; display: block; }
 .form-group input.error, .form-group textarea.error { border-color: var(--accent-rose); }
 .form-error { display: none; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-rose); }
 .form-success { display: none; padding: 1.5rem; border: 1px solid rgba(16,185,129,0.35); border-radius: var(--radius); background: rgba(16,185,129,0.06); }
-.form-success h3 { font-family: var(--font-display); margin-bottom: 0.4rem; }
+.form-success h3 { font-family: var(--font-display); font-weight: 600; margin-bottom: 0.4rem; }
 .form-success-check { display: block; width: 40px; height: 40px; margin-bottom: 0.9rem; color: var(--accent-green); }
 .form-success-check svg { width: 100%; height: 100%; }
 
