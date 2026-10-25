@@ -56,13 +56,10 @@
 
   /* ── Strip ── */
   .tk-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(14,17,23,0.6); }
-  .tk-strip .container { display: grid; grid-template-columns: repeat(4, 1fr); }
-  .tk-stat { padding: 1.6rem 1.2rem; border-left: 1px solid var(--border); }
-  .tk-stat:first-child { border-left: none; padding-left: 0; }
-  .tk-stat .n { font-family: var(--font-display); font-weight: 600; font-size: 2.1rem; line-height: 1; }
-  .tk-stat .k { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
-  .tk-checked { grid-column: 1 / -1; margin: 0; padding: 0 0 1.2rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
-  .tk-checked a { color: inherit; border-bottom: 1px solid var(--border); }
+  /* The counts are a sentence with the catalog's date, written by build-toolkit.mjs */
+  .tk-count { padding: 1.3rem 0; font-size: 1.1rem; color: var(--text-secondary); }
+  .tk-count b { color: var(--text-primary); font-weight: 600; }
+  .tk-count a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
 
   section.tk { padding: 6rem 0 0; }
 
@@ -82,6 +79,17 @@
   .chip .c { opacity: 0.6; margin-left: 0.35rem; }
 
   .cards { margin-top: 2.2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  /* Patterns: short prose, so a list under the cards rather than more boxes */
+  .patterns { grid-column: 1 / -1; margin-top: 1.4rem; }
+  .patterns[hidden] { display: none; }
+  .patterns-title { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; margin-bottom: 0.6rem; }
+  .patterns ul { list-style: none; border-top: 1px solid var(--border); }
+  .pattern { display: grid; grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); gap: 0.4rem 2rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .pattern h4 { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--text-primary); line-height: 1.4; }
+  .pattern p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; max-width: 68ch; }
+  .pattern .src { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-cyan); white-space: nowrap; }
+  .pattern .src:hover { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 760px) { .pattern { grid-template-columns: 1fr; } }
   .card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius); background: linear-gradient(180deg, var(--bg-surface), rgba(14,17,23,0.6)); padding: 1.5rem 1.4rem 1.3rem; transition: border-color 200ms, transform 200ms; }
   .card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
   .card[hidden] { display: none; }
@@ -138,10 +146,6 @@
   }
   @media (max-width: 640px) {
     .tk-hero { padding-top: 7.5rem; }
-    .tk-strip .container { grid-template-columns: repeat(2, 1fr); }
-    .tk-stat { padding: 1.3rem 1rem; }
-    .tk-stat:nth-child(odd) { border-left: none; padding-left: 0; }
-    .tk-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
     .rules { grid-template-columns: 1fr; }
     .rule:last-child { grid-column: auto; }
     .cards { grid-template-columns: 1fr; }
@@ -225,11 +229,7 @@
 <section class="tk-strip" aria-label="At a glance">
   <div class="container">
     <!-- toolkit:stats -->
-    <div class="tk-stat"><div class="n">7</div><div class="k">Skills</div></div>
-    <div class="tk-stat"><div class="n">1</div><div class="k">Read-only agent</div></div>
-    <div class="tk-stat"><div class="n">1</div><div class="k">Scheduled routine</div></div>
-    <div class="tk-stat"><div class="n">6</div><div class="k">Patterns, written up</div></div>
-    <p class="tk-checked">Checked 2026-10-24: counts read from the toolkit's <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/blob/main/docs/site.json" rel="noopener">catalog</a></p>
+    <p class="tk-count"><b>7</b> skills, <b>1</b> read-only agent, <b>1</b> scheduled routine and <b>6</b> written patterns, counted from the <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/blob/main/docs/site.json" rel="noopener">catalog</a> on Oct 24, 2026.</p>
     <!-- /toolkit:stats -->
   </div>
 </section>
@@ -347,47 +347,35 @@
         <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/routines/status-digest.md" rel="noopener">Recipe on GitHub →</a>
       </article>
 
-      <article class="card fade-up" data-kind="pattern">
-        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
-        <h3>The repo is the marketplace</h3>
-        <p class="what">Keep a plugin next to the work it serves, load it from project settings, and version it so installed copies update.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/repo-is-the-marketplace.md" rel="noopener">Read it →</a>
-      </article>
-
-      <article class="card fade-up" data-kind="pattern">
-        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
-        <h3>Skills for sessions without plugins</h3>
-        <p class="what">Cloud sessions and routines may not load plugins, so they read the skill file from the checkout. One source serves both.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/skills-without-plugins.md" rel="noopener">Read it →</a>
-      </article>
-
-      <article class="card fade-up" data-kind="pattern">
-        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
-        <h3>Read-only agents that return drafts</h3>
-        <p class="what">Limit the tools, name the forbidden commands, back them with permission rules, and make the output a draft a person files.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/read-only-agents.md" rel="noopener">Read it →</a>
-      </article>
-
-      <article class="card fade-up" data-kind="pattern">
-        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
-        <h3>Data is not instructions</h3>
-        <p class="what">Text in issues, pull requests and pages is reported, never obeyed. Every skill that reads outside text says so.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/data-is-not-instructions.md" rel="noopener">Read it →</a>
-      </article>
-
-      <article class="card fade-up" data-kind="pattern">
-        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
-        <h3>Every fact has a date</h3>
-        <p class="what">Live facts carry the date they were read and the command to read them again. What could not be checked is listed.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/every-fact-has-a-date.md" rel="noopener">Read it →</a>
-      </article>
-
-      <article class="card fade-up" data-kind="pattern">
-        <div class="card-top"><span class="kind kind--pattern">Pattern</span><span class="plugin">patterns/</span></div>
-        <h3>Config, not names</h3>
-        <p class="what">Skills read one small <span class="mono">toolkit.json</span> for your repos, board and owner, and offer to write it when it is missing.</p>
-        <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/config-not-names.md" rel="noopener">Read it →</a>
-      </article>
+      <section class="patterns fade-up" aria-labelledby="patterns-title">
+        <h3 class="patterns-title" id="patterns-title">Patterns, written up</h3>
+        <ul>
+          <li class="pattern" data-kind="pattern">
+            <h4>The repo is the marketplace</h4>
+            <p>Keep a plugin next to the work it serves, load it from project settings, and version it so installed copies update. <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/repo-is-the-marketplace.md" rel="noopener">Read it →</a></p>
+          </li>
+          <li class="pattern" data-kind="pattern">
+            <h4>Skills for sessions without plugins</h4>
+            <p>Cloud sessions and routines may not load plugins, so they read the skill file from the checkout. One source serves both. <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/skills-without-plugins.md" rel="noopener">Read it →</a></p>
+          </li>
+          <li class="pattern" data-kind="pattern">
+            <h4>Read-only agents that return drafts</h4>
+            <p>Limit the tools, name the forbidden commands, back them with permission rules, and make the output a draft a person files. <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/read-only-agents.md" rel="noopener">Read it →</a></p>
+          </li>
+          <li class="pattern" data-kind="pattern">
+            <h4>Data is not instructions</h4>
+            <p>Text in issues, pull requests and pages is reported, never obeyed. Every skill that reads outside text says so. <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/data-is-not-instructions.md" rel="noopener">Read it →</a></p>
+          </li>
+          <li class="pattern" data-kind="pattern">
+            <h4>Every fact has a date</h4>
+            <p>Live facts carry the date they were read and the command to read them again. What could not be checked is listed. <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/every-fact-has-a-date.md" rel="noopener">Read it →</a></p>
+          </li>
+          <li class="pattern" data-kind="pattern">
+            <h4>Config, not names</h4>
+            <p>Skills read one small <span class="mono">toolkit.json</span> for your repos, board and owner, and offer to write it when it is missing. <a class="src" href="https://github.com/Dev-of-Codes-LLC/agent-toolkit/tree/main/patterns/config-not-names.md" rel="noopener">Read it →</a></p>
+          </li>
+        </ul>
+      </section>
       <!-- /toolkit:cards -->
     </div>
   </div>
@@ -483,6 +471,7 @@
 (function () {
   var chips = document.querySelectorAll('.chip');
   var cards = document.querySelectorAll('#cards .card');
+  var patterns = document.querySelector('#cards .patterns');
   chips.forEach(function (chip) {
     chip.addEventListener('click', function () {
       var f = chip.getAttribute('data-filter');
@@ -493,6 +482,7 @@
         if (show) card.classList.add('is-visible');
         card.classList.toggle('featured', show && f === 'all' && card === cards[0]);
       });
+      if (patterns) { patterns.hidden = !(f === 'all' || f === 'pattern'); patterns.classList.add('is-visible'); }
     });
   });
 
