@@ -136,14 +136,6 @@
 .hero-sub strong { color: var(--text-primary); font-weight: 500; }
 .hero-sub .sub-phone { display: none; }
 .hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
-[data-stage] { opacity: 0; transform: translateY(var(--distance-medium)); }
-[data-stage].anim-in {
-  opacity: 1; transform: none;
-  transition: opacity var(--duration-very-slow) var(--ease-smooth-out), transform var(--duration-very-slow) var(--ease-smooth-out);
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-stage], [data-stage].anim-in { opacity: 1; transform: none; transition: none; }
-}
 
 /* Status board: every project and the state it is in, newest status from the log */
 .ledger {
@@ -182,7 +174,7 @@
 .ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.95rem; font-weight: 400; }
 .ledger-row .pill { font-size: 0.75rem; padding: 0.25rem 0.6rem; white-space: nowrap; }
 .ledger-more { display: grid; gap: 0.3rem; padding: 0 0 0.9rem 1.2rem; font-size: 0.95rem; color: var(--text-secondary); }
-.ledger-more .go { color: var(--accent-cyan); justify-self: start; }
+.ledger-more .go { padding: 0.15rem 0; color: var(--accent-cyan); justify-self: start; }
 .ledger-more .go:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 480px) {
   /* on a phone the pill moves under the name, so names and descriptions get the full width */
@@ -320,8 +312,8 @@
   .bench-row .btn { justify-self: start; }
 }
 
-@media (max-width: 480px) {
-  /* a phone's first screen: a short eyebrow, one sentence, one button, then the board */
+/* a phone's first screen, upright or on its side: a short eyebrow, one sentence, one button, then the board */
+@media (max-width: 480px), (max-width: 960px) and (max-height: 500px) {
   .hero { padding-top: 5.5rem; }
   .hero-eyebrow .long, .hero-sub .sub-more, .hero-ctas .btn-ghost { display: none; }
   .hero-sub .sub-phone { display: inline; }
@@ -331,6 +323,20 @@
   .hero .container { gap: 1.8rem; }
   /* one log entry on the board; the log link sits in its header */
   .ledger-latest li + li { display: none; }
+}
+/* on its side, a stacked hero fills the screen and pushes the board below it: the board goes
+   beside the text again, as on a desktop, with each pill under its name as on a phone */
+@media (max-width: 960px) and (max-height: 500px) {
+  .hero .container { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+  .hero-text { padding-top: 0; }
+  .hero-headline { font-size: 2.5rem; margin-bottom: 1rem; }
+  .hero-sub { font-size: 1.05rem; }
+  .ledger { max-width: none; }
+  .ledger-row summary { grid-template-columns: minmax(0, 1fr); row-gap: 0.4rem; }
+  .ledger-row summary .pill { justify-self: start; margin-left: 1.2rem; }
+}
+
+@media (max-width: 480px) {
   .project .kicker-more { display: none; }
   .phone-only { display: inline; }
   /* the screenshot shows one panel at full size: the infeasible run, explained */
@@ -344,6 +350,9 @@
    WORK WITH ME
    ═══════════════════════════════════════════ */
 .services { padding: 6.5rem 0 5rem; }
+/* #work and #services land their heading below the nav, not their 6.5rem of top padding:
+   -5.5rem cancels html's scroll-padding-top, so the heading sits 6.5rem down */
+.work, .services { scroll-margin-top: -5.5rem; }
 .services-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 4rem; align-items: start; }
 .offers { counter-reset: offer; display: grid; gap: 0; border-top: 1px solid var(--border); }
 .offer { counter-increment: offer; display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.6rem 0; border-bottom: 1px solid var(--border); }
@@ -438,17 +447,17 @@
   </div>
   <div class="container">
     <div class="hero-text">
-      <div class="hero-eyebrow" data-stage="350">
+      <div class="hero-eyebrow">
         <span class="dot" aria-hidden="true"></span><span>Available<span class="long"> for contract work</span></span>
         <span class="sep" aria-hidden="true">/</span><span>San Diego<span class="long">, CA</span></span>
       </div>
       <h1 class="hero-headline" id="heroHeadline">
         Work you can inspect.
       </h1>
-      <p class="hero-sub" data-stage="1100">
+      <p class="hero-sub">
         Dev of Codes LLC is Max Wahlgren, a senior engineer in San Diego<span class="sub-phone">, taking a few fixed-scope contracts</span>. <span class="sub-more">I build my own tools and take a few <strong>fixed-scope contracts</strong>: web apps, data pipelines, and AI wired into systems you already run.</span>
       </p>
-      <div class="hero-ctas" data-stage="1250">
+      <div class="hero-ctas">
         <a href="#contact" class="btn btn-amber">Discuss a project →</a>
         <a href="#work" class="btn btn-ghost">Explore my work ↓</a>
       </div>
@@ -548,7 +557,7 @@
         <h3>DFS Command Center <span class="pill pill--use status-inline">In daily use</span></h3>
         <p class="kicker">A research and portfolio workbench for daily fantasy sports on DraftKings and FanDuel. <span class="kicker-more">It consolidates provider exports, public sports data, projections, lineup construction, contest evaluation and results into one audited record.</span></p>
         <div class="project-body">
-          <p>I built it for myself, which means it gets used every slate. It imports the platforms' real export files (parsers verified against the actual downloads), ingests schedules, rosters, game logs and injury reports from public sources behind a licensing gate, generates lineups under constraints, and reconciles what was actually entered against what the plan said.</p>
+          <p>I built it for myself, which means it gets used every slate (each day's set of games). It imports the platforms' real export files (parsers verified against the actual downloads), ingests schedules, rosters, game logs and injury reports from public sources behind a licensing gate, generates lineups under constraints, and reconciles what was actually entered against what the plan said.</p>
           <p><strong>What it refuses to do:</strong> it never enters a contest or moves money, nothing in it says "profitable", and a feature that isn't ready shows an explicit unavailable state instead of a placeholder that looks real.</p>
         </div>
         <figure class="project-shot">
@@ -556,6 +565,7 @@
           <div class="browser-bar" aria-hidden="true"><span>dfs command center · lineup studio · synthetic workspace</span></div>
           <img src="assets/dfs-lineup-studio.png" alt="DFS Command Center's Lineup Studio screen: a five-step workflow, a constrained lineup generator with an infeasible run explained constraint by constraint, and a candidates table with validation states." loading="lazy" width="1280" height="2149">
           <div class="shot-shade"></div>
+          <span class="visually-hidden">(opens the full image in a new tab)</span>
           </a>
           <figcaption class="shot-caption">Real screenshot · synthetic data<span class="phone-only"> · one panel shown, tap for the full screen</span></figcaption>
         </figure>
@@ -671,7 +681,7 @@
             <div>
               <h3>Set up an AI platform, or build AI into your product</h3>
               <p>Model APIs connected to your own data and systems, with the parts that make it dependable written as code: structured outputs, tool calls, permission boundaries, evaluation sets, cost limits, and logs you can audit. Or a working setup for your team's AI coding tools: shared instructions, MCP servers into your systems, and review rules that keep the output something a person can check.</p>
-              <div class="evidence">Evidence: <a href="#bbi">BBI's design workshop</a>, where the model shapes the spec and deterministic code builds everything else</div>
+              <div class="evidence">Evidence: <a href="#bbi">BBI's design workshop</a></div>
             </div>
           </div>
         </div>
@@ -693,7 +703,7 @@
 </section>
 
 <!-- ═══════════ ABOUT + CONTACT ═══════════ -->
-<section class="about" id="contact">
+<section class="about">
   <div class="container">
     <div class="about-grid">
       <div class="fade-up">
@@ -706,7 +716,8 @@
         <div class="signature"><b>Max Wahlgren</b><br>Founder and engineer, Dev of Codes LLC<br>San Diego, California</div>
       </div>
 
-      <div class="contact-card fade-up">
+      <!-- #contact is the form, not the section: on a phone the bio stacks above it -->
+      <div class="contact-card fade-up" id="contact">
         <div class="contact-inner">
           <h3>Discuss a project</h3>
           <p>Tell me what you're trying to get built, roughly when, and anything that already exists.</p>

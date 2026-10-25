@@ -238,11 +238,4 @@
       }, 600);
     });
   });
-
-  /* Hero load sequence */
-  var staged = document.querySelectorAll('[data-stage]');
-  staged.forEach(function (el) {
-    var delay = parseInt(el.getAttribute('data-stage'), 10) || 0;
-    setTimeout(function () { el.classList.add('anim-in'); }, delay);
-  });
 })();

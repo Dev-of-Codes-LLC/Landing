@@ -68,6 +68,10 @@ const lowerFirst = (s) => s.charAt(0).toLowerCase() + s.slice(1);
 const count = (site, kind) => site.items.filter((it) => it.kind === kind).length;
 const url = (site, path) => `${site.repo}/tree/${site.branch}/${path.split("/").map(encodeURIComponent).join("/")}`;
 
+// Each word of a command is a .w span that never breaks, so a command wraps only at its spaces, never
+// at a hyphen inside a name. Copy reads the code's textContent, which the spans leave unchanged.
+const words = (cmd) => cmd.split(" ").map((word) => `<span class="w">${esc(word)}</span>`).join(" ");
+
 function install(site) {
   // What each install adds: the names of the skills and agents in that plugin.
   const added = (cmd) => {
@@ -80,7 +84,7 @@ function install(site) {
     .map((cmd, i) => {
       const n = i + 1;
       return [
-        `        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd${n}">${esc(cmd)}</code><button class="term-copy" data-copy="cmd${n}">Copy</button></div>`,
+        `        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd${n}">${words(cmd)}</code><button class="term-copy" data-copy="cmd${n}">Copy</button></div>`,
         `        <div class="term-out">${added(cmd)}</div>`,
       ].join("\n");
     })

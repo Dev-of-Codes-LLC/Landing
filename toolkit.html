@@ -32,7 +32,8 @@
       radial-gradient(600px 320px at 78% 30%, rgba(0,200,255,0.10), transparent 70%),
       radial-gradient(520px 300px at 12% 80%, rgba(245,158,11,0.07), transparent 70%);
   }
-  .tk-hero .container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: center; }
+  /* even columns: from 1100px each install command fits on one line, and below that it wraps after "install" */
+  .tk-hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
   .tk-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 4.6vw, 3.7rem); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
   .tk-lede { margin-top: 1.4rem; color: var(--text-secondary); font-size: 1.2rem; max-width: 34rem; }
   .tk-lede strong { color: var(--text-primary); font-weight: 500; }
@@ -45,7 +46,9 @@
   .term-bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
   .term-body { padding: 1.1rem 1.2rem 1.3rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.9; }
   .term-line { display: flex; gap: 0.6rem; align-items: baseline; min-width: 0; }
-  .term-line code { flex: 1; min-width: 0; color: var(--text-primary); white-space: nowrap; overflow-x: auto; scrollbar-width: thin; }
+  /* commands wrap at their spaces only: each word is a .w span (build-toolkit.mjs) */
+  .term-line code { flex: 1; min-width: 0; color: var(--text-primary); overflow-x: auto; scrollbar-width: thin; }
+  .term-line code .w { white-space: nowrap; }
   .term-line .p { color: var(--text-muted); flex: none; }
   .term-out { color: var(--text-muted); padding-left: 1.2rem; }
   .term-out b { color: var(--accent-green); font-weight: 500; }
@@ -147,6 +150,10 @@
   @media (max-width: 480px) {
     /* a phone's first screen: the lede's first sentence and one button, then the install block */
     .tk-lede .lede-more, .tk-ctas .btn-ghost { display: none; }
+    /* each command stays on one line and scrolls sideways; the fade shows there is more until the
+       end is in view (.at-end, set by the script below) */
+    .term-line code { white-space: nowrap; }
+    .term-line code:not(.at-end) { -webkit-mask-image: linear-gradient(to right, #000 78%, transparent 100%); mask-image: linear-gradient(to right, #000 78%, transparent 100%); }
   }
   @media (max-width: 640px) {
     .tk-hero { padding-top: 7.5rem; }
@@ -213,16 +220,16 @@
       <div class="term-bar"><span>claude — install</span></div>
       <div class="term-body">
         <!-- toolkit:install -->
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd1">/plugin marketplace add Dev-of-Codes-LLC/agent-toolkit</code><button class="term-copy" data-copy="cmd1">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd1"><span class="w">/plugin</span> <span class="w">marketplace</span> <span class="w">add</span> <span class="w">Dev-of-Codes-LLC/agent-toolkit</span></code><button class="term-copy" data-copy="cmd1">Copy</button></div>
         <div class="term-out">✓ marketplace <b>agent-toolkit</b> added</div>
         <div class="term-gap"></div>
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd2">/plugin install devofcodes-dev-workflow@agent-toolkit</code><button class="term-copy" data-copy="cmd2">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd2"><span class="w">/plugin</span> <span class="w">install</span> <span class="w">devofcodes-dev-workflow@agent-toolkit</span></code><button class="term-copy" data-copy="cmd2">Copy</button></div>
         <div class="term-out">✓ feature-doc · land-branch · docker-cleanup</div>
         <div class="term-gap"></div>
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3">/plugin install devofcodes-repo-ops@agent-toolkit</code><button class="term-copy" data-copy="cmd3">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd3"><span class="w">/plugin</span> <span class="w">install</span> <span class="w">devofcodes-repo-ops@agent-toolkit</span></code><button class="term-copy" data-copy="cmd3">Copy</button></div>
         <div class="term-out">✓ ticket-writer · status-digest · org-map · backlog-planner</div>
         <div class="term-gap"></div>
-        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd4">/plugin install devofcodes-own-it@agent-toolkit</code><button class="term-copy" data-copy="cmd4">Copy</button></div>
+        <div class="term-line"><span class="p" aria-hidden="true">❯</span><code id="cmd4"><span class="w">/plugin</span> <span class="w">install</span> <span class="w">devofcodes-own-it@agent-toolkit</span></code><button class="term-copy" data-copy="cmd4">Copy</button></div>
         <div class="term-out">✓ after-action</div>
         <!-- /toolkit:install -->
       </div>
@@ -497,6 +504,15 @@
         status.textContent = f === 'all' ? 'Showing all ' + shown + ' items' : 'Showing ' + shown + ' ' + nouns[f][shown === 1 ? 0 : 1];
       }
     });
+  });
+
+  /* A command that scrolls sideways keeps its right-edge fade until its end is in view. */
+  document.querySelectorAll('.term-line code').forEach(function (code) {
+    function edge() { code.classList.toggle('at-end', code.scrollLeft + code.clientWidth >= code.scrollWidth - 1); }
+    code.addEventListener('scroll', edge, { passive: true });
+    window.addEventListener('resize', edge);
+    if (document.fonts) document.fonts.ready.then(edge);
+    edge();
   });
 
   document.querySelectorAll('.term-copy').forEach(function (btn) {
