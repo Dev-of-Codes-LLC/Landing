@@ -1,6 +1,6 @@
 <a href="https://devofcodes.com"><img src=".github/brand/social-landing.png" alt="Landing: source for devofcodes.com" width="100%"></a>
 
-Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC. Plain HTML and CSS, no build step. Backgrounds are rendered live with WebGPU by the MIT [`shaders`](https://github.com/shader-effects-inc/shaders) library, with a CSS fallback under every surface. The code is MIT; the copy and images are © DevOfCodes LLC; third-party pieces keep their own licences. [`NOTICE.md`](NOTICE.md) says which is which.
+Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC. Plain HTML and CSS, no build step. The home page's hero background is rendered live with WebGPU by the MIT [`shaders`](https://github.com/shader-effects-inc/shaders) library, with a CSS fallback underneath. The code is MIT; the copy and images are © DevOfCodes LLC; third-party pieces keep their own licences. [`NOTICE.md`](NOTICE.md) says which is which.
 
 ## Layout
 
@@ -12,7 +12,7 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 | `.well-known/security.txt` | Where to report a security problem ([RFC 9116](https://www.rfc-editor.org/rfc/rfc9116)). `Expires` is a year out: renew it before it lapses |
 | `LICENSE.md`, `NOTICE.md` | MIT for the code, and what is not under it |
 | `assets/site.css`, `assets/site.js` | Shared tokens, nav, reveals, contact form |
-| `assets/shaders.js` | WebGPU presets, mounted lazily |
+| `assets/shaders.js` | The hero's WebGPU preset, mounted once the page is idle |
 | `.github/workflows/deploy.yml` | Deploy to S3 and CloudFront |
 | `.claude/skills/transitions-*` | Not in git (see `.gitignore`). The `transitions-dev` and `transitions-polish` agent skills from [transitions.dev](https://github.com/Jakubantalik/transitions.dev/tree/a0c6e7bbf603a0a46588e37c6c6a4d0af3290d52/skills), installed per machine. See [Agent skills](#agent-skills). |
 | `.github/brand/` | GitHub avatar, banner and social previews, and the templates that render them |

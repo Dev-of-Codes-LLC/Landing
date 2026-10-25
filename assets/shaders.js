@@ -1,4 +1,4 @@
-/* DevOfCodes — WebGPU covers built with the open-source `shaders` library
+/* DevOfCodes — the home page's WebGPU hero background, built with the open-source `shaders` library
    (https://github.com/shader-effects-inc/shaders, MIT).
    Every surface has a CSS fallback underneath, so the page is complete without this file. */
 
@@ -30,36 +30,6 @@ const PRESETS = {
       { type: 'DotGrid', props: { color: '#BFEAF7', density: 26, dotSize: 0.07, twinkle: 0.45, opacity: 0.32 } },
       { type: 'CursorTrail', props: { colorA: '#00C8FF', colorB: '#F59E0B', radius: 0.6, length: 0.7, shrink: 1, softness: 0.7, opacity: 0.35, blendMode: 'screen' } },
       { type: 'Vignette', props: { color: '#080A0F', center: { x: 0.5, y: 0.45 }, radius: 0.55, falloff: 1.0, intensity: 0.95 } }
-    ]
-  },
-
-  /* BBI: a slowly turning voxel cube, lit like a tabletop model. A stand-in, labelled as one
-     on the page, until a real generated build replaces it. */
-  bbi: {
-    components: [
-      {
-        type: 'Voxels', id: 'bbiCube',
-        props: {
-          shape: {
-            type: 'cube3D', sizeX: 0.27, sizeY: 0.27, sizeZ: 0.27, rounding: 0,
-            rotX: -30, rotZ: 12,
-            rotY: { type: 'auto-animate', mode: 'loop', outputMin: -180, outputMax: 180, speed: 0.1 }
-          },
-          voxelSize: 0.045, voxelScale: 0.96, bevel: 0.1, seams: 0.4,
-          colorA: '#F59E0B', colorB: '#4A2E06', colorMode: 'height', colorVariation: 0.35, colorSpace: 'oklab',
-          lightAngle: 215, lightElevation: 48, lightColor: '#FFF2DF', lightIntensity: 1.15,
-          ambientColor: '#28506B', ambient: 0.6, shadows: 0.8, shadowSoftness: 0.4, ao: 1.1,
-          glossiness: 0.3, specular: 0.5, scale: 0.85
-        }
-      }
-    ]
-  },
-
-  /* Contact: a quiet aurora. */
-  contact: {
-    components: [
-      { type: 'Aurora', props: { colorA: '#0A3A4D', colorB: '#00C8FF', colorC: '#F59E0B', intensity: 55, curtainCount: 3, speed: 2.5, waviness: 60, rayDensity: 18, height: 110, center: { x: 0.5, y: 0.05 }, seed: 4, opacity: 0.6 } },
-      { type: 'Vignette', props: { color: '#080A0F', radius: 0.45, falloff: 0.9, intensity: 0.9 } }
     ]
   }
 };
