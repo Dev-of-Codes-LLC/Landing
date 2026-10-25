@@ -711,10 +711,12 @@
             <div class="form-group">
               <label for="c-name">Name</label>
               <input type="text" id="c-name" name="name" class="t-input" autocomplete="name" placeholder="Your name" required>
+              <p class="field-error" id="c-name-error"></p>
             </div>
             <div class="form-group">
               <label for="c-email">Email</label>
               <input type="email" id="c-email" name="email" class="t-input" autocomplete="email" placeholder="you@example.com" required>
+              <p class="field-error" id="c-email-error"></p>
             </div>
             <div class="form-group">
               <label for="c-kind">What kind of project?</label>
@@ -732,6 +734,7 @@
             <div class="form-group">
               <label for="c-message">The project</label>
               <textarea id="c-message" name="message" class="t-input" rows="5" placeholder="What should exist when we're done? What exists today?" required></textarea>
+              <p class="field-error" id="c-message-error"></p>
             </div>
             <button type="submit" class="btn btn-amber">Send →</button>
             <div class="form-error" id="contactError" role="alert"></div>

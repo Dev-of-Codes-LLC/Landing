@@ -91,10 +91,30 @@
       setTimeout(function () { el.classList.remove('is-shaking'); }, ms + 20);
     }
 
+    /* A field's own message sits under it (#<id>-error) and is linked with aria-describedby
+       only while it says something, so a screen reader hears why the field is invalid. */
+    function setFieldError(el, message) {
+      var slot = document.getElementById(el.id + '-error');
+      el.classList.toggle('error', !!message);
+      if (message) {
+        el.setAttribute('aria-invalid', 'true');
+        if (slot) { slot.textContent = message; el.setAttribute('aria-describedby', slot.id); }
+      } else {
+        el.removeAttribute('aria-invalid');
+        el.removeAttribute('aria-describedby');
+        if (slot) slot.textContent = '';
+      }
+    }
+
     /* Typing into a flagged field clears its error. */
     form.querySelectorAll('.t-input').forEach(function (el) {
-      el.addEventListener('input', function () { el.classList.remove('error'); el.removeAttribute('aria-invalid'); });
+      el.addEventListener('input', function () { setFieldError(el, ''); });
     });
+
+    /* The browser's own email check, plus a dot in the domain: a reply has to reach it. */
+    function looksLikeEmail(el) {
+      return !el.validity.typeMismatch && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+    }
 
     function sha256Hex(text) {
       var bytes = new TextEncoder().encode(text);
@@ -114,20 +134,21 @@
       var honeypotEl = form.querySelector('[name="website"]');
       var errorEl = document.getElementById('contactError');
       var submitBtn = form.querySelector('[type="submit"]');
-      var missing = [];
-
-      /* A red border alone says nothing to a screen reader, so a failed check
-         also names the empty fields in the alert and moves focus to the first. */
-      [nameEl, emailEl, messageEl].forEach(function (el) {
-        el.classList.remove('error');
-        el.removeAttribute('aria-invalid');
-        if (!el.value.trim()) {
-          el.classList.add('error'); el.setAttribute('aria-invalid', 'true'); shake(el);
-          missing.push(form.querySelector('label[for="' + el.id + '"]').textContent);
-        }
+      /* Every problem is shown at once: a message under each field, the fields listed in the
+         alert, and focus on the first. Nothing is sent while any field is wrong. */
+      var problems = [
+        [nameEl, !nameEl.value.trim() ? 'Add your name.' : ''],
+        [emailEl, !emailEl.value.trim() ? 'Add an email address so I can reply.'
+          : !looksLikeEmail(emailEl) ? 'Check the address: it should look like you@example.com.' : ''],
+        [messageEl, !messageEl.value.trim() ? 'Tell me a little about the project.' : '']
+      ];
+      var wrong = [];
+      problems.forEach(function (p) {
+        setFieldError(p[0], p[1]);
+        if (p[1]) { shake(p[0]); wrong.push(form.querySelector('label[for="' + p[0].id + '"]').textContent); }
       });
-      if (missing.length) {
-        errorEl.textContent = 'Still needed: ' + missing.join(', ') + '.';
+      if (wrong.length) {
+        errorEl.textContent = (wrong.length === 1 ? 'Check this field: ' : 'Check these fields: ') + wrong.join(', ') + '.';
         errorEl.style.display = 'block';
         form.querySelector('[aria-invalid="true"]').focus();
         return;
