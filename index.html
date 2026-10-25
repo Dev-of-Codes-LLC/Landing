@@ -363,6 +363,8 @@
 .about-text { color: var(--text-secondary); }
 .about-text p + p { margin-top: 1.1rem; }
 .about-text strong { color: var(--text-primary); font-weight: 500; }
+.about-text .more { color: var(--accent-cyan); }
+.about-text .more:hover { text-decoration: underline; text-underline-offset: 3px; }
 .signature { margin-top: 1.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; }
 .signature b { color: var(--text-primary); font-weight: 500; }
 
@@ -492,9 +494,9 @@
         <h3 class="ledger-sub">Latest in the log</h3>
         <!-- log:latest -->
         <ol class="ledger-latest">
-          <li><a href="changelog.html#home-status-first">The home page leads with where each project stands</a><span class="when">Oct 24, 2026 · Site</span></li>
           <li><a href="changelog.html#toolkit-public">The AI toolkit is public</a><span class="when">Oct 17, 2026 · Toolkit</span></li>
-          <li><a href="changelog.html#ai-platforms-offer">New offer: AI platforms and integrations</a><span class="when">Oct 17, 2026 · Site</span></li>
+          <li><a href="changelog.html#platform-ci-repaired">CI repaired across the platform repos</a><span class="when">Oct 11, 2026 · Platform</span></li>
+          <li><a href="changelog.html#open-editor-plan">Open Editor Platform research plan</a><span class="when">Oct 10, 2026 · Open Editor</span></li>
         </ol>
         <!-- /log:latest -->
       </div>
@@ -517,9 +519,8 @@
   <div class="container">
     <div class="work-header">
       <div class="fade-up">
-        <div class="eyebrow">Selected projects</div>
-        <h2 class="section-headline">Each one has a purpose, a state it's actually in, and something you can look at.</h2>
-        <p class="section-sub">No client logos yet. Credibility here comes from the work itself. Statuses are kept honest; roadmap items are marked as such.</p>
+        <h2 class="section-headline">Projects.</h2>
+        <p class="section-sub">No client logos yet.</p>
       </div>
       <div class="legend fade-up" aria-label="Status legend">
         <span class="use">In daily use</span><span class="dev">In development</span><span class="proto">Prototype</span><span class="plan">Research plan</span>
@@ -602,7 +603,7 @@
     <!-- Earlier stages: a row each, because there is less to show -->
     <section class="bench fade-up" aria-labelledby="benchTitle">
       <h3 class="bench-title" id="benchTitle">Earlier stages</h3>
-      <p class="bench-intro">A prototype and a plan. Less to look at yet, so less space.</p>
+      <p class="bench-intro">A prototype and a plan.</p>
 
       <article class="bench-row" id="platform">
         <div>
@@ -632,9 +633,8 @@
   <div class="container">
     <div class="services-grid">
       <div>
-        <div class="eyebrow fade-up">Work with me</div>
         <h2 class="section-headline fade-up">Four kinds of project I can deliver with confidence.</h2>
-        <p class="section-sub fade-up">Each one is something I've already done for myself, which is the only kind of promise I'm comfortable making on a page like this.</p>
+        <p class="section-sub fade-up">Each one is something I've already done for myself.</p>
         <div class="offers fade-up" style="margin-top:2.5rem">
           <div class="offer">
             <div>
@@ -687,11 +687,10 @@
   <div class="container">
     <div class="about-grid">
       <div class="fade-up">
-        <div class="eyebrow">About</div>
         <h2 class="section-headline">Hi, I'm Max.</h2>
         <div class="about-text" style="margin-top:1.4rem">
-          <p>I'm a software engineer in San Diego. I've spent seven years building internal tools and systems across enterprise operations, going from analyst to senior engineer, and I've watched the same problems repeat on every team: context that lived in a chat thread nobody could find, decisions that couldn't be traced, software that worked until someone else had to maintain it.</p>
-          <p>Dev of Codes LLC is the work I do on my own account, alongside my full-time engineering job. I build things I want to exist, I document them as if a stranger will take them over tomorrow, and I take on a small number of contract projects where that way of working is worth paying for. Because it runs alongside a day job, I only take work I can scope honestly and deliver on the schedule I quote.</p>
+          <p>I build things I want to exist, document them as if a stranger will take them over tomorrow, and take a few contracts where that way of working is worth paying for.</p>
+          <p><a class="more" href="about.html">More about how I work →</a></p>
           <p><strong>If you've read this far, you probably have something in mind.</strong> Send it over. I read every message myself and reply, usually within a day.</p>
         </div>
         <div class="signature"><b>Max Wahlgren</b><br>Founder and engineer, Dev of Codes LLC<br>San Diego, California</div>

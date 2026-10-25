@@ -6,7 +6,8 @@
 //
 // It rewrites two things in the page, and nothing else:
 //   - what sits between <!-- log:latest --> and <!-- /log:latest -->: the newest
-//     entries, one list item each, linked to changelog.html#<id>;
+//     project entries (not the Site ones, which stay on the Log page), one list
+//     item each, linked to changelog.html#<id>;
 //   - every <a class="log-link" data-log-area="AREA">: the newest entry whose
 //     area (the line under the date in .entry-when, such as "BBI") is AREA, as a
 //     link with its title and date. The project records and the status board use
@@ -63,8 +64,12 @@ function areaLinks(page, list) {
   });
 }
 
+// The home page's latest entries are evidence about the work, so entries about the site itself
+// are left to the Log page.
+const projectEntries = (list) => list.filter((e) => e.area !== "Site");
+
 function latest(list, indent) {
-  const items = list.slice(0, count).map(
+  const items = projectEntries(list).slice(0, count).map(
     (e) =>
       `${indent}  <li><a href="changelog.html#${e.id}">${e.title}</a><span class="when">${e.when}${e.area ? ` · ${e.area}` : ""}</span></li>`
   );
@@ -91,10 +96,10 @@ function main() {
       process.exitCode = 1;
       return;
     }
-    console.log(`${pagePath} matches ${logPath} (newest: ${list[0].id})`);
+    console.log(`${pagePath} matches ${logPath} (newest project entry: ${projectEntries(list)[0]?.id})`);
   } else {
     writeFileSync(pagePath, page);
-    console.log(`${pagePath}: ${page === before ? "already up to date" : "rebuilt"} from ${logPath} (newest ${Math.min(count, list.length)} of ${list.length}: ${list.slice(0, count).map((e) => e.id).join(", ")})`);
+    console.log(`${pagePath}: ${page === before ? "already up to date" : "rebuilt"} from ${logPath} (newest ${Math.min(count, projectEntries(list).length)} project entries of ${list.length}: ${projectEntries(list).slice(0, count).map((e) => e.id).join(", ")})`);
   }
 }
 
