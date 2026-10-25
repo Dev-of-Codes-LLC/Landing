@@ -1,8 +1,10 @@
-# Deploys the site to devofcodes.com (S3 + CloudFront in the Dev of Codes
-# prod AWS account). The infrastructure lives in the private repo
-# Dev-of-Codes-LLC/devofcodes-infra (modules/static-site); the role below
+# Deploys the site to devofcodes.com (S3 + CloudFront in the prod account).
+# The infrastructure lives in the private repo
+# Dev-of-Codes-LLC/devofcodes-infra (modules/static-site); the deploy role
 # trusts only jobs in this repository's prod environment, which only main
-# may use, and can only write this bucket and invalidate this distribution.
+# may use, and can only write the site bucket and invalidate its distribution.
+# The role, bucket and distribution are secrets on the prod environment, so
+# this file names none of them and run logs show them as ***.
 name: Deploy
 
 on:
@@ -18,12 +20,6 @@ concurrency:
   group: deploy-site
   cancel-in-progress: false
 
-env:
-  AWS_REGION: us-west-2
-  ROLE_ARN: arn:aws:iam::100808729005:role/gha-deploy-site
-  BUCKET: devofcodes-prod-site
-  DISTRIBUTION_ID: E231XH2855QFP9
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -31,7 +27,25 @@ jobs:
     environment:
       name: prod
       url: https://devofcodes.com
+    # Environment secrets resolve only inside a job that names the environment,
+    # so these sit on the job, not the workflow.
+    env:
+      AWS_REGION: us-west-2
+      ROLE_ARN: ${{ secrets.DEPLOY_ROLE_ARN }}
+      BUCKET: ${{ secrets.SITE_BUCKET }}
+      DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
     steps:
+      - name: Check the deploy secrets are set
+        run: |
+          missing=""
+          for v in ROLE_ARN BUCKET DISTRIBUTION_ID; do
+            [ -n "${!v}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing on the prod environment:$missing. Set DEPLOY_ROLE_ARN, SITE_BUCKET and CLOUDFRONT_DISTRIBUTION_ID under Settings > Environments > prod."
+            exit 1
+          fi
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0

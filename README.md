@@ -27,4 +27,4 @@ The preview listens on loopback only. `.claude/serve.json` answers 404 for anyth
 
 ## Deploy
 
-Every push to `main` syncs the site to S3 and invalidates CloudFront (see `.github/workflows/deploy.yml`). `main` takes changes through pull requests only. Markdown files, `.github/` and `.claude/` are never uploaded.
+Every push to `main` syncs the site to S3 and invalidates CloudFront (see `.github/workflows/deploy.yml`). `main` takes changes through pull requests only. Markdown files, `.github/` and `.claude/` are never uploaded. The role, bucket and distribution come from secrets on the repository's `prod` environment (`DEPLOY_ROLE_ARN`, `SITE_BUCKET`, `CLOUDFRONT_DISTRIBUTION_ID`), so the workflow names none of them.
