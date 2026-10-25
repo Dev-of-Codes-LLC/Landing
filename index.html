@@ -192,6 +192,14 @@
 .ledger-row a:hover { color: var(--accent-cyan); }
 .ledger-row .desc { display: block; color: var(--text-secondary); font-size: 0.82rem; }
 .ledger-row .pill { font-size: 0.64rem; padding: 0.22rem 0.55rem; white-space: nowrap; }
+/* Newest log entries, copied from changelog.html at deploy by .github/scripts/build-log.mjs */
+.ledger-log-latest { padding: 0.8rem 0 0.9rem; border-top: 1px solid var(--border); }
+.ledger-sub { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.45rem; }
+.ledger-latest { list-style: none; display: grid; gap: 0.5rem; }
+.ledger-latest li { display: grid; gap: 0.05rem; font-size: 0.88rem; line-height: 1.4; }
+.ledger-latest a { color: var(--text-primary); }
+.ledger-latest a:hover { color: var(--accent-cyan); }
+.ledger-latest .when { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); }
 .ledger-foot { padding-top: 0.7rem; border-top: 1px solid var(--border); font-family: var(--font-mono); color: var(--text-muted); font-size: 0.72rem; }
 
 @media (max-width: 960px) {
@@ -424,7 +432,17 @@
         <li class="ledger-row" data-stage="1510"><span><a href="#platform">The DevOfCodes platform</a><span class="desc">Multi-tenant foundation, Falcon on top</span></span><span class="pill pill--proto">Prototype</span></li>
         <li class="ledger-row" data-stage="1580"><span><a href="#editor">Open Editor Platform</a><span class="desc">A plan for an open-source editor SDK</span></span><span class="pill pill--plan">Research plan</span></li>
       </ul>
-      <div class="ledger-foot" data-stage="1650">Updated <!--deploy-date-->Oct 24, 2026<!--/deploy-date--></div>
+      <div class="ledger-log-latest" data-stage="1650">
+        <h3 class="ledger-sub">Latest in the log</h3>
+        <!-- log:latest -->
+        <ol class="ledger-latest">
+          <li><a href="changelog.html#home-status-first">The home page leads with where each project stands</a><span class="when">Oct 2026 · Site</span></li>
+          <li><a href="changelog.html#toolkit-public">The AI toolkit is public</a><span class="when">Oct 2026 · Toolkit</span></li>
+          <li><a href="changelog.html#ai-platforms-offer">New offer: AI platforms and integrations</a><span class="when">Oct 2026 · Site</span></li>
+        </ol>
+        <!-- /log:latest -->
+      </div>
+      <div class="ledger-foot" data-stage="1700">Updated <!--deploy-date-->Oct 24, 2026<!--/deploy-date--></div>
     </aside>
   </div>
 </section>

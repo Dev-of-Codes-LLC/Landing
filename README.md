@@ -14,6 +14,7 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 | `assets/site.css`, `assets/site.js` | Shared tokens, nav, reveals, contact form |
 | `assets/shaders.js` | The hero's WebGPU preset, mounted once the page is idle |
 | `.github/workflows/deploy.yml` | Deploy to S3 and CloudFront |
+| `.github/scripts/build-log.mjs` | Copies the newest three log entries onto the home page. Run it after adding a log entry; `--check` only compares |
 | `.claude/skills/transitions-*` | Not in git (see `.gitignore`). The `transitions-dev` and `transitions-polish` agent skills from [transitions.dev](https://github.com/Jakubantalik/transitions.dev/tree/a0c6e7bbf603a0a46588e37c6c6a4d0af3290d52/skills), installed per machine. See [Agent skills](#agent-skills). |
 | `.github/brand/` | GitHub avatar, banner and social previews, and the templates that render them |
 
