@@ -30,6 +30,22 @@ const IMAGES = [
       stack: 'HTML,CSS,WebGPU,GitHub Actions',
     }),
   },
+  {
+    out: 'social-agent-toolkit.png', width: 1280, height: 640, scale: 1,
+    url: src('social.html', {
+      repo: 'agent-toolkit',
+      desc: 'Claude Code skills, agents and routine recipes, packaged as a plugin marketplace.',
+      stack: 'MIT,Skills,Agents,Routines',
+    }),
+  },
+  {
+    out: 'social-github.png', width: 1280, height: 640, scale: 1,
+    url: src('social.html', {
+      repo: '.github',
+      desc: 'The organization profile: what DevOfCodes is, what it builds and where each project stands.',
+      stack: 'Profile README,Markdown',
+    }),
+  },
 ];
 
 const proxy = process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY, bypass: '<-loopback>' } : undefined;
