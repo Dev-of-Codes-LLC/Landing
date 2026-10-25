@@ -19,7 +19,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <style>
   .nav { background: rgba(8, 10, 15, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--border); }
@@ -33,8 +33,8 @@
       radial-gradient(520px 300px at 12% 80%, rgba(245,158,11,0.07), transparent 70%);
   }
   .tk-hero .container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: center; }
-  .tk-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 4.6vw, 3.7rem); line-height: 1.06; letter-spacing: -0.035em; text-wrap: balance; }
-  .tk-lede { margin-top: 1.4rem; color: var(--text-secondary); font-size: 1.12rem; max-width: 34rem; }
+  .tk-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 4.6vw, 3.7rem); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
+  .tk-lede { margin-top: 1.4rem; color: var(--text-secondary); font-size: 1.2rem; max-width: 34rem; }
   .tk-lede strong { color: var(--text-primary); font-weight: 500; }
   .tk-ctas { margin-top: 2rem; display: flex; gap: 0.9rem; flex-wrap: wrap; }
   .tk-ctas svg { width: 16px; height: 16px; fill: currentColor; }
@@ -59,7 +59,7 @@
   .tk-strip .container { display: grid; grid-template-columns: repeat(4, 1fr); }
   .tk-stat { padding: 1.6rem 1.2rem; border-left: 1px solid var(--border); }
   .tk-stat:first-child { border-left: none; padding-left: 0; }
-  .tk-stat .n { font-family: var(--font-display); font-weight: 700; font-size: 2.1rem; line-height: 1; }
+  .tk-stat .n { font-family: var(--font-display); font-weight: 600; font-size: 2.1rem; line-height: 1; }
   .tk-stat .k { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
   .tk-checked { grid-column: 1 / -1; margin: 0; padding: 0 0 1.2rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
   .tk-checked a { color: inherit; border-bottom: 1px solid var(--border); }
@@ -70,13 +70,13 @@
   .rules { margin-top: 2.8rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
   .rule { background: var(--bg-surface); padding: 1.5rem 1.3rem 1.6rem; }
   .rule .i { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; }
-  .rule h3 { margin-top: 0.8rem; font-family: var(--font-display); font-weight: 700; font-size: 1.08rem; line-height: 1.25; }
+  .rule h3 { margin-top: 0.8rem; font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; line-height: 1.25; }
   .rule p { margin-top: 0.6rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
 
   /* ── Catalog ── */
   .cat-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
   .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .chip { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-secondary); background: transparent; border: 1px solid var(--border-bright); border-radius: 999px; padding: 0.4rem 0.9rem; cursor: pointer; transition: color 160ms, border-color 160ms, background 160ms; }
+  .chip { font-family: var(--font-body); font-size: 0.92rem; color: var(--text-secondary); background: transparent; border: 1px solid var(--border-bright); border-radius: 999px; padding: 0.4rem 0.9rem; cursor: pointer; transition: color 160ms, border-color 160ms, background 160ms; }
   .chip:hover { color: var(--text-primary); }
   .chip[aria-pressed="true"] { color: var(--bg-base); background: var(--text-primary); border-color: var(--text-primary); }
   .chip .c { opacity: 0.6; margin-left: 0.35rem; }

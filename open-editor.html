@@ -19,13 +19,13 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <style>
   .nav { background: rgba(8, 10, 15, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--border); }
   .plan { color: var(--text-secondary); font-size: 1.02rem; }
-  .plan h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.015em; color: var(--text-primary); margin: 3rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-  .plan h2 .n { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-amber); letter-spacing: 0.14em; display: block; margin-bottom: 0.5rem; }
+  .plan h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; color: var(--text-primary); margin: 3rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .plan h2 .n { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.14em; display: block; margin-bottom: 0.5rem; }
   .plan p + p { margin-top: 1.05rem; }
   .plan strong { color: var(--text-primary); font-weight: 500; }
   .plan a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
@@ -35,13 +35,13 @@
   .plan code { font-family: var(--font-mono); font-size: 0.85em; color: var(--text-primary); background: var(--bg-elevated); padding: 0.1em 0.4em; border-radius: 4px; }
   .plan pre { margin: 1.2rem 0; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.3rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.65; color: var(--text-primary); }
   .plan pre code { background: none; padding: 0; font-size: inherit; }
-  .callout { margin: 1.5rem 0; padding: 1.2rem 1.4rem; border-left: 2px solid var(--accent-cyan); background: rgba(0,200,255,0.05); border-radius: 0 var(--radius) var(--radius) 0; }
-  .callout strong { color: var(--accent-cyan); }
+  .callout { margin: 1.5rem 0; padding: 1.2rem 1.4rem; border-left: 2px solid var(--border-bright); background: rgba(255,255,255,0.03); border-radius: 0 var(--radius) var(--radius) 0; }
+  .callout strong { color: var(--text-primary); }
   .lede { font-size: 1.12rem; color: var(--text-secondary); }
   .lede strong { color: var(--text-primary); }
 
   .tbl { width: 100%; border-collapse: collapse; margin: 1.3rem 0; font-size: 0.9rem; line-height: 1.55; }
-  .tbl th { text-align: left; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--border-bright); vertical-align: bottom; }
+  .tbl th { text-align: left; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); padding: 0.6rem 0.8rem 0.6rem 0; border-bottom: 1px solid var(--border-bright); vertical-align: bottom; }
   .tbl td { padding: 0.8rem 0.8rem 0.8rem 0; border-bottom: 1px solid var(--border); vertical-align: top; }
   .tbl td:first-child { color: var(--text-primary); font-weight: 500; white-space: nowrap; }
   .tbl-wrap { overflow-x: auto; margin: 0 -1.5rem; padding: 0 1.5rem; }
@@ -51,11 +51,11 @@
   .flow-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.5rem; }
   .flow-box { border: 1px solid var(--border-bright); border-radius: 6px; padding: 0.6rem 0.75rem; background: var(--bg-surface); color: var(--text-primary); line-height: 1.4; }
   .flow-box.hub { border-color: rgba(0,200,255,0.5); background: rgba(0,200,255,0.06); }
-  .flow-box small { display: block; color: var(--text-muted); font-size: 0.68rem; margin-top: 0.2rem; }
+  .flow-box small { display: block; color: var(--text-muted); font-size: 0.7rem; margin-top: 0.2rem; }
   .flow-arrow { text-align: center; color: var(--text-muted); font-size: 0.9rem; line-height: 1; }
 
   .toc { margin: 2rem 0 0; padding: 1.3rem 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); }
-  .toc h2 { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+  .toc h2 { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
   .toc ol { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1.5rem; font-size: 0.92rem; }
   .toc a { color: var(--text-secondary); }
   .toc a:hover { color: var(--accent-cyan); }
