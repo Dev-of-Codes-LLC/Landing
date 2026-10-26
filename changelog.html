@@ -36,6 +36,9 @@
   .entry li { position: relative; padding-left: 1.5rem; color: var(--text-secondary); font-size: 0.95rem; }
   .entry li::before { content: "–"; position: absolute; left: 0; color: var(--text-muted); }
   .entry a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
+  /* Why the change was made: one labelled line under the summary */
+  .entry .why { margin: 0.9rem 0 0.4rem; padding: 0.6rem 0.9rem; border-left: 3px solid var(--text-primary); border-radius: 0 8px 8px 0; background: var(--bg-elevated); color: var(--text-primary); }
+  .entry .why b { margin-right: 0.6rem; font-family: var(--font-mono); font-size: 0.78em; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
   @media (max-width: 700px) { .entry { grid-template-columns: 1fr; gap: 0.6rem; } }
 </style>
 </head>
@@ -82,7 +85,9 @@
          under the date: DFS Command Center, Toolkit, BBI, Platform, Open Editor, or Site); keep those names.
          .github/scripts/build-log.mjs copies them there at deploy
          (run it locally too, so the committed home page matches).
-         Pill classes (assets/site.css): pill--use (in daily use), pill--dev (in development), pill--plan (plan), pill--proto (prototype). Site entries have no pill: their rail already says Site. -->
+         Pill classes (assets/site.css): pill--use (in daily use), pill--dev (in development), pill--plan (plan), pill--proto (prototype). Site entries have no pill: their rail already says Site.
+         Every entry gets a Why line under its summary, <p class="why"><b>Why</b>...</p>: one sentence giving the reason for
+         the change, taken from its PR or issue. If neither says why, ask rather than guess. -->
     <div class="log">
 
       <article class="entry" id="home-status-first">
@@ -90,6 +95,7 @@
         <div>
           <h2>The home page leads with where each project stands</h2>
           <p>The home page opens with "Work you can inspect." and a plain status board for every project, with the newest log entries under it. Projects are ordered by how real they are: DFS Command Center and BBI in full, the platform and the Open Editor plan as one row each.</p>
+          <p class="why"><b>Why</b>The status record says what only DevOfCodes can say, so it now opens the home page instead of sitting a click away.</p>
           <ul>
             <li>Amber marks what you can act on, cyan marks links, and status colours appear only on status pills</li>
             <li>Small labels meet WCAG AA contrast, and an empty contact form says which fields are missing</li>
@@ -103,6 +109,7 @@
         <div>
           <h2>The AI toolkit is public <span class="pill pill--use">In daily use</span></h2>
           <p>The Claude Code skills and agents that plan, ship and document the work here are now an open-source repo under the MIT licence, with my own names and accounts taken out. Each one says what it will not do. <a href="toolkit.html">See the toolkit page.</a></p>
+          <p class="why"><b>Why</b>One public repo can't drift from the tools in use the way a cleaned-up private copy would.</p>
           <ul>
             <li>devofcodes-dev-workflow: feature docs, landing a branch, Docker cleanup</li>
             <li>devofcodes-repo-ops: ticket writing, a status digest, an org map and a read-only backlog planner</li>
@@ -125,6 +132,7 @@
         <div>
           <h2>CI repaired across the platform repos <span class="pill pill--proto">Prototype</span></h2>
           <p>Pull request checks build and test again on Identity, Control Plane, Gateway, Audit, Falcon and the end-to-end suite. Every GitHub Action is pinned to a commit SHA, and Dependabot keeps those pins and the dependencies current.</p>
+          <p class="why"><b>Why</b>CI had failed on every pull request in five of the six repos, one of them since February.</p>
         </div>
       </article>
 
@@ -133,6 +141,7 @@
         <div>
           <h2>Contact form moves off Formspree</h2>
           <p>Submissions now go to a small function in the site's own AWS account, which emails them to my inbox from the site's domain. No third-party form service, a hidden-field and timing check against bots, and the function only accepts requests the site's CDN has signed.</p>
+          <p class="why"><b>Why</b>Submissions should reach the hello@ inbox without a third-party service, a monthly cap or another company's privacy terms in the way.</p>
         </div>
       </article>
 
@@ -140,7 +149,8 @@
         <div class="entry-when"><b>Oct 10, 2026</b>Site</div>
         <div>
           <h2>devofcodes.com rebuilt as a one-person company site</h2>
-          <p>The previous homepage described a product with founding customers and a pricing page. Neither existed. The site now says what's true: one developer, four projects with honest statuses, and a clear way to hire me. Backgrounds are rendered live with WebGPU using the open-source <a href="https://github.com/shader-effects-inc/shaders" rel="noopener">shaders</a> library, with CSS fallbacks everywhere.</p>
+          <p>The previous homepage described a product with founding customers and pricing. Neither existed. The site now says what's true: one developer, four projects with honest statuses, and a clear way to hire me. Backgrounds are rendered live with WebGPU using the open-source <a href="https://github.com/shader-effects-inc/shaders" rel="noopener">shaders</a> library, with CSS fallbacks everywhere.</p>
+          <p class="why"><b>Why</b>The site should match reality, and the old one described a billed service that did not exist.</p>
         </div>
       </article>
 
@@ -149,6 +159,7 @@
         <div>
           <h2>Open Editor Platform research plan <span class="pill pill--plan">Plan</span></h2>
           <p>A research and implementation plan for a fully open-source editor SDK serving developers and book authors equally. Engine survey, architecture contracts, release gates and a twelve-month delivery plan, with sources. <a href="open-editor.html">Read it here.</a></p>
+          <p class="why"><b>Why</b>Sophisticated editing should be easy to integrate, reliable, portable and fully open source.</p>
         </div>
       </article>
 
@@ -157,6 +168,7 @@
         <div>
           <h2>Instruction book change marking; phase 5 under way <span class="pill pill--dev">In development</span></h2>
           <p>The instruction book now marks what changed between revisions. Phases 1 to 4 (design studio, voxel engine, build intelligence, instruction factory) are delivered; phase 5, the revision engine, is in progress.</p>
+          <p class="why"><b>Why</b>A builder partway through the old book got a new book with every step unmarked and progress at zero; now they keep their place.</p>
           <ul>
             <li>Instruction book with chapters, steps, camera hints and quality checks</li>
             <li>Bill of materials, BOM deltas, build statistics and build progress</li>
@@ -170,6 +182,7 @@
         <div>
           <h2>Results, Slate Radar, optimization and routines ship <span class="pill pill--use">In daily use</span></h2>
           <p>The blueprint's 27 units are complete, plus the v2 data track and the first v4 operations units. Results now import from both platforms' account history and reconcile against the ledger.</p>
+          <p class="why"><b>Why</b>The point is less research and lineup work, with every recommendation traceable, reproducible and measurable.</p>
           <ul>
             <li>Lineup generation with OR-Tools CP-SAT; portfolio optimization with HiGHS</li>
             <li>Contest evaluation with Monte Carlo and model uncertainty reported separately</li>
@@ -184,6 +197,7 @@
         <div>
           <h2>Platform prototype runs end to end <span class="pill pill--proto">Prototype</span></h2>
           <p>Identity, Control Plane, Gateway, Audit and Falcon come up from a single compose file. Multi-tenant isolation with PostgreSQL row-level security, MFA and step-up authentication, policy-driven rate limits, an append-only audit log, and observability with Prometheus and Grafana. Falcon works locally and has no users.</p>
+          <p class="why"><b>Why</b>The full stack had to run locally with one command.</p>
         </div>
       </article>
 
