@@ -341,7 +341,8 @@
   .phone-only { display: inline; }
   /* the screenshot shows one panel at full size: the infeasible run, explained */
   .shot { aspect-ratio: 4 / 3; }
-  .shot img { object-fit: none; object-position: -282px -1060px; }
+  /* dfs-lineup-studio-panel.webp is that panel alone, cut from the full image at 282, 1060 */
+  .shot img { object-fit: none; object-position: 0 0; }
   /* the panel's lines are wider than any readable phone crop: fade them out rather than cut them */
   .shot img { -webkit-mask-image: linear-gradient(to right, #000 78%, transparent 100%); mask-image: linear-gradient(to right, #000 78%, transparent 100%); }
 }
@@ -563,7 +564,11 @@
         <figure class="project-shot">
           <a class="shot" href="assets/dfs-lineup-studio.png" target="_blank" rel="noopener">
           <div class="browser-bar" aria-hidden="true"><span>dfs command center · lineup studio · synthetic workspace</span></div>
+          <picture>
+            <source media="(max-width: 480px)" srcset="assets/dfs-lineup-studio-panel.webp" type="image/webp" width="448" height="300">
+            <source srcset="assets/dfs-lineup-studio.webp" type="image/webp">
           <img src="assets/dfs-lineup-studio.png" alt="DFS Command Center's Lineup Studio screen: a five-step workflow, a constrained lineup generator with an infeasible run explained constraint by constraint, and a candidates table with validation states." loading="lazy" width="1280" height="2149">
+          </picture>
           <div class="shot-shade"></div>
           <span class="visually-hidden">(opens the full image in a new tab)</span>
           </a>
