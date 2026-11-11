@@ -6,6 +6,10 @@ const CDN = 'https://cdn.jsdelivr.net/npm/shaders@4.0.4/dist/js/bundle.js';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const saveData = navigator.connection && navigator.connection.saveData;
+/* The library is about 560 KB over the wire: on a 3G link that is 10 to 15 seconds of download
+   for a background, so a slow link keeps the CSS fallback. Browsers without the Network
+   Information API (Safari, Firefox) report nothing and mount as before. */
+const slowLink = navigator.connection && /(^|-)[23]g$/.test(navigator.connection.effectiveType || '');
 
 const PRESETS = {
   /* Hero: a slow, low-contrast mesh in the site palette, grain and cursor paint. It reads as light,
@@ -97,7 +101,7 @@ function mountAll() {
   rest.forEach((s) => io.observe(s));
 }
 
-if (!reducedMotion && !saveData) {
+if (!reducedMotion && !saveData && !slowLink) {
   const start = () => ('requestIdleCallback' in window ? requestIdleCallback(mountAll, { timeout: 1500 }) : setTimeout(mountAll, 200));
   if (document.readyState === 'complete') start();
   else window.addEventListener('load', start, { once: true });

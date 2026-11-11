@@ -53,6 +53,11 @@
   .term-out { color: var(--text-muted); padding-left: 1.2rem; }
   .term-out b { color: var(--accent-green); font-weight: 500; }
   .term-copy { margin-left: auto; flex: none; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); background: transparent; border: 1px solid var(--border-bright); border-radius: 4px; padding: 0.2rem 0.55rem; min-height: 24px; cursor: pointer; transition: color 160ms, border-color 160ms; }
+  /* On a touch screen the button's target is 44px tall; the button itself stays small */
+  @media (pointer: coarse) {
+    .term-copy { position: relative; }
+    .term-copy::after { content: ""; position: absolute; inset: -11px -6px; }
+  }
   .term-copy:hover { color: var(--accent-amber); border-color: var(--accent-amber); }
   .term-copy.done { color: var(--accent-green); border-color: rgba(16,185,129,0.5); }
   .term-gap { height: 0.6rem; }
