@@ -102,6 +102,25 @@
   if (form) {
     var startedAt = Date.now();
 
+    /* Start token. The first time someone touches the form, ask the function for a token:
+       its own clock time, signed. Sent back with the message, it lets the function measure
+       the time spent on the form itself, not take this page's word for it. If the request
+       fails, the message goes without one and the function falls back to startedAt. */
+    var startToken = '';
+    var tokenRequest = null;
+    function askForToken() {
+      if (tokenRequest || !window.fetch) return;
+      tokenRequest = fetch('/api/contact', { headers: { 'Accept': 'application/json' } })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (body) {
+          if (body && typeof body.token === 'string') startToken = body.token;
+          else tokenRequest = null; /* no token came back: the next touch asks again */
+        })
+        .catch(function () { tokenRequest = null; });
+    }
+    form.addEventListener('focusin', askForToken);
+    form.addEventListener('pointerdown', askForToken);
+
     /* Error state shake: replay from a clean start on every failed check. */
     function shake(el) {
       el.classList.remove('is-shaking');
@@ -174,14 +193,18 @@
         return;
       }
 
-      var payload = JSON.stringify({
-        name: nameEl.value.trim(),
-        email: emailEl.value.trim(),
-        kind: kindEl ? kindEl.value : '',
-        message: messageEl.value.trim(),
-        website: honeypotEl ? honeypotEl.value : '',
-        t: startedAt
-      });
+      /* Built after the token request settles, so a quick sender still carries the token. */
+      function buildPayload() {
+        return JSON.stringify({
+          name: nameEl.value.trim(),
+          email: emailEl.value.trim(),
+          kind: kindEl ? kindEl.value : '',
+          message: messageEl.value.trim(),
+          website: honeypotEl ? honeypotEl.value : '',
+          t: startedAt,
+          token: startToken
+        });
+      }
 
       var originalLabel = submitBtn.textContent;
       submitBtn.textContent = 'Sending…';
@@ -197,7 +220,14 @@
 
       if (!window.crypto || !crypto.subtle || !window.TextEncoder) { fail(); return; }
 
-      sha256Hex(payload)
+      /* No token is asked for here: one issued at this moment would read as zero seconds
+         on the form and the message would be dropped as too fast. */
+      var payload;
+      (tokenRequest || Promise.resolve())
+        .then(function () {
+          payload = buildPayload();
+          return sha256Hex(payload);
+        })
         .then(function (hash) {
           return fetch('/api/contact', {
             method: 'POST',
