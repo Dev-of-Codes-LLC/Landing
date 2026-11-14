@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- YouTube channel banner. render.mjs captures .card at 1280×720, 2x, which gives the 2560×1440 that
+     YouTube asks for. YouTube shows only the middle of it: a 1546×423 box on a phone, and a strip
+     2560 wide and 423 high on a desktop. So all the text sits in .safe, the middle 773×211 here,
+     and the background fills the rest. -->
+<html lang="en"><head><meta charset="UTF-8"><title>youtube-banner</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.card { width: 1280px; height: 720px; display: grid; place-items: center; }
+/* Even light across the strip: the text is in the middle, not on the left as on the other cards. */
+.card.surface {
+  background:
+    radial-gradient(ellipse 40% 60% at 88% 50%, rgba(0, 200, 255, 0.28), transparent 62%),
+    radial-gradient(ellipse 30% 46% at 6% 58%, rgba(245, 158, 11, 0.22), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 50% 52%, rgba(13, 52, 70, 0.85), transparent 70%),
+    var(--bg-base);
+}
+.card.surface::after { background: radial-gradient(ellipse 46% 26% at 50% 50%, rgba(8,10,15,0.78), rgba(8,10,15,0.3) 70%, transparent 100%); }
+.safe { width: 773px; height: 211px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.lockup { font-size: 20px; }
+.lockup .mark { font-size: 22px; }
+.headline { font-size: 50px; margin-top: 14px; white-space: nowrap; }
+.row { margin-top: 16px; display: flex; align-items: center; gap: 18px; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.06em; }
+.row .what { text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--text-secondary); }
+.row .sep { color: var(--text-muted); }
+.row .url { color: var(--accent-amber); font-weight: 500; }
+</style></head>
+<body>
+<div class="card surface">
+  <div class="safe">
+    <div class="lockup"><span class="mark">D&lt;</span><span>DevOfCodes</span></div>
+    <h1 class="headline">Work you can inspect.</h1>
+    <div class="row"><span class="what">Build videos and guides</span><span class="sep">/</span><span class="url">devofcodes.com</span></div>
+  </div>
+</div>
+</body></html>

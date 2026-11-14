@@ -22,6 +22,7 @@ const IMAGES = [
   { out: '../../assets/og.png', url: src('og.html'), width: 1200, height: 630, scale: 1 },
   { out: 'workspace-logo.png', url: src('workspace-logo.html'), width: 320, height: 132, scale: 1 },
   { out: 'x-header.png', url: src('x-header.html'), width: 1500, height: 500, scale: 1 },
+  { out: 'youtube-banner.png', url: src('youtube-banner.html'), width: 1280, height: 720, scale: 2 },
   {
     out: 'social-landing.png', width: 1280, height: 640, scale: 1,
     url: src('social.html', {
