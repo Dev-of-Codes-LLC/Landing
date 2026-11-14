@@ -13,6 +13,7 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 | `LICENSE.md`, `NOTICE.md` | MIT for the code, and what is not under it |
 | `assets/site.css`, `assets/site.js` | Shared tokens, nav, reveals, contact form |
 | `assets/shaders.js` | The hero's WebGPU preset, mounted once the page is idle |
+| `assets/pad.js` | Opens the VC Pad in a frame over the home page and closes it when the visitor leaves; falls back to a plain link. Its spiral mirrors vc-pad's `lib/leadIn.ts` |
 | `.github/workflows/deploy.yml` | Deploy to S3 and CloudFront |
 | `.github/workflows/check.yml`, `.github/scripts/check-css.mjs` | On every pull request (and before each deploy): the pages' CSS braces are balanced, and the home page's log entries match the log |
 | `.github/scripts/build-log.mjs` | Copies the newest three project log entries (not the Site ones) onto the home page, and each project's newest entry into its "Latest entry" links. Run it after adding a log entry; `--check` only compares |
