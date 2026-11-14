@@ -1,4 +1,4 @@
-/* DevOfCodes — the VC Pad, opened inside the home page.
+/* DevOfCodes — the Reading Room (the VC Pad, in the code and at its address), opened inside the home page.
  *
  * Without this script a link marked data-pad is a plain link: it takes the visitor to
  * pad.devofcodes.com in this tab, where the pad starts on arrival and its Leave comes
@@ -62,7 +62,7 @@
     }
     stage.inert = true;
     frame = document.createElement('iframe');
-    frame.title = 'VC Pad: the pitch, then a library hall in 3D';
+    frame.title = 'The Reading Room: a two-minute pitch, then a library hall in 3D';
     /* The click is on this page, so the frame needs this page's leave to play the pitch with sound. */
     frame.allow = 'autoplay; fullscreen';
     frame.src = PAD + '/?embed=1';
