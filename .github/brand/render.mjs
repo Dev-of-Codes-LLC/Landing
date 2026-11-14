@@ -24,6 +24,13 @@ const IMAGES = [
   { out: 'x-header.png', url: src('x-header.html'), width: 1500, height: 500, scale: 1 },
   { out: 'youtube-banner.png', url: src('youtube-banner.html'), width: 1280, height: 720, scale: 2 },
   {
+    out: 'youtube-thumbnail-own-it-01.png', width: 1280, height: 720, scale: 1,
+    url: src('youtube-thumbnail.html', {
+      series: 'Own It', episode: '1', title: 'Why does this page *jump*?',
+      before: '0.730', after: '0.000', metric: 'layout shift, measured',
+    }),
+  },
+  {
     out: 'social-landing.png', width: 1280, height: 640, scale: 1,
     url: src('social.html', {
       repo: 'Landing',
