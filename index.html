@@ -135,10 +135,12 @@
 .hero-sub { font-size: 1.2rem; color: var(--text-secondary); max-width: 520px; margin-bottom: 2rem; }
 .hero-sub strong { color: var(--text-primary); font-weight: 500; }
 .hero-sub .sub-phone { display: none; }
-.hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
-/* Launch VC Pad (Landing#72): the way into pad.devofcodes.com, the pitch and the studio in 3D. A pill, so it
-   reads as another kind of thing than the two buttons beside it: its ring runs from the links' cyan to the
-   amber of things you can act on, and an amber dot says it is live. */
+.hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+/* Launch VC Pad (Landing#72): the way into the VC Pad, the pitch and the library hall in 3D. It has a row of
+   its own under the two buttons for clients, set off by a rule, with its line beside it. A pill, so it reads
+   as another kind of thing than those buttons: its ring runs from the links' cyan to the amber of things you
+   can act on, and an amber dot says it is live. */
+.hero-pad { display: flex; align-items: center; gap: 1.1rem; max-width: 520px; padding-top: 1.3rem; margin-bottom: 1.4rem; border-top: 1px solid var(--border); }
 .btn-pad {
   border-radius: 999px; color: var(--text-primary);
   background:
@@ -147,11 +149,23 @@
   box-shadow: 0 12px 36px -16px rgba(0,200,255,0.55);
 }
 .btn-pad:hover { box-shadow: 0 14px 44px -12px rgba(0,200,255,0.7), 0 0 22px -8px rgba(245,158,11,0.55); transform: translateY(-1px); }
-.btn-pad .pad-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-amber); box-shadow: 0 0 0 0 rgba(245,158,11,0.5); animation: pad-pulse 2.4s ease-out infinite; }
+.pad-dot { flex: none; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-amber); box-shadow: 0 0 0 0 rgba(245,158,11,0.5); animation: pad-pulse 2.4s ease-out infinite; }
 @keyframes pad-pulse { 0% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); } 70%, 100% { box-shadow: 0 0 0 7px rgba(245,158,11,0); } }
-@media (prefers-reduced-motion: reduce) { .btn-pad .pad-dot { animation: none; } .btn-pad:hover { transform: none; } }
-.hero-pad-note { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.4rem; }
+@media (prefers-reduced-motion: reduce) { .pad-dot { animation: none; } .btn-pad:hover { transform: none; } }
+/* The pad opens over this page, in a frame that fills the window (assets/pad.js). The stage is the frame's
+   layer: clear until the pad's lead-in starts, then over everything. The pieces of the page that the lead-in
+   carries into the vortex are cloned into the layer above it. */
+.pad-stage { position: fixed; inset: 0; z-index: 2000; background: var(--bg-base); opacity: 0; pointer-events: none; transition: opacity 0.9s ease; }
+.pad-stage.is-open { opacity: 1; pointer-events: auto; transition-duration: 0.25s; }
+.pad-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; color-scheme: dark; }
+.pad-pieces { position: fixed; inset: 0; z-index: 2001; pointer-events: none; overflow: hidden; }
+html.pad-open { overflow: hidden; }
+.is-opening { cursor: progress; }
+.is-opening .pad-dot { animation-duration: 0.7s; }
+@media (prefers-reduced-motion: reduce) { .pad-stage, .pad-stage.is-open { transition-duration: 0.01s; } }
+.hero-pad-note { font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.55; color: var(--text-muted); }
 .hero-pad-note .note-phone { display: none; color: var(--accent-cyan); }
+.hero-pad-note .note-phone .pad-dot { margin-right: 0.55rem; vertical-align: 0.08em; }
 .hero-pad-note .note-phone .for { color: var(--text-muted); }
 
 /* Status board: every project and the state it is in, newest status from the log */
@@ -332,9 +346,9 @@
 /* a phone's first screen, upright or on its side: a short eyebrow, one sentence, one button, then the board */
 @media (max-width: 480px), (max-width: 960px) and (max-height: 500px) {
   .hero { padding-top: 5.5rem; }
-  .hero-eyebrow .long, .hero-sub .sub-more, .hero-ctas .btn-ghost, .hero-ctas .btn-pad, .hero-pad-note .note-wide { display: none; }
+  .hero-eyebrow .long, .hero-sub .sub-more, .hero-ctas .btn-ghost, .hero-pad .btn-pad, .hero-pad-note .note-wide { display: none; }
   /* the pad's button is a line under the one button; tall enough to tap */
-  .hero-pad-note { margin: 0.2rem 0 0; }
+  .hero-pad { display: block; padding-top: 0; margin: 0.2rem 0 0; border-top: 0; }
   .hero-pad-note .note-phone { display: inline-block; padding: 0.85rem 0; font-size: 0.72rem; }
   .hero-sub .sub-phone { display: inline; }
   .hero-eyebrow { margin-bottom: 1rem; }
@@ -481,12 +495,15 @@
       <div class="hero-ctas">
         <a href="#contact" class="btn btn-amber">Discuss a project →</a>
         <a href="#work" class="btn btn-ghost">Explore my work ↓</a>
-        <a href="https://pad.devofcodes.com/" class="btn btn-pad" target="_blank" rel="noopener"><span class="pad-dot" aria-hidden="true"></span>Launch VC Pad <span aria-hidden="true">↗</span></a>
       </div>
-      <p class="hero-pad-note">
-        <span class="note-wide">For investors and partners: the pitch, then the studio in 3D.</span>
-        <a class="note-phone" href="https://pad.devofcodes.com/" target="_blank" rel="noopener">Launch VC Pad <span aria-hidden="true">↗</span><span class="for"> · investors and partners</span></a>
-      </p>
+      <!-- The VC Pad opens over this page (assets/pad.js). Without the script each link goes to the pad in this tab. -->
+      <div class="hero-pad">
+        <a href="https://pad.devofcodes.com/?from=site" class="btn btn-pad" data-pad><span class="pad-dot" aria-hidden="true"></span>Launch VC Pad</a>
+        <p class="hero-pad-note">
+          <span class="note-wide">A two-minute pitch you can step out of, into a library hall in 3D. It opens here, with sound.</span>
+          <a class="note-phone" href="https://pad.devofcodes.com/?from=site" data-pad><span class="pad-dot" aria-hidden="true"></span>Launch VC Pad<span class="for"> · a two-minute pitch, with sound</span></a>
+        </p>
+      </div>
     </div>
 
     <aside class="ledger" aria-labelledby="ledgerTitle">
@@ -844,6 +861,7 @@
 </footer>
 
 <script src="assets/site.js"></script>
+<script src="assets/pad.js" defer></script>
 <script type="module" src="assets/shaders.js"></script>
 </body>
 </html>
