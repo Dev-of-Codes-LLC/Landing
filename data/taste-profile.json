@@ -1,0 +1,100 @@
+{
+  "formatVersion": "1.1",
+  "owner": {
+    "type": "Organization",
+    "name": "DevOfCodes",
+    "sameAs": [
+      "https://devofcodes.com/",
+      "https://github.com/Dev-of-Codes-LLC"
+    ]
+  },
+  "entries": [
+    {
+      "id": "rick-rubin",
+      "name": "Rick Rubin",
+      "kind": "person",
+      "relation": "inspiration",
+      "sameAs": ["https://en.wikipedia.org/wiki/Rick_Rubin"],
+      "added": "2026-10-25",
+      "gave": "Make the work for the feeling, and put the audience last.",
+      "creditedIn": [{ "name": "The DevOfCodes founding goals" }]
+    },
+    {
+      "id": "jon-bellion",
+      "name": "Jon Bellion",
+      "kind": "person",
+      "relation": "inspiration",
+      "sameAs": ["https://en.wikipedia.org/wiki/Jon_Bellion"],
+      "added": "2026-10-25",
+      "gave": "A lyric that stayed in the founding notes.",
+      "creditedIn": [{ "name": "The DevOfCodes founding goals" }]
+    },
+    {
+      "id": "spike-lee",
+      "name": "Spike Lee",
+      "kind": "person",
+      "relation": "inspiration",
+      "sameAs": ["https://en.wikipedia.org/wiki/Spike_Lee"],
+      "added": "2026-10-25",
+      "gave": "A spark for a planned platform for creative work.",
+      "creditedIn": [{ "name": "The DevOfCodes founding goals" }]
+    },
+    {
+      "id": "hunter-s-thompson",
+      "name": "Hunter S. Thompson",
+      "kind": "person",
+      "relation": "inspiration",
+      "sameAs": ["https://en.wikipedia.org/wiki/Hunter_S._Thompson"],
+      "added": "2026-10-25",
+      "gave": "The idea of a place where people can live like human beings.",
+      "creditedIn": [{ "name": "The DevOfCodes founding goals" }]
+    },
+    {
+      "id": "kanye-west",
+      "name": "Kanye West",
+      "kind": "person",
+      "relation": "inspiration",
+      "sameAs": ["https://en.wikipedia.org/wiki/Kanye_West"],
+      "added": "2026-10-25",
+      "gave": "The way the projects are named.",
+      "creditedIn": [{ "name": "The DevOfCodes founding goals" }]
+    },
+    {
+      "id": "jean-piaget",
+      "name": "Jean Piaget",
+      "kind": "person",
+      "relation": "inspiration",
+      "sameAs": ["https://en.wikipedia.org/wiki/Jean_Piaget"],
+      "added": "2026-10-25",
+      "gave": "A model of how learning works: schemas, assimilation, accommodation and equilibration.",
+      "creditedIn": [{ "name": "The DevOfCodes founding goals" }]
+    },
+    {
+      "id": "aristide-benoist",
+      "name": "Aristide Benoist",
+      "kind": "person",
+      "relation": "tasteReference",
+      "sameAs": ["https://aristidebenoist.com/"],
+      "notes": "Independent developer. A portfolio of interactive client sites.",
+      "added": "2026-10-25"
+    },
+    {
+      "id": "yuri-artiukh",
+      "name": "Yuri Artiukh (akella)",
+      "kind": "channel",
+      "relation": "tasteReference",
+      "sameAs": ["https://www.youtube.com/channel/UCDo7RTzizoOdPjY8A-xDR7g"],
+      "notes": "WebGL and creative-coding livestreams.",
+      "added": "2026-10-25"
+    },
+    {
+      "id": "keita-yamada",
+      "name": "Keita Yamada (p5aholic)",
+      "kind": "person",
+      "relation": "tasteReference",
+      "sameAs": ["https://p5aholic.me/", "https://p5aholic.me/copycats/"],
+      "notes": "Creative developer.",
+      "added": "2026-10-25"
+    }
+  ]
+}

@@ -22,3 +22,6 @@ jobs:
 
       - name: Home page log entries match changelog.html
         run: node .github/scripts/build-log.mjs --check
+
+      - name: The taste page matches the taste profile
+        run: node .github/scripts/build-taste.mjs --check
