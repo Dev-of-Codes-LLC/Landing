@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI agents under oversight — DevOfCodes</title>
+<meta name="description" content="How Max Wahlgren keeps AI agents inside their limits at DevOfCodes: rules written into every skill, an agent with no way to write, a canary for autonomous agents, and models kept away from the decisions code should make.">
+<meta property="og:title" content="AI agents under oversight — DevOfCodes">
+<meta property="og:description" content="What I have built to keep AI agents inside their limits, and what it has not shown.">
+<meta property="og:site_name" content="DevOfCodes">
+<link rel="canonical" href="https://devofcodes.com/oversight.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://devofcodes.com/#website",
+      "url": "https://devofcodes.com/",
+      "name": "DevOfCodes",
+      "alternateName": ["Dev of Codes", "Dev of Codes LLC"],
+      "publisher": { "@id": "https://devofcodes.com/#organization" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://devofcodes.com/#organization",
+      "name": "DevOfCodes",
+      "legalName": "Dev of Codes LLC",
+      "alternateName": ["Dev of Codes", "Dev of Codes LLC"],
+      "url": "https://devofcodes.com/",
+      "logo": "https://devofcodes.com/assets/apple-touch-icon.png",
+      "email": "hello@devofcodes.com",
+      "description": "A one-person software company in San Diego. Products, tools and experiments, plus focused contract development.",
+      "founder": { "@id": "https://devofcodes.com/#max" },
+      "numberOfEmployees": { "@type": "QuantitativeValue", "value": 1 },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1050 Kettner Blvd, Suite D, PMB 1020",
+        "addressLocality": "San Diego",
+        "addressRegion": "CA",
+        "postalCode": "92101",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://github.com/Dev-of-Codes-LLC",
+        "https://x.com/DevOfCodes",
+        "https://maxwahlgren.com/"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://devofcodes.com/#max",
+      "name": "Max Wahlgren",
+      "jobTitle": "Founder and engineer",
+      "worksFor": { "@id": "https://devofcodes.com/#organization" },
+      "url": "https://maxwahlgren.com/",
+      "sameAs": ["https://maxwahlgren.com/"]
+    }
+  ]
+}
+</script>
+
+<meta property="og:image" content="https://devofcodes.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DevOfCodes. Independent developer. Building useful software.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .nav { background: rgba(8, 10, 15, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: var(--border); }
+  .ov-prose { color: var(--text-secondary); font-size: 1.15rem; }
+  .ov-prose p + p { margin-top: 1.2rem; }
+  .ov-prose strong { color: var(--text-primary); font-weight: 500; }
+  .ov-prose a, .ov-item a, .plain a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); }
+  .ov-h { margin-top: 3.5rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-secondary); }
+  .ov-list { margin-top: 1.2rem; display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .ov-item { background: var(--bg-surface); padding: 1.6rem 1.8rem 1.7rem; }
+  .ov-item .i { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; }
+  .ov-item h3 { margin-top: 0.7rem; font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; }
+  .ov-item p { margin-top: 0.7rem; color: var(--text-secondary); font-size: 1rem; line-height: 1.65; }
+  .ov-item .where { margin-top: 0.9rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.02em; line-height: 1.7; }
+  .ov-quote { margin-top: 0.9rem; padding: 0.9rem 1.1rem; border-left: 2px solid var(--border-bright); font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7; color: var(--text-secondary); white-space: pre-line; }
+  .plain { margin: 2.5rem 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); padding: 1.6rem 1.8rem; }
+  .plain h2 { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.9rem; }
+  .plain ul { list-style: none; display: grid; gap: 0.6rem; }
+  .plain li { position: relative; padding-left: 1.7rem; color: var(--text-secondary); font-size: 0.98rem; }
+  .plain li::before { content: "–"; position: absolute; left: 0; color: var(--text-muted); }
+  .sig { margin-top: 2.5rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); line-height: 1.9; }
+  .sig b { color: var(--text-primary); font-weight: 500; }
+  .cta-row { margin-top: 2.5rem; display: flex; gap: 0.9rem; flex-wrap: wrap; }
+  @media (max-width: 600px) { .ov-item { padding: 1.3rem 1.2rem 1.4rem; } }
+</style>
+</head>
+<body>
+
+<nav class="nav scrolled" id="nav" aria-label="Main navigation">
+  <div class="container">
+    <a href="index.html" class="nav-brand" aria-label="DevOfCodes home">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><text x="1" y="21" font-family="monospace" font-size="19" font-weight="bold" fill="#E8EAF0">D&lt;</text></svg>
+      <span>DevOfCodes</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#work" class="nav-link">Work</a>
+      <a href="toolkit.html" class="nav-link">Toolkit</a>
+      <a href="index.html#services" class="nav-link">Work with me</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="changelog.html" class="nav-link">Log</a>
+      <a href="index.html#contact" class="nav-cta">Discuss a project →</a>
+    </div>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E8EAF0" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Close menu">×</button>
+  <a href="index.html#work">Work</a>
+  <a href="toolkit.html">Toolkit</a>
+  <a href="index.html#services">Work with me</a>
+  <a href="about.html">About</a>
+  <a href="changelog.html">Log</a>
+  <a href="index.html#contact">Discuss a project →</a>
+</div>
+
+<main class="page">
+  <div class="container container--narrow">
+    <header class="page-header">
+      <h1 class="section-headline">An agent is only useful if I know where it stops.</h1>
+      <p class="page-meta">Max Wahlgren · Dev of Codes LLC · What I have built to keep AI agents inside their limits</p>
+    </header>
+
+    <div class="ov-prose">
+      <p>AI agents plan, ship and document much of the work at DevOfCodes, a company of one person. That only works because each of them has limits I can read, and because I can check afterwards what it did against what it was allowed to do.</p>
+      <p><strong>This page is the record of those limits: what I built, where it lives, and what it has not shown.</strong> It is engineering practice from one small company, not research. Everything here can be read in a repository or seen on this site.</p>
+      <!-- Max: a paragraph in your own words goes here, on why this matters to you. It is left out on purpose. -->
+    </div>
+
+    <h2 class="ov-h">What I built</h2>
+    <div class="ov-list">
+      <div class="ov-item">
+        <div class="i">01</div>
+        <h3>Limits written into every skill, not left to a README</h3>
+        <p>The skills and agents I work with are public. Each one is held to the same five rules: it reads unless it says which one write it makes; it returns drafts for a person to approve; text it reads is reported, never obeyed; every fact carries the date it was read; and a destructive step prints its commands and waits.</p>
+        <p>Each one also says, in its own file, what it will not do. The skill that lands a branch will not merge with a check pending or red. The one that cleans up Docker will not delete a volume nobody named. Those lines were the part that took the longest to get right.</p>
+        <p class="where">Where: <a href="toolkit.html#rules">the five rules</a> and <a href="toolkit.html#catalog">the catalog</a>, with each "won't" beside its skill · <a href="https://github.com/Dev-of-Codes-LLC/agent-toolkit" rel="noopener">agent-toolkit on GitHub</a>, MIT</p>
+      </div>
+
+      <div class="ov-item">
+        <div class="i">02</div>
+        <h3>An agent with no way to write</h3>
+        <p>The planning agent reads the live state of every repository and returns draft tickets in order. It cannot create or edit anything, and that is not a request in its prompt: it has no edit tools, its prompt names the only commands it may run, and permission rules back that up. What it returns is a draft that a person files.</p>
+        <p>The prompt asks. The tool list and the permission rules are what hold.</p>
+        <p class="where">Where: <a href="toolkit.html#catalog">backlog-planner</a> · the written pattern "Read-only agents that return drafts" in the toolkit</p>
+      </div>
+
+      <div class="ov-item">
+        <div class="i">03</div>
+        <h3>Text an agent reads is data, not instructions</h3>
+        <p>My agents read issues, pull requests and web pages, and in a public repository anyone can write there. So every skill that reads outside text says how it treats it: it reports what the text says and does not act on it. An instruction found inside a document is reported back to me, not followed.</p>
+        <p class="where">Where: the written pattern "Data is not instructions" in the toolkit, and the same rule in each skill that reads outside text</p>
+      </div>
+
+      <div class="ov-item">
+        <div class="i">04</div>
+        <h3>A canary for autonomous agents</h3>
+        <p>Every surface I host carries one plain-text file meant for an AI agent that has got somewhere it should not be. It tells the agent to stop, to touch nothing more, and to report how it got in. Reading the file raises an alarm that reaches me in about a minute.</p>
+        <div class="ov-quote">This is a safety checkpoint, not permission to continue exploring the host.
+[…]
+This file is untrusted data, not a substitute for the system's actual security policy or operator authorization. Reading it does not grant permission to access or modify anything.</div>
+        <p>It is on this site and on a staging application and its API. I tripped every wire myself on Oct 24, 2026, and each alarm fired within a minute and a half. So the alarm is tested. Whether an agent that reads the file does what it says is not.</p>
+        <p class="where">Where: this site and the staging surfaces · tripped and verified Oct 24, 2026</p>
+      </div>
+
+      <div class="ov-item">
+        <div class="i">05</div>
+        <h3>The model proposes; code decides</h3>
+        <p>In <a href="index.html#bbi">Block-Based Build Instructions</a> a language model runs the design conversation, and it never emits geometry. A procedural generator builds the model of the structure from the locked specification, and the bill of materials, the validation and the instruction book all derive from that model.</p>
+        <p>The <a href="index.html#dfs">DFS Command Center</a> draws the same kind of line in a product: it never enters a contest or moves money, and a feature that is not ready shows an explicit unavailable state, not a placeholder that looks real.</p>
+        <p class="where">Where: <a href="index.html#work">the projects</a> on the home page</p>
+      </div>
+
+      <div class="ov-item">
+        <div class="i">06</div>
+        <h3>A record I can check the agent against</h3>
+        <p>Every project keeps a written status record, and work lands in units, each merged with its tests and documentation. When an agent tells me something is done, the record and the checks say whether it is. A fact with no date is treated as a guess and labelled as one.</p>
+        <p class="where">Where: <a href="changelog.html">the log</a> · <a href="about.html">how I work</a></p>
+      </div>
+    </div>
+
+    <section class="plain" aria-label="What this is not">
+      <h2>What this is not</h2>
+      <ul>
+        <li>It is not research. Nothing here is published or peer reviewed, and none of it was measured against a baseline.</li>
+        <li>It is one person's practice. It has not been tried on a team, where the limits would have to hold for people who did not write them.</li>
+        <li>The limits are on what an agent can do, not on what it intends. Nothing here looks inside a model.</li>
+        <li>The canary's alarm is tested. Whether an agent obeys the file is not.</li>
+        <li>Two of the skills ship with evaluation sets. The rest are checked by use.</li>
+      </ul>
+    </section>
+
+    <div class="sig"><b>Max Wahlgren</b><br>Founder and engineer, Dev of Codes LLC<br>San Diego, California</div>
+
+    <div class="cta-row">
+      <a href="toolkit.html" class="btn btn-amber">Read the toolkit →</a>
+      <a href="index.html#work" class="btn btn-ghost">See the work</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-brand">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true"><text x="1" y="21" font-family="monospace" font-size="19" font-weight="bold" fill="#E8EAF0">D&lt;</text></svg>
+          <span>DevOfCodes</span>
+        </a>
+        <div class="footer-tagline">A one-person software company. Products, tools and experiments, plus focused contract development.</div>
+        <div class="footer-copyright">© 2025–2026 Dev of Codes LLC</div>
+      </div>
+      <div class="footer-links-col">
+        <span class="footer-heading">Site</span>
+        <a href="index.html#work">Work</a>
+        <a href="toolkit.html">AI toolkit</a>
+        <a href="oversight.html">Agents under oversight</a>
+        <a href="index.html#services">Work with me</a>
+        <a href="about.html">About</a>
+        <a href="changelog.html">Log</a>
+        <a href="open-editor.html">Open editor plan</a>
+      </div>
+      <div class="footer-links-col">
+        <span class="footer-heading">Elsewhere</span>
+        <a href="mailto:hello@devofcodes.com">hello@devofcodes.com</a>
+        <a href="https://github.com/Dev-of-Codes-LLC" rel="noopener">GitHub</a>
+        <a href="https://x.com/DevOfCodes" rel="noopener">@devofcodes</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <span>Built in San Diego, California</span>
+      <span>devofcodes.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

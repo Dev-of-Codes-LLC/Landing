@@ -2,7 +2,7 @@
   "directoryListing": false,
   "redirects": [
     {
-      "source": "!{,*.html,about,changelog,open-editor,privacy,terms,toolkit,favicon.ico,robots.txt,sitemap.xml,assets/**,.well-known/**}",
+      "source": "!{,*.html,about,changelog,open-editor,oversight,privacy,terms,toolkit,favicon.ico,robots.txt,sitemap.xml,assets/**,.well-known/**}",
       "destination": "/",
       "type": 404
     }
