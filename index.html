@@ -233,13 +233,21 @@ html.pad-open { overflow: hidden; }
    STRIP (what this site is)
    ═══════════════════════════════════════════ */
 .strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(14,17,23,0.55); }
-.strip .container { display: grid; grid-template-columns: repeat(3, 1fr); }
+.strip .container { display: grid; grid-template-columns: repeat(4, 1fr); }
 .strip-item { padding: 1.5rem 1.5rem 1.5rem 0; border-right: 1px solid var(--border); }
 .strip-item + .strip-item { padding-left: 1.5rem; }
 .strip-item:last-child { border-right: 0; }
 .strip-item .k { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; }
 .strip-item .v { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
 .strip-item .v small { display: block; font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.15rem; }
+.strip-item .v small a { color: var(--accent-cyan); border-bottom: 1px solid rgba(0,200,255,0.3); white-space: nowrap; }
+/* Four facts: two rows of two between a phone and a wide screen, where four across would squeeze each to a few words a line. */
+@media (max-width: 1180px) and (min-width: 761px) {
+  .strip .container { grid-template-columns: repeat(2, 1fr); }
+  .strip-item:nth-child(2n) { border-right: 0; }
+  .strip-item:nth-child(2n+1) { padding-left: 0; }
+  .strip-item:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+}
 @media (max-width: 760px) {
   .strip .container { grid-template-columns: 1fr; }
   .strip-item { border-right: 0; border-bottom: 1px solid var(--border); padding: 1.1rem 0; }
@@ -405,6 +413,8 @@ html.pad-open { overflow: hidden; }
 /* block, not grid: an inline element in an item would become its own grid cell */
 .how li { position: relative; padding-left: 1.7rem; color: var(--text-secondary); font-size: 0.95rem; }
 .how li::before { content: "→"; position: absolute; left: 0; color: var(--text-muted); font-family: var(--font-mono); }
+.how li a { color: var(--text-primary); border-bottom: 1px dotted var(--text-muted); }
+.how li a:hover { color: var(--accent-cyan); }
 .how .fit { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.92rem; color: var(--text-secondary); }
 .how .fit b { color: var(--text-primary); font-weight: 500; }
 .how .btn { margin-top: 1.4rem; width: 100%; justify-content: center; }
@@ -574,6 +584,7 @@ html.pad-open { overflow: hidden; }
     <div class="strip-item fade-up"><div class="k">Who</div><div class="v">Max Wahlgren<small>Senior software engineer, seven years in enterprise internal tools. DevOfCodes is the work I do on my own account, alongside that job.</small></div></div>
     <div class="strip-item fade-up" style="transition-delay:80ms"><div class="k">What I build with</div><div class="v">.NET and TypeScript<small>ASP.NET Core, NestJS, React, PostgreSQL, Docker. Python when the data wants it.</small></div></div>
     <div class="strip-item fade-up" style="transition-delay:160ms"><div class="k">How I work</div><div class="v">Written scope, shipped in units<small>Acceptance criteria up front, a status record kept as I go, docs with the code.</small></div></div>
+    <div class="strip-item fade-up" style="transition-delay:240ms"><div class="k">With AI agents</div><div class="v">Inside limits I can show<small>They read unless told the one thing to write, and return drafts for me to approve. Every host carries a canary for one that strays. <a href="oversight.html">How →</a></small></div></div>
   </div>
 </section>
 
@@ -728,7 +739,7 @@ html.pad-open { overflow: hidden; }
             <div>
               <h3>Set up an AI platform, or build AI into your product</h3>
               <p>Model APIs connected to your own data and systems, with the parts that make it dependable written as code: structured outputs, tool calls, permission boundaries, evaluation sets, cost limits, and logs you can audit. Or a working setup for your team's AI coding tools: shared instructions, MCP servers into your systems, and review rules that keep the output something a person can check.</p>
-              <div class="evidence">Evidence: <a href="#bbi">BBI's design workshop</a></div>
+              <div class="evidence">Evidence: <a href="#bbi">BBI's design workshop</a>, <a href="toolkit.html">the toolkit</a>, <a href="oversight.html">how my own agents are kept inside their limits</a></div>
             </div>
           </div>
         </div>
@@ -740,7 +751,7 @@ html.pad-open { overflow: hidden; }
           <li>Fixed-scope quote. Work lands in units, each merged with its tests and docs.</li>
           <li>A written status record as I go, so you always know what exists and what doesn't.</li>
           <li>You own the code and the repository from day one.</li>
-          <li>I use AI coding tools heavily and under strict process. You'll see the process, not just the output.</li>
+          <li>I use AI coding tools heavily and <a href="oversight.html">under strict process</a>. You'll see the process, not just the output.</li>
         </ul>
         <div class="fit"><b>Good fit:</b> a well-defined project of a few weeks to a couple of months for a founder, a small team, or an engineer who needs a second pair of hands. I work on DevOfCodes projects outside a full-time job, so schedules are quoted with that in mind.<br><br><b>Not a fit:</b> open-ended staff augmentation, anything that needs daytime on-call, or a project that needs a team.</div>
         <a href="#contact" class="btn btn-amber">Discuss a project →</a>
