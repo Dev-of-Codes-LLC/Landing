@@ -79,6 +79,11 @@ jobs:
       - name: Build the toolkit page from agent-toolkit's catalog
         run: node .github/scripts/build-toolkit.mjs --fail-soft
 
+      # The profile is a file in this repository, so there is nothing to fetch
+      # and no soft failure: a profile that is not valid stops the deploy.
+      - name: Build the taste page from the taste profile
+        run: node .github/scripts/build-taste.mjs
+
       # Excluded prefixes are also excluded from --delete, so anything that
       # once reached the bucket under them is removed explicitly.
       - name: Remove files that must never be served
