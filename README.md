@@ -8,6 +8,7 @@ Source for [devofcodes.com](https://devofcodes.com), the site of DevOfCodes LLC.
 |---|---|
 | `index.html` | Home: intro, projects, work with me, contact |
 | `about.html`, `changelog.html`, `open-editor.html` | About, the log, the Open Editor research plan |
+| `oversight.html` | What keeps the AI agents inside their limits: the toolkit's rules, the read-only agent, the canary, and where models are kept away from decisions |
 | `privacy.html`, `terms.html` | Legal pages |
 | `.well-known/security.txt` | Where to report a security problem ([RFC 9116](https://www.rfc-editor.org/rfc/rfc9116)). `Expires` is a year out: renew it before it lapses |
 | `LICENSE.md`, `NOTICE.md` | MIT for the code, and what is not under it |
