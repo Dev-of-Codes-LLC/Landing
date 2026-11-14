@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- YouTube thumbnail, 1280×720 (YouTube's size; keep the file under 2 MB).
+     Parameters: ?series=Own It&episode=1&title=Why does this page *jump*?&before=0.730&after=0.000&metric=layout shift, measured
+     Words between * in the title take the amber accent. Leave before and after out for an episode with no number.
+     A thumbnail is read at the size of a postage stamp: few words, large type, one picture. No photo of any person. -->
+<html lang="en"><head><meta charset="UTF-8"><title>youtube-thumbnail</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.card { width: 1280px; height: 720px; padding: 56px 64px; display: grid; grid-template-columns: minmax(0, 1fr) 380px; column-gap: 48px; }
+.card.surface::after { background: linear-gradient(100deg, rgba(8,10,15,0.94) 0%, rgba(8,10,15,0.8) 46%, rgba(8,10,15,0.3) 78%, rgba(8,10,15,0.1) 100%); }
+.text { display: flex; flex-direction: column; min-width: 0; }
+.series { font-family: var(--font-display); font-weight: 800; font-size: 34px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-cyan); display: flex; align-items: baseline; gap: 18px; }
+.series .ep { font-family: var(--font-mono); font-weight: 500; font-size: 24px; letter-spacing: 0.12em; color: var(--text-secondary); }
+.headline { font-size: 118px; line-height: 1.02; margin-top: 30px; text-wrap: balance; }
+.headline .accent { color: var(--accent-amber); }
+.numbers { margin-top: auto; display: flex; align-items: baseline; gap: 22px; font-family: var(--font-mono); font-weight: 800; font-size: 68px; letter-spacing: -0.02em; }
+.numbers .before { color: var(--accent-amber); }
+.numbers .after { color: var(--accent-cyan); }
+.numbers .arrow { color: var(--text-muted); font-weight: 400; font-size: 52px; }
+.metric { margin-top: 6px; font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); }
+/* Top right: YouTube lays the video's length over the bottom right corner. */
+.lockup { position: absolute; right: 64px; top: 54px; font-size: 24px; }
+.lockup .mark { font-size: 26px; }
+
+/* The picture: a page whose blocks have moved. Dashed outlines show where each one was. */
+.page { align-self: end; position: relative; height: 500px; border: 2px solid var(--border-bright); border-radius: 22px; background: rgba(14,17,23,0.82); padding: 22px; }
+.block { position: absolute; left: 22px; right: 22px; border-radius: 10px; background: #2a3342; }
+.was { position: absolute; left: 22px; right: 22px; border-radius: 10px; border: 3px dashed var(--accent-amber); opacity: 0.9; }
+.now { box-shadow: 0 0 0 3px var(--accent-amber); background: rgba(245,158,11,0.22); }
+.b1 { top: 22px; height: 44px; }
+.w2 { top: 84px; height: 120px; }  .b2 { top: 148px; height: 120px; }
+.w3 { top: 222px; height: 120px; } .b3 { top: 290px; height: 120px; }
+.w4 { top: 360px; height: 70px; }  .b4 { top: 428px; height: 52px; }
+</style></head>
+<body>
+<div class="card surface">
+  <div class="text">
+    <div class="series"><span id="series"></span><span class="ep" id="episode"></span></div>
+    <h1 class="headline" id="title"></h1>
+    <div class="numbers" id="numbers"><span class="before" id="before"></span><span class="arrow">→</span><span class="after" id="after"></span></div>
+    <div class="metric" id="metric"></div>
+  </div>
+  <div class="page" aria-hidden="true">
+    <div class="block b1"></div>
+    <div class="was w2"></div><div class="block now b2"></div>
+    <div class="was w3"></div><div class="block now b3"></div>
+    <div class="was w4"></div><div class="block now b4"></div>
+  </div>
+  <div class="lockup"><span class="mark">D&lt;</span><span>DevOfCodes</span></div>
+</div>
+<script>
+const q = new URLSearchParams(location.search);
+document.getElementById('series').textContent = q.get('series') || '';
+document.getElementById('episode').textContent = q.get('episode') ? '#' + q.get('episode') : '';
+// *word* takes the accent. The text is split, never parsed as HTML.
+const title = document.getElementById('title');
+(q.get('title') || '').split('*').forEach((part, i) => {
+  if (!part) return;
+  if (i % 2) { const s = document.createElement('span'); s.className = 'accent'; s.textContent = part; title.append(s); }
+  else title.append(part);
+});
+if (q.get('before') && q.get('after')) {
+  document.getElementById('before').textContent = q.get('before');
+  document.getElementById('after').textContent = q.get('after');
+  document.getElementById('metric').textContent = q.get('metric') || '';
+} else {
+  document.getElementById('numbers').remove();
+  document.getElementById('metric').remove();
+}
+</script>
+</body></html>
