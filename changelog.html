@@ -87,6 +87,20 @@
          Pill classes (assets/site.css): pill--use (in daily use), pill--dev (in development), pill--plan (plan), pill--proto (prototype). Site entries have no pill: their rail already says Site. -->
     <div class="log">
 
+      <article class="entry" id="open-editor-first-slice">
+        <div class="entry-when"><b>Nov 25, 2026</b>Open Editor</div>
+        <div>
+          <h2>Open Editor has a repository and a first slice</h2>
+          <p>One <code>createEditor</code> call now builds a code editor or a manuscript editor, with the same five methods for both. It is a first slice of the plan, not a product. <a href="https://github.com/Dev-of-Codes-LLC/open-editor" target="_blank" rel="noopener">See the repository.</a></p>
+          <ul>
+            <li>Code runs on CodeMirror 6; manuscripts run on Tiptap's open-source packages and ProseMirror</li>
+            <li>A page that needs one profile loads one engine: 162 kB for code, 134 kB for manuscript, compressed, measured on one machine</li>
+            <li>A test builds, edits and removes each editor 50 times; one manuscript editor stays in memory until the next replaces it</li>
+            <li>No chapters, export or collaboration yet, and none of the plan's targets has been measured</li>
+          </ul>
+        </div>
+      </article>
+
       <article class="entry" id="vc-pad-launch">
         <div class="entry-when"><b>Nov 13, 2026</b>Site</div>
         <div>
